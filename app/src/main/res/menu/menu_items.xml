@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/sentItemBtn"
+        android:icon="@drawable/ic_unarchive_black_24dp"
+        android:title="Archive"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/addBtn"
+        android:icon="@drawable/ic_add_black_24dp"
+        android:title="add"
+        app:showAsAction="always" />
+</menu>

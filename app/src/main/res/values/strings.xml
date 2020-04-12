@@ -1,0 +1,26 @@
+<resources>
+    <string name="getLocationBtn">Get My Location</string>
+    <string name="scanBtn">Scan Accreditation QR</string>
+    <string name="sendBtn">Send</string>
+    <string name="app_name">GrowApp</string>
+    <string name="copyright">Copyright 2020 - RSIS</string>
+    <string name="accreditation">Accreditation No.:</string>
+    <string name="latitude">Latitude:</string>
+    <string name="longitude">Longitude:</string>
+
+    <string name="varietyPlanted">Variety Planted</string>
+    <string name="seedSource">Seed Source</string>
+    <string name="otherSeedSource">Other Seed Source</string>
+    <string name="seedClass">Seed Class Planted</string>
+    <string name="datePlanted">Date Planted</string>
+    <string name="areaPlanted">Area Planted (ha)</string>
+    <string name="seedQuantity">Seed Quantity (kg)</string>
+    <string name="seedbedArea">Seedbed Area (sqm)</string>
+    <string name="seedlingAge">Seedling Age (days)</string>
+    <string name="seedLot">Seed Lot No.</string>
+    <string name="controlNo">Control No.</string>
+    <string name="barangay">Barangay</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
