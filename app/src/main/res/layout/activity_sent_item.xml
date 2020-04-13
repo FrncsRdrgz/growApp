@@ -4,15 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SentItemActivity">
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="136dp"
-        android:layout_height="120dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="161dp"
-        android:layout_marginTop="255dp"
-        android:text="SentItems" />
+    tools:context=".HomeActivity">
+    <include
+        android:id="@+id/sent_toolbar"
+        layout="@layout/sent_toolbar"
+        />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewSent"
+        android:layout_below="@id/sent_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:listitem="@layout/item_sent"/>
 </RelativeLayout>

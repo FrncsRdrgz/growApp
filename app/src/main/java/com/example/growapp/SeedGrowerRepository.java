@@ -10,13 +10,13 @@ import java.util.List;
 public class SeedGrowerRepository {
     private SeedGrowerDao seedGrowerDao;
     private LiveData<List<SeedGrower>> allSeedGrowers;
+    private LiveData<List<SeedGrower>> allSent;
 
     public SeedGrowerRepository(Application application) {
         SeedGrowerDatabase database = SeedGrowerDatabase.getInstance(application);
-
         seedGrowerDao = database.seedGrowerDao();
-
         allSeedGrowers = seedGrowerDao.getAll();
+        allSent = seedGrowerDao.getSentForms();
     }
 
     public void insert(SeedGrower seedGrower) {
@@ -29,14 +29,18 @@ public class SeedGrowerRepository {
     public void delete(SeedGrower seedGrower) {
         new DeleteSeedGrowerAsyncTask(seedGrowerDao).execute(seedGrower);
     }
-    public void deleteAll() {
 
+    public void deleteAllSeedGrower() {
+        new DeleteAllSeedGrowerAsyncTask(seedGrowerDao).execute();
     }
+
 
     public LiveData<List<SeedGrower>> getAllSeedGrowers() {
         return allSeedGrowers;
     }
-
+    public LiveData<List<SeedGrower>> getAllSent() {
+        return allSent;
+    }
     private static class InsertSeedGrowerAsyncTask extends AsyncTask<SeedGrower, Void, Void> {
         private SeedGrowerDao seedGrowerDao;
 
@@ -76,4 +80,16 @@ public class SeedGrowerRepository {
         }
     }
 
+    private static class DeleteAllSeedGrowerAsyncTask extends AsyncTask<Void, Void, Void> {
+        private SeedGrowerDao seedGrowerDao;
+
+        private DeleteAllSeedGrowerAsyncTask(SeedGrowerDao seedGrowerDao) {
+            this.seedGrowerDao = seedGrowerDao;
+        }
+        @Override
+        protected Void doInBackground(Void... voids) {
+            seedGrowerDao.deleteAll();
+            return null;
+        }
+    }
 }

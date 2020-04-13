@@ -11,12 +11,13 @@ import java.util.List;
 public class SeedGrowerViewModel extends AndroidViewModel {
     private SeedGrowerRepository repository;
     private LiveData<List<SeedGrower>> allSeedGrowers;
-
+    private LiveData<List<SeedGrower>> allSent;
     public SeedGrowerViewModel(@NonNull Application application) {
         super(application);
 
         repository = new SeedGrowerRepository(application);
         allSeedGrowers = repository.getAllSeedGrowers();
+        allSent = repository.getAllSent();
     }
 
     public void insert(SeedGrower seedGrower) {
@@ -31,7 +32,11 @@ public class SeedGrowerViewModel extends AndroidViewModel {
         repository.delete(seedGrower);
     }
 
+    public void deleteAllSeedGrower() {repository.deleteAllSeedGrower();}
+
     public LiveData<List<SeedGrower>> getAllSeedGrowers() {
         return allSeedGrowers;
     }
+
+    public LiveData<List<SeedGrower>> getAllSent() {return allSent;}
 }

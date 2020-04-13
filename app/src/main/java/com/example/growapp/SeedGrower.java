@@ -64,7 +64,32 @@ public class SeedGrower {
     @ColumnInfo (name="isSent")
     public Boolean isSent;
 
+    public SeedGrower(String macaddress, String accredno, String latitude, String longitude, String variety, String seedsource, String otherseedsource, String seedclass, String dateplanted,
+                       String areaplanted, String quantity, String seedbedarea, String seedlingage, String seedlot, String controlno, String barangay, String datecollected, Boolean isSent){
+        this.macaddress = macaddress;
+        this.accredno = accredno;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.variety = variety;
+        this.seedsource = seedsource;
+        this.otherseedsource = otherseedsource;
+        this.seedclass = seedclass;
+        this.dateplanted = dateplanted;
+        this.areaplanted = areaplanted;
+        this.quantity = quantity;
+        this.seedbedarea = seedbedarea;
+        this.seedlingage = seedlingage;
+        this.seedlot = seedlot;
+        this.controlno = controlno;
+        this.barangay = barangay;
+        this.datecollected = datecollected;
+        this.isSent = isSent;
+    }
+
+
     public int getSgId() {return sgId;}
+    public void setSgId(int sgId) {this.sgId = sgId;
+    }
     public String getMacaddress() {return macaddress;}
     public void setMacaddress(String macaddress) {this.macaddress = macaddress;}
 

@@ -9,6 +9,7 @@
         android:id="@+id/toolbar"
         layout="@layout/toolbar"
         />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView1"
         android:layout_below="@id/toolbar"

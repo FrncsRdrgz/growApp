@@ -1,114 +1,99 @@
 package com.example.growapp;
 
-import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.List;
 
 public class SeedGrowerAdapter extends RecyclerView.Adapter<SeedGrowerAdapter.ViewHolder> {
     private static final String TAG = "SeedGrowerAdapter";
-    private Context c;
-    private ArrayList<SeedGrower> mSeedGrower;
-    private SGClicked sgClickedListener;
-    private SGEditClicked sgEditClickedListener;
-    public interface SGClicked {
-        void sendToServer(String sgId);
-    }
+    private List<SeedGrower> seedGrowers = new ArrayList<>();
 
-    public interface SGEditClicked{
-        void editSGDetails(String sgId);
-    }
+    private sendBtnClicked sendBtnClickedListener;
+    private sgFormClicked sgFormClickedListener;
 
-    public void setSgEditClickedListener(SeedGrowerAdapter.SGEditClicked sgEditClickedListener){
-        this.sgEditClickedListener = sgEditClickedListener;
-    }
-
-    public void setSgClickedListener(SeedGrowerAdapter.SGClicked sgClickedListener) {
-        this.sgClickedListener = sgClickedListener;
-    }
-
-    public SeedGrowerAdapter(Context c, ArrayList<SeedGrower> mSeedGrower){
-        this.c = c;
-        this.mSeedGrower = mSeedGrower;
-
-        notifyDataSetChanged();
-    }
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        LinearLayout linearLayout;
-        TextView tvVariety,tvDateplanted;
-        Button sendBtn;
-
-        public ViewHolder(View itemView) {
-            super(itemView);
-
-            linearLayout = (LinearLayout) itemView.findViewById(R.id.lineSeeds);
-            tvVariety = (TextView) itemView.findViewById(R.id.tvVariety);
-            tvDateplanted = (TextView) itemView.findViewById(R.id.tvDateplanted);
-            sendBtn = (Button) itemView.findViewById(R.id.sendBtn);
-        }
-    }
     @NonNull
     @Override
-    public SeedGrowerAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View v = inflater.inflate(R.layout.item_seeds, parent, false);
-        ViewHolder vh = new ViewHolder(v);
-        return vh;
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_seeds, parent, false);
+        return new ViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull SeedGrowerAdapter.ViewHolder holder,final int position) {
-        SeedGrower seedGrower = mSeedGrower.get(position);
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        SeedGrower seedGrower = seedGrowers.get(position);
+        holder.tvVariety.setText(seedGrower.getVariety());
+        holder.tvDateplanted.setText(seedGrower.getDateplanted());
 
-        LinearLayout linearLayout = holder.linearLayout;
-        TextView textView1 = holder.tvVariety;
-        textView1.setText(seedGrower.getVariety());
-        TextView textView2 = holder.tvDateplanted;
-        Button button = holder.sendBtn;
-        SimpleDateFormat sdf =new SimpleDateFormat("yyyy-MM-dd");//set format of date you receiving from db
-        Date date = null;
-        try {
-            date = (Date) sdf.parse(seedGrower.getDateplanted());
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        SimpleDateFormat newDate = new SimpleDateFormat("MMMM dd, yyyy");//set format of new date
-        textView2.setText(newDate.format(date));
-
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (sgClickedListener != null) {
-                    sgClickedListener.sendToServer(Integer.toString(mSeedGrower.get(position).getSgId()));
-                }
-            }
-        });
-
-        linearLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(sgEditClickedListener != null) {
-                    sgEditClickedListener.editSGDetails(Integer.toString(mSeedGrower.get(position).getSgId()));
-                }
-
-            }
-        });
     }
 
     @Override
     public int getItemCount() {
-        return mSeedGrower.size();
+        return seedGrowers.size();
     }
+
+    public void setSeedGrowers(List<SeedGrower> seedGrowers) {
+        this.seedGrowers = seedGrowers;
+        notifyDataSetChanged();
+    }
+
+    public SeedGrower getSeedGrowerAt(int position) {
+        return seedGrowers.get(position);
+    }
+
+    public interface sendBtnClicked {
+        void sendToServer(SeedGrower seedGrower);
+    }
+
+    public interface sgFormClicked {
+        void editSGDetails(SeedGrower seedGrower);
+    }
+
+    public void setSgFormClickedListener(SeedGrowerAdapter.sgFormClicked sgFormClickedListener) {
+        this.sgFormClickedListener = sgFormClickedListener;
+    }
+
+    public void setSendBtnClickedListener(SeedGrowerAdapter.sendBtnClicked sendBtnClickedListener) {
+        this.sendBtnClickedListener = sendBtnClickedListener;
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        TextView tvVariety, tvDateplanted;
+        Button sendBtn;
+
+        public ViewHolder(View itemView) {
+            super(itemView);
+            tvVariety = (TextView) itemView.findViewById(R.id.tvVariety);
+            tvDateplanted = (TextView) itemView.findViewById(R.id.tvDateplanted);
+            sendBtn = (Button) itemView.findViewById(R.id.sendBtn);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    if (sgFormClickedListener != null && position != RecyclerView.NO_POSITION) {
+                        sgFormClickedListener.editSGDetails(seedGrowers.get(position));
+                    }
+                }
+            });
+
+            sendBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    if (sendBtnClickedListener != null && position != RecyclerView.NO_POSITION) {
+                        sendBtnClickedListener.sendToServer(seedGrowers.get(position));
+                    }
+                }
+            });
+        }
+    }
+
 }

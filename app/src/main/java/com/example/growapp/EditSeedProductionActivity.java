@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.Manifest;
 import android.app.DatePickerDialog;
@@ -77,10 +78,12 @@ public class EditSeedProductionActivity extends AppCompatActivity implements Loc
     CodeScannerView scannerView;
 
     SeedGrowerDatabase database;
-
+    private SeedGrowerViewModel seedGrowerViewModel;
     Intent intent;
     TelephonyManager telephonyManager;
     SeedGrower seedGrowers;
+
+    int id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,6 +97,7 @@ public class EditSeedProductionActivity extends AppCompatActivity implements Loc
         intent = getIntent();
         String formId = intent.getStringExtra(HomeActivity.EXTRA_MESSAGE);
 
+        id = Integer.parseInt(formId);
         seedGrowers = database.seedGrowerDao().findFormById(formId);
         telephonyManager = (TelephonyManager) getSystemService(this.TELEPHONY_SERVICE);
 
@@ -130,7 +134,7 @@ public class EditSeedProductionActivity extends AppCompatActivity implements Loc
 
         Log.e(TAG, "onClick: " + DebugDB.getAddressLog());
 
-        SimpleDateFormat sdf =new SimpleDateFormat("yyyy-MM-dd");//set format of date you receiving from db
+        SimpleDateFormat sdf =new SimpleDateFormat("yyyy-MM-dd");//set format of date you receive from db
         Date date = null;
         try {
             date = (Date) sdf.parse(seedGrowers.getDateplanted());
@@ -339,11 +343,11 @@ public class EditSeedProductionActivity extends AppCompatActivity implements Loc
         String controlNo = etControlNo.getText().toString();
         String barangay = etBarangay.getText().toString();
         String datecollected = newDate.format(new Date());
-
+        Boolean isSent = false;
 
         Log.e(TAG, "Accreditation number: "+accredno );
         //SeedGrower seedGrower = new SeedGrower();
-        seedGrowers.setMacaddress(uniqueid);
+        /*seedGrowers.setMacaddress(uniqueid);
         seedGrowers.setAccredno(accredno);
         seedGrowers.setLatitude(latitude);
         seedGrowers.setLongitude(longitude);
@@ -359,13 +363,14 @@ public class EditSeedProductionActivity extends AppCompatActivity implements Loc
         seedGrowers.setSeedlot(seedLot);
         seedGrowers.setControlno(controlNo);
         seedGrowers.setBarangay(barangay);
-        seedGrowers.setDatecollected(datecollected);
+        seedGrowers.setDatecollected(datecollected);*/
 
-        database.seedGrowerDao().updateSeedGrower(seedGrowers);
-        Toast.makeText(EditSeedProductionActivity.this, "update success", Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(EditSeedProductionActivity.this,HomeActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
+
+        seedGrowerViewModel = ViewModelProviders.of(this).get(SeedGrowerViewModel.class);
+        SeedGrower seedGrower = new SeedGrower(uniqueid,accredno,latitude,longitude,seedVariety,seedSource,otherSeedSource,seedClass,dateplanted,
+                areaPlanted,seedQuantity,seedbedArea,seedlingAge,seedLot,controlNo,barangay,datecollected,isSent);
+        seedGrower.setSgId(id);
+        seedGrowerViewModel.update(seedGrower);
         finish();
     }
     private TextWatcher saveTextWatcher = new TextWatcher() {

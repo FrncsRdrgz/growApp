@@ -12,14 +12,17 @@ import java.util.List;
 @Dao
 public interface SeedGrowerDao {
 
-    @Query("SELECT * from seedgrower WHERE isSent=0")
+    @Query("SELECT * from seedgrower WHERE isSent=0 ORDER BY sgId DESC")
     LiveData<List<SeedGrower>> getAll();
 
-    @Query("SELECT * from seedgrower WHERE isSent=1")
-    List<SeedGrower> getSentForms();
+    @Query("SELECT * from seedgrower WHERE isSent=1 ORDER BY sgId DESC")
+    LiveData<List<SeedGrower>> getSentForms();
 
     @Query("SELECT * from seedgrower WHERE sgId =:sgId")
     SeedGrower findFormById(String sgId);
+
+    @Query("DELETE FROM seedgrower")
+    void deleteAll();
 
     @Insert
     void insertSeedGrower(SeedGrower seedGrower);

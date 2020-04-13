@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.Manifest;
 
@@ -64,6 +65,7 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
     private int CAMERA_PERMISSION_CODE = 1;
     private DatePickerDialog.OnDateSetListener mDateSetListener;
     private String uniqueId="";
+    private SeedGrowerViewModel seedGrowerViewModel;
     LocationManager locationManager;
     LocationListener locationListener;
     Toolbar toolbar;
@@ -89,6 +91,10 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
         mCodeScanner = new CodeScanner(SeedProductionDetailActivity.this, scannerView);
         telephonyManager = (TelephonyManager) getSystemService(this.TELEPHONY_SERVICE);
 
+        Intent intent = getIntent();
+
+        String test = intent.getStringExtra(HomeActivity.EXTRA_ARRAY);
+        Log.e(TAG, "onCreate: "+test );
         l10 = (LinearLayout) findViewById(R.id.l10);
         l11 = (LinearLayout) findViewById(R.id.l11);
         tvCancel = (TextView) findViewById(R.id.tvCancel);
@@ -118,7 +124,7 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         database = SeedGrowerDatabase.getInstance(this);
-        Log.e(TAG, "onClick: "+DebugDB.getAddressLog() );
+
 
         tvAccredNo.addTextChangedListener(saveTextWatcher);
         tvLatitude.addTextChangedListener(saveTextWatcher);
@@ -318,32 +324,12 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
         String controlNo = etControlNo.getText().toString();
         String barangay = etBarangay.getText().toString();
         String datecollected = newDate.format(new Date());
+        Boolean isSent = false;
 
-        SeedGrower seedGrower = new SeedGrower();
-        seedGrower.setMacaddress(uniqueid);
-        seedGrower.setAccredno(accredno);
-        seedGrower.setLatitude(latitude);
-        seedGrower.setLongitude(longitude);
-        seedGrower.setVariety(seedVariety);
-        seedGrower.setSeedsource(seedSource);
-        seedGrower.setOtherseedsource(otherSeedSource);
-        seedGrower.setSeedclass(seedClass);
-        seedGrower.setDateplanted(dateplanted);
-        seedGrower.setAreaplanted(areaPlanted);
-        seedGrower.setQuantity(seedQuantity);
-        seedGrower.setSeedbedarea(seedbedArea);
-        seedGrower.setSeedlingage(seedlingAge);
-        seedGrower.setSeedlot(seedLot);
-        seedGrower.setControlno(controlNo);
-        seedGrower.setBarangay(barangay);
-        seedGrower.setDatecollected(datecollected);
-        seedGrower.setIsSent(false);
-
-        database.seedGrowerDao().insertSeedGrower(seedGrower);
-        Toast.makeText(SeedProductionDetailActivity.this, "save success", Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(SeedProductionDetailActivity.this,HomeActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
+        seedGrowerViewModel = ViewModelProviders.of(this).get(SeedGrowerViewModel.class);
+        SeedGrower seedGrower = new SeedGrower(uniqueid,accredno,latitude,longitude,seedVariety,seedSource,otherSeedSource,seedClass,dateplanted,
+                areaPlanted,seedQuantity,seedbedArea,seedlingAge,seedLot,controlNo,barangay,datecollected,isSent);
+        seedGrowerViewModel.insert(seedGrower);
         finish();
     }
 
@@ -381,7 +367,7 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
                 Criteria criteria = new Criteria();
                 Log.e(TAG, "onClick: "+criteria );
                 String bestProvider = locationManager.getBestProvider(criteria, true);
-                Location location = locationManager.getLastKnownLocation(bestProvider);
+                final Location location = locationManager.getLastKnownLocation(bestProvider);
                 Toast.makeText(SeedProductionDetailActivity.this, "Getting your current location.", Toast.LENGTH_SHORT).show();
 
                 if (location == null) {
@@ -389,10 +375,17 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
                 }
                 if (location != null) {
 
-                    String latitude = Double.toString(location.getLatitude());
-                    String longitude = Double.toString(location.getLongitude());
-                    tvLatitude.setText(latitude);
-                    tvLongitude.setText(longitude);
+                    new AlertDialog.Builder(SeedProductionDetailActivity.this)
+                            .setMessage("Location Found")
+                            .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    String latitude = Double.toString(location.getLatitude());
+                                    String longitude = Double.toString(location.getLongitude());
+                                    tvLatitude.setText(latitude);
+                                    tvLongitude.setText(longitude);
+                                }
+                            }).show();
                 }
             }
 
@@ -418,11 +411,17 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
                         @Override
                         public void run() {
                             Toast.makeText(SeedProductionDetailActivity.this, result.getText(), Toast.LENGTH_SHORT).show();
-                            frameLayout.setVisibility(View.INVISIBLE);
-                            scrollView.setVisibility(View.VISIBLE);
-                            toolbar.setVisibility(View.VISIBLE);
-                            tvAccredNo.setText(result.getText());
-
+                            new AlertDialog.Builder( SeedProductionDetailActivity.this)
+                                    .setMessage("QR CODE SCANNED")
+                                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            frameLayout.setVisibility(View.INVISIBLE);
+                                            scrollView.setVisibility(View.VISIBLE);
+                                            toolbar.setVisibility(View.VISIBLE);
+                                            tvAccredNo.setText(result.getText());
+                                        }
+                                    }).show();
                         }
                     });
 

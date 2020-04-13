@@ -17,28 +17,32 @@
         >
 
         <TextView
-            android:id="@+id/tvVariety"
+            android:id="@+id/textViewVariety"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="25dp"
             android:textColor="#000000"
-            android:layout_toStartOf="@id/sendBtn"
+            android:layout_toStartOf="@id/viewBtn"
             android:layout_alignParentStart="true"
             android:layout_weight="1"/>
+
         <Button
-            android:id="@+id/sendBtn"
+            android:id="@+id/viewBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/sendBtn"
-            android:textColor="#FFFFFF"
+            android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
-            android:background="@drawable/success_button"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="7dp"
+            android:background="@drawable/primary_button"
+            android:drawableStart="@drawable/ic_remove_red_eye_white_24dp"
+            android:text="@string/viewBtn"
             android:textAllCaps="false"
-            android:drawableStart="@drawable/ic_unarchive_white_24dp"
-            />
+            android:textColor="#FFFFFF" />
+
         <TextView
-            android:id="@+id/tvDateplanted"
-            android:layout_below="@id/tvVariety"
+            android:id="@+id/textViewDateplanted"
+            android:layout_below="@id/textViewVariety"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#CACACA"/>

@@ -18,18 +18,17 @@
         android:showDividers="end">
 
         <TextView
-            android:id="@+id/tvDeleteAll"
+            android:id="@+id/tvYourForms"
             style="@style/TextAppearance.Widget.AppCompat.Toolbar.Subtitle"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="?attr/selectableItemBackground"
             android:drawablePadding="8dp"
             android:gravity="center_vertical"
-            android:paddingLeft="16dp"
             android:paddingRight="16dp"
-            android:textColor="#000000"
-            android:text="Delete All"/>
-
+            android:textColor="#1D6AD2"
+            android:drawableStart="@drawable/ic_navigate_before_blue_36dp"
+            android:text="Your Forms"/>
         <TextView
             style="@style/TextAppearance.Widget.AppCompat.Toolbar.Subtitle"
             android:layout_width="153dp"
@@ -40,7 +39,7 @@
             android:gravity="center_vertical"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
-            android:text="Your Forms"
+            android:text="Sent Forms"
             android:textColor="#000000" />
     </LinearLayout>
 
