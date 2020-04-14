@@ -9,7 +9,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class SeedGrowerAdapter extends RecyclerView.Adapter<SeedGrowerAdapter.ViewHolder> {
@@ -29,8 +32,17 @@ public class SeedGrowerAdapter extends RecyclerView.Adapter<SeedGrowerAdapter.Vi
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         SeedGrower seedGrower = seedGrowers.get(position);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");//set format of date you receiving from db
+        Date date = null;
+        try {
+            date = (Date) sdf.parse(seedGrower.getDateplanted());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        SimpleDateFormat newDate = new SimpleDateFormat("MMMM dd, yyyy");
+
         holder.tvVariety.setText(seedGrower.getVariety());
-        holder.tvDateplanted.setText(seedGrower.getDateplanted());
+        holder.tvDateplanted.setText(newDate.format(date));
 
     }
 

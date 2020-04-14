@@ -45,6 +45,7 @@ import com.amitshekhar.DebugDB;
 import com.budiyev.android.codescanner.CodeScanner;
 import com.budiyev.android.codescanner.CodeScannerView;
 import com.budiyev.android.codescanner.DecodeCallback;
+import com.budiyev.android.codescanner.ErrorCallback;
 import com.google.zxing.Result;
 
 import java.net.NetworkInterface;
@@ -66,6 +67,7 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
     private DatePickerDialog.OnDateSetListener mDateSetListener;
     private String uniqueId="";
     private SeedGrowerViewModel seedGrowerViewModel;
+    private boolean mPermissionGranted;
     LocationManager locationManager;
     LocationListener locationListener;
     Toolbar toolbar;
@@ -87,14 +89,11 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_seed_production_detail);
-        scannerView = findViewById(R.id.scanner_view);
-        mCodeScanner = new CodeScanner(SeedProductionDetailActivity.this, scannerView);
         telephonyManager = (TelephonyManager) getSystemService(this.TELEPHONY_SERVICE);
 
-        Intent intent = getIntent();
+        scannerView = findViewById(R.id.scanner_view);
+        mCodeScanner = new CodeScanner(SeedProductionDetailActivity.this, scannerView);
 
-        String test = intent.getStringExtra(HomeActivity.EXTRA_ARRAY);
-        Log.e(TAG, "onCreate: "+test );
         l10 = (LinearLayout) findViewById(R.id.l10);
         l11 = (LinearLayout) findViewById(R.id.l11);
         tvCancel = (TextView) findViewById(R.id.tvCancel);
@@ -124,7 +123,6 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         database = SeedGrowerDatabase.getInstance(this);
-
 
         tvAccredNo.addTextChangedListener(saveTextWatcher);
         tvLatitude.addTextChangedListener(saveTextWatcher);
@@ -207,6 +205,7 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
         };
 
         String[] classes = new String []{
+                "Select Seed Class",
                 "Foundation",
                 "Registered"
         };
@@ -345,8 +344,9 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
             } catch (Exception e) {
                 e.printStackTrace() ;
             }
+
             try {
-                network_enabled = locationManager.isProviderEnabled(LocationManager. NETWORK_PROVIDER ) ;
+                network_enabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER ) ;
             } catch (Exception e) {
                 e.printStackTrace() ;
             }
@@ -365,11 +365,9 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
             }else{
                 locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, SeedProductionDetailActivity.this);
                 Criteria criteria = new Criteria();
-                Log.e(TAG, "onClick: "+criteria );
                 String bestProvider = locationManager.getBestProvider(criteria, true);
                 final Location location = locationManager.getLastKnownLocation(bestProvider);
                 Toast.makeText(SeedProductionDetailActivity.this, "Getting your current location.", Toast.LENGTH_SHORT).show();
-
                 if (location == null) {
                     Toast.makeText(getApplicationContext(), "GPS signal not found", Toast.LENGTH_SHORT).show();
                 }
@@ -396,6 +394,7 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
 
     public void scanFunction() {
         if(ContextCompat.checkSelfPermission(SeedProductionDetailActivity.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+            mPermissionGranted = true;
             frameLayout = (FrameLayout) findViewById(R.id.scannerLayout);
             frameLayout.setVisibility(View.VISIBLE);
             tvAccredNo.setText("");
@@ -436,13 +435,20 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
     @Override
     protected void onResume() {
         super.onResume();
-        mCodeScanner.startPreview();
+        if(mPermissionGranted) {
+            mCodeScanner.startPreview();
+        }
+
     }
 
     @Override
     protected void onPause() {
-        mCodeScanner.releaseResources();
+
         super.onPause();
+        if(mPermissionGranted) {
+            mCodeScanner.releaseResources();
+        }
+
     }
     public static String getMacAddr() {
         try {
@@ -477,7 +483,7 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
         if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION) && ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_COARSE_LOCATION) ) {
             new AlertDialog.Builder(this)
                     .setTitle("Permission needed")
-                    .setMessage("This permission is needed")
+                    .setMessage("Allow this app to access location.")
                     .setPositiveButton("ok", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
@@ -503,6 +509,7 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             ActivityCompat.requestPermissions(SeedProductionDetailActivity.this, new String[]{Manifest.permission.CAMERA}, CAMERA_PERMISSION_CODE);
+                            mPermissionGranted = true;
                         }
                     }).setNegativeButton("cancel", new DialogInterface.OnClickListener() {
                 @Override
@@ -512,6 +519,7 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
             }).create().show();
         } else {
             ActivityCompat.requestPermissions(SeedProductionDetailActivity.this, new String[]{Manifest.permission.CAMERA}, CAMERA_PERMISSION_CODE);
+            mPermissionGranted = false;
         }
     }
 
