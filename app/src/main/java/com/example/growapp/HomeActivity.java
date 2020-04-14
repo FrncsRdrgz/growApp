@@ -97,8 +97,16 @@ public class HomeActivity extends AppCompatActivity {
         tvDeleteAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                seedGrowerViewModel.deleteAllSeedGrower();
-                Toast.makeText(HomeActivity.this, "Deleted All Forms.", Toast.LENGTH_SHORT).show();
+                new AlertDialog.Builder(HomeActivity.this)
+                        .setTitle("Are you sure you want to delete all forms?")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                seedGrowerViewModel.deleteAllSeedGrower();
+                                Toast.makeText(HomeActivity.this, "Deleted All Forms.", Toast.LENGTH_SHORT).show();
+                            }
+                        }).setNegativeButton("No",null).show();
+
             }
         });
 

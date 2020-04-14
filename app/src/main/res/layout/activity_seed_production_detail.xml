@@ -109,7 +109,7 @@
                     android:textColor="#FFFFFF"
                     android:background="@drawable/buttonbackground"
                     android:textAllCaps="false"
-                    android:drawableStart="@drawable/ic_add_location_white_24dp"
+                    android:drawableStart="@drawable/ic_location_on_white_24dp"
                     />
 
             </LinearLayout>
