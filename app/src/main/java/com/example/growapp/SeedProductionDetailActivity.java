@@ -69,13 +69,12 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
     private SeedGrowerViewModel seedGrowerViewModel;
     private boolean mPermissionGranted;
     LocationManager locationManager;
-    LocationListener locationListener;
     Toolbar toolbar;
     LinearLayout l10, l11;
     TextView tvLatitude, tvLongitude, tvCancel,tvSave,tvAccredNo;
     Button getLocationBtn,scanBtn;
     Spinner varietyspinner, sourcespinner,classspinner;
-    EditText etDatePlanted,etSeedClass,etAreaPlanted, etSeedQuantity, etSeedbedArea, etSeedlingAge, etSeedLot, etControlNo, etBarangay, etOtherSource;
+    EditText etDatePlanted,etAreaPlanted, etSeedQuantity, etSeedbedArea, etSeedlingAge, etSeedLot, etControlNo, etBarangay, etOtherSource;
     FrameLayout frameLayout;
     ScrollView scrollView;
 

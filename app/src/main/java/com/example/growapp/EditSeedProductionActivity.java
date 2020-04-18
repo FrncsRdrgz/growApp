@@ -61,6 +61,7 @@ public class EditSeedProductionActivity extends AppCompatActivity implements Loc
     private static final String TAG = "EditSeedProduction";
     private int LOCATION_PERMISSION_CODE = 1;
     private int CAMERA_PERMISSION_CODE = 1;
+    private boolean mPermissionGranted;
     private DatePickerDialog.OnDateSetListener mDateSetListener;
     private String uniqueId="";
     LocationManager locationManager;
@@ -452,6 +453,7 @@ public class EditSeedProductionActivity extends AppCompatActivity implements Loc
     }
     public void scanFunction() {
         if(ContextCompat.checkSelfPermission(EditSeedProductionActivity.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+            mPermissionGranted = true;
             frameLayout = (FrameLayout) findViewById(R.id.scannerLayout);
             frameLayout.setVisibility(View.VISIBLE);
             tvAccredNo.setText("");
@@ -486,13 +488,18 @@ public class EditSeedProductionActivity extends AppCompatActivity implements Loc
     @Override
     protected void onResume() {
         super.onResume();
-        mCodeScanner.startPreview();
+        if(mPermissionGranted) {
+            mCodeScanner.startPreview();
+        }
     }
 
     @Override
     protected void onPause() {
-        mCodeScanner.releaseResources();
         super.onPause();
+
+        if(mPermissionGranted) {
+            mCodeScanner.releaseResources();
+        }
     }
     public static String getMacAddr() {
         try {
@@ -553,6 +560,7 @@ public class EditSeedProductionActivity extends AppCompatActivity implements Loc
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             ActivityCompat.requestPermissions(EditSeedProductionActivity.this, new String[]{Manifest.permission.CAMERA}, CAMERA_PERMISSION_CODE);
+                            mPermissionGranted = true;
                         }
                     }).setNegativeButton("cancel", new DialogInterface.OnClickListener() {
                 @Override
@@ -562,6 +570,7 @@ public class EditSeedProductionActivity extends AppCompatActivity implements Loc
             }).create().show();
         } else {
             ActivityCompat.requestPermissions(EditSeedProductionActivity.this, new String[]{Manifest.permission.CAMERA}, CAMERA_PERMISSION_CODE);
+            mPermissionGranted = false;
         }
     }
 
