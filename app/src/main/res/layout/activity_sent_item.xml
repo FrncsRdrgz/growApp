@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HomeActivity">
+    tools:context="govph.rsis.growapp.HomeActivity">
     <include
         android:id="@+id/sent_toolbar"
         layout="@layout/sent_toolbar"
