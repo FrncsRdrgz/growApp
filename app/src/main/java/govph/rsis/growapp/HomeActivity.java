@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -25,15 +26,12 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-//import com.amitshekhar.DebugDB;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import govph.rsis.growapp.R;
-
 
 import java.util.HashMap;
 import java.util.List;
@@ -46,17 +44,19 @@ public class HomeActivity extends AppCompatActivity {
     private static final String TAG = "HomeActivity";
     private SeedGrowerViewModel seedGrowerViewModel;
 
-    TextView tvDeleteAll;
+    TextView tvDeleteAll,tvEmptyView;
     Toolbar toolbar;
     Intent intent;
 
     SeedGrowerDatabase database;
     RecyclerView rvSeedGrowers;
     RequestQueue queue;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
         //Log.e(TAG, "onClick: "+ DebugDB.getAddressLog() );
         database = SeedGrowerDatabase.getInstance(this);
         toolbar = findViewById(R.id.toolbar);
@@ -64,8 +64,11 @@ public class HomeActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         tvDeleteAll = (TextView) findViewById(R.id.tvDeleteAll);
         rvSeedGrowers = (RecyclerView) findViewById(R.id.recyclerView1);
+        tvEmptyView = findViewById(R.id.empty_view);
         rvSeedGrowers.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         rvSeedGrowers.setHasFixedSize(true);
+
+
 
         final SeedGrowerAdapter adapter = new SeedGrowerAdapter();
         rvSeedGrowers.setAdapter(adapter);
@@ -76,7 +79,20 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onChanged(List<SeedGrower> seedGrowers) {
                 //update recyclerview
-                adapter.setSeedGrowers(seedGrowers);
+                if(seedGrowers.isEmpty()){
+                    tvEmptyView.setVisibility(View.VISIBLE);
+                    rvSeedGrowers.setVisibility(View.GONE);
+                    tvDeleteAll.setClickable(false);
+                    tvDeleteAll.setTextColor(Color.GRAY);
+                }else{
+                    rvSeedGrowers.setVisibility(View.VISIBLE);
+                    tvEmptyView.setVisibility(View.GONE);
+                    adapter.setSeedGrowers(seedGrowers);
+                    tvDeleteAll.setClickable(true);
+                    tvDeleteAll.setTextColor(Color.BLACK);
+                }
+
+
             }
         });
 
@@ -238,5 +254,6 @@ public class HomeActivity extends AppCompatActivity {
         startActivity(intent);
 
     }
+
 
 }

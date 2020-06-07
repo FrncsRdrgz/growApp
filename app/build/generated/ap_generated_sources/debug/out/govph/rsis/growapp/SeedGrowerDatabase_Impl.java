@@ -25,19 +25,23 @@ import java.util.Set;
 public final class SeedGrowerDatabase_Impl extends SeedGrowerDatabase {
   private volatile SeedGrowerDao _seedGrowerDao;
 
+  private volatile SeedsDao _seedsDao;
+
   @Override
   protected SupportSQLiteOpenHelper createOpenHelper(DatabaseConfiguration configuration) {
     final SupportSQLiteOpenHelper.Callback _openCallback = new RoomOpenHelper(configuration, new RoomOpenHelper.Delegate(1) {
       @Override
       public void createAllTables(SupportSQLiteDatabase _db) {
         _db.execSQL("CREATE TABLE IF NOT EXISTS `SeedGrower` (`sgId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `macaddress` TEXT, `accredno` TEXT, `latitude` TEXT, `longitude` TEXT, `variety` TEXT, `seedsource` TEXT, `otherseedsource` TEXT, `seedclass` TEXT, `dateplanted` TEXT, `areaplanted` TEXT, `quantity` TEXT, `seedbedarea` TEXT, `seedlingage` TEXT, `seedlot` TEXT, `controlno` TEXT, `barangay` TEXT, `datecollected` TEXT, `isSent` INTEGER)");
+        _db.execSQL("CREATE TABLE IF NOT EXISTS `Seeds` (`seed_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `variety` TEXT)");
         _db.execSQL("CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)");
-        _db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'aadc6e4ae16b20ddf32baf2e5225394e')");
+        _db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '9a0993592ec5f0df924bcdfc23f73500')");
       }
 
       @Override
       public void dropAllTables(SupportSQLiteDatabase _db) {
         _db.execSQL("DROP TABLE IF EXISTS `SeedGrower`");
+        _db.execSQL("DROP TABLE IF EXISTS `Seeds`");
         if (mCallbacks != null) {
           for (int _i = 0, _size = mCallbacks.size(); _i < _size; _i++) {
             mCallbacks.get(_i).onDestructiveMigration(_db);
@@ -105,9 +109,21 @@ public final class SeedGrowerDatabase_Impl extends SeedGrowerDatabase {
                   + " Expected:\n" + _infoSeedGrower + "\n"
                   + " Found:\n" + _existingSeedGrower);
         }
+        final HashMap<String, TableInfo.Column> _columnsSeeds = new HashMap<String, TableInfo.Column>(2);
+        _columnsSeeds.put("seed_id", new TableInfo.Column("seed_id", "INTEGER", true, 1, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsSeeds.put("variety", new TableInfo.Column("variety", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        final HashSet<TableInfo.ForeignKey> _foreignKeysSeeds = new HashSet<TableInfo.ForeignKey>(0);
+        final HashSet<TableInfo.Index> _indicesSeeds = new HashSet<TableInfo.Index>(0);
+        final TableInfo _infoSeeds = new TableInfo("Seeds", _columnsSeeds, _foreignKeysSeeds, _indicesSeeds);
+        final TableInfo _existingSeeds = TableInfo.read(_db, "Seeds");
+        if (! _infoSeeds.equals(_existingSeeds)) {
+          return new RoomOpenHelper.ValidationResult(false, "Seeds(govph.rsis.growapp.Seeds).\n"
+                  + " Expected:\n" + _infoSeeds + "\n"
+                  + " Found:\n" + _existingSeeds);
+        }
         return new RoomOpenHelper.ValidationResult(true, null);
       }
-    }, "aadc6e4ae16b20ddf32baf2e5225394e", "0c0153e0ecd9c779d3d7b765f057a6f5");
+    }, "9a0993592ec5f0df924bcdfc23f73500", "bc9e9353f8139702d896be8dffb5ef71");
     final SupportSQLiteOpenHelper.Configuration _sqliteConfig = SupportSQLiteOpenHelper.Configuration.builder(configuration.context)
         .name(configuration.name)
         .callback(_openCallback)
@@ -120,7 +136,7 @@ public final class SeedGrowerDatabase_Impl extends SeedGrowerDatabase {
   protected InvalidationTracker createInvalidationTracker() {
     final HashMap<String, String> _shadowTablesMap = new HashMap<String, String>(0);
     HashMap<String, Set<String>> _viewTables = new HashMap<String, Set<String>>(0);
-    return new InvalidationTracker(this, _shadowTablesMap, _viewTables, "SeedGrower");
+    return new InvalidationTracker(this, _shadowTablesMap, _viewTables, "SeedGrower","Seeds");
   }
 
   @Override
@@ -130,6 +146,7 @@ public final class SeedGrowerDatabase_Impl extends SeedGrowerDatabase {
     try {
       super.beginTransaction();
       _db.execSQL("DELETE FROM `SeedGrower`");
+      _db.execSQL("DELETE FROM `Seeds`");
       super.setTransactionSuccessful();
     } finally {
       super.endTransaction();
@@ -150,6 +167,20 @@ public final class SeedGrowerDatabase_Impl extends SeedGrowerDatabase {
           _seedGrowerDao = new SeedGrowerDao_Impl(this);
         }
         return _seedGrowerDao;
+      }
+    }
+  }
+
+  @Override
+  public SeedsDao seedsDao() {
+    if (_seedsDao != null) {
+      return _seedsDao;
+    } else {
+      synchronized(this) {
+        if(_seedsDao == null) {
+          _seedsDao = new SeedsDao_Impl(this);
+        }
+        return _seedsDao;
       }
     }
   }

@@ -811,6 +811,7 @@ id dimensions
 id direct
 id disableHome
 id edit_query
+id empty_view
 id end
 id end_padder
 id etAreaPlanted
@@ -1087,6 +1088,7 @@ mipmap ic_launcher_round
 mipmap rsis_launcher
 mipmap rsis_launcher_foreground
 mipmap rsis_launcher_round
+raw data
 string PORT_NUMBER
 string abc_action_bar_home_description
 string abc_action_bar_up_description

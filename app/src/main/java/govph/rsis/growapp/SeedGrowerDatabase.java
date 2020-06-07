@@ -6,7 +6,7 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-@Database(entities = {SeedGrower.class}, version = 1, exportSchema = false)
+@Database(entities = {SeedGrower.class,Seeds.class}, version = 1, exportSchema = false)
 public abstract class SeedGrowerDatabase extends RoomDatabase {
     public static final String DB_NAME ="seedgrower";
     private static SeedGrowerDatabase instance;
@@ -21,6 +21,7 @@ public abstract class SeedGrowerDatabase extends RoomDatabase {
     }
 
     public abstract SeedGrowerDao seedGrowerDao();
+    public abstract SeedsDao seedsDao();
 
  /*   private static RoomDatabase.Callback roomCallback = new RoomDatabase.Callback(){
         @Override

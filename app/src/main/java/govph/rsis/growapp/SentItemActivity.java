@@ -13,8 +13,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
-import govph.rsis.growapp.R;
-
 import java.util.List;
 
 public class SentItemActivity extends AppCompatActivity {

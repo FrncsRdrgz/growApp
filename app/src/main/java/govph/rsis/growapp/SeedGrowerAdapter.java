@@ -1,12 +1,12 @@
 package govph.rsis.growapp;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import govph.rsis.growapp.R;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -34,6 +34,7 @@ public class SeedGrowerAdapter extends RecyclerView.Adapter<SeedGrowerAdapter.Vi
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         SeedGrower seedGrower = seedGrowers.get(position);
+
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");//set format of date you receiving from db
         Date date = null;
         try {
@@ -87,7 +88,6 @@ public class SeedGrowerAdapter extends RecyclerView.Adapter<SeedGrowerAdapter.Vi
             tvVariety = (TextView) itemView.findViewById(R.id.tvVariety);
             tvDateplanted = (TextView) itemView.findViewById(R.id.tvDateplanted);
             sendBtn = (Button) itemView.findViewById(R.id.sendBtn);
-
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

@@ -40,11 +40,9 @@ import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.budiyev.android.codescanner.CodeScanner;
 import com.budiyev.android.codescanner.CodeScannerView;
 import com.budiyev.android.codescanner.DecodeCallback;
-import govph.rsis.growapp.R;
 import com.google.zxing.Result;
 
 import java.net.NetworkInterface;
@@ -52,6 +50,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
@@ -67,6 +66,8 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
     private String uniqueId="";
     private SeedGrowerViewModel seedGrowerViewModel;
     private boolean mPermissionGranted;
+    private List<Seeds> seedSample = new ArrayList<>();
+
     LocationManager locationManager;
     Toolbar toolbar;
     LinearLayout l10, l11;
@@ -83,12 +84,13 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
     SeedGrowerDatabase database;
 
     TelephonyManager telephonyManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_seed_production_detail);
-        telephonyManager = (TelephonyManager) getSystemService(this.TELEPHONY_SERVICE);
 
+        telephonyManager = (TelephonyManager) getSystemService(this.TELEPHONY_SERVICE);
         scannerView = findViewById(R.id.scanner_view);
         mCodeScanner = new CodeScanner(SeedProductionDetailActivity.this, scannerView);
 
@@ -175,16 +177,11 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
             }
         });
 
-        String[] varieties = new String[]{
-                "Select Seed Variety",
-                "NSIC Rc 222",
-                "NSIC Rc 218",
-                "NSIC Rc 216",
-                "NSIC Rc 300",
-                "NSIC 2015 Rc 400",
-                "NSIC Rc 402",
-        };
-
+        List<Seeds> seeds = database.seedsDao().getSeeds();
+        ArrayList varieties = new ArrayList<>();
+        for(Seeds s : seeds){
+            varieties.add(s.getVariety());
+        }
         String[] stations = new String[] {
                 "Select Seed Source",
                 "PhilRice CES",
@@ -294,13 +291,17 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        SimpleDateFormat timestamp = new SimpleDateFormat("dd-MM-yyyy-hh-mm-ss");
+        String format = timestamp.format(new Date());
+        Log.e(TAG, "onCreate: "+format);
+
         SimpleDateFormat newDate = new SimpleDateFormat("yyyy-MM-dd");//set format of new date
 
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy HH:mm:ss");
-        String timestamp = dateFormat.format(calendar.getTime());
+        //String timestamp = dateFormat.format(calendar.getTime());
 
-        String uniqueid = md5(uniqueId + getMacAddr() + timestamp);
+        String uniqueid = md5(uniqueId+"-"+ getMacAddr()+"-"+ timestamp);
         String accredno = tvAccredNo.getText().toString();
         String latitude = tvLatitude.getText().toString();
         String longitude = tvLongitude.getText().toString();
@@ -570,4 +571,7 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
         }
         return "";
     }
+
+
+
 }

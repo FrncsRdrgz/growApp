@@ -40,11 +40,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-//import com.amitshekhar.DebugDB;
 import com.budiyev.android.codescanner.CodeScanner;
 import com.budiyev.android.codescanner.CodeScannerView;
 import com.budiyev.android.codescanner.DecodeCallback;
-import govph.rsis.growapp.R;
 import com.google.zxing.Result;
 
 import java.net.NetworkInterface;
@@ -52,6 +50,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
@@ -223,15 +222,11 @@ public class EditSeedProductionActivity extends AppCompatActivity implements Loc
         });
 
 
-        String[] varieties = new String[]{
-                "Select Seed Variety",
-                "NSIC Rc 222",
-                "NSIC Rc 218",
-                "NSIC Rc 216",
-                "NSIC Rc 300",
-                "NSIC 2015 Rc 400",
-                "NSIC Rc 402",
-        };
+        List<Seeds> seeds = database.seedsDao().getSeeds();
+        ArrayList varieties = new ArrayList<>();
+        for(Seeds s : seeds){
+            varieties.add(s.getVariety());
+        }
 
         String[] stations = new String[]{
                 "Select Seed Source",
