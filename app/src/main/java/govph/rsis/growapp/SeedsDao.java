@@ -12,6 +12,9 @@ public interface SeedsDao {
 
     @Query("SELECT * FROM seeds")
     List<Seeds> getSeeds();
+
+    @Query("SELECT count(*) FROM seeds")
+    int isEmpty();
     @Insert
     void insertSeeds(Seeds seeds);
 

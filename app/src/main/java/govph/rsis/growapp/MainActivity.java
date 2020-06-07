@@ -10,7 +10,6 @@ import android.os.Handler;
 import android.util.Log;
 import android.widget.TextView;
 
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -30,7 +29,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         tvVersion = (TextView) findViewById(R.id.tvVersion);
-        readCSV();
+        database = SeedGrowerDatabase.getInstance(this);
+
+        int checkDB = database.seedsDao().isEmpty();
+        Log.e(TAG, "onCreate: "+checkDB );
+        if(checkDB < 1){
+            readCSV();
+        }
+
         try {
             PackageInfo pInfo = this.getPackageManager().getPackageInfo(getPackageName(), 0);
             tvVersion.setText("Version: "+ pInfo.versionName);

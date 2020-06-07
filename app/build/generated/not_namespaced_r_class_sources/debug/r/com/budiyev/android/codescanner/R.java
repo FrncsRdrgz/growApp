@@ -23,7 +23,7 @@ public final class R {
         public static final int frameCornersSize = 0x7f02009e;
         public static final int frameSize = 0x7f02009f;
         public static final int frameThickness = 0x7f0200a0;
-        public static final int maskColor = 0x7f0200fa;
+        public static final int maskColor = 0x7f0200fb;
     }
     public static final class drawable {
         private drawable() {}
@@ -36,7 +36,7 @@ public final class R {
     public static final class styleable {
         private styleable() {}
 
-        public static final int[] CodeScannerView = { 0x7f02002c, 0x7f02002d, 0x7f02008d, 0x7f02008e, 0x7f02009a, 0x7f02009b, 0x7f02009c, 0x7f02009d, 0x7f02009e, 0x7f02009f, 0x7f0200a0, 0x7f0200fa };
+        public static final int[] CodeScannerView = { 0x7f02002c, 0x7f02002d, 0x7f02008d, 0x7f02008e, 0x7f02009a, 0x7f02009b, 0x7f02009c, 0x7f02009d, 0x7f02009e, 0x7f02009f, 0x7f0200a0, 0x7f0200fb };
         public static final int CodeScannerView_autoFocusButtonColor = 0;
         public static final int CodeScannerView_autoFocusButtonVisible = 1;
         public static final int CodeScannerView_flashButtonColor = 2;

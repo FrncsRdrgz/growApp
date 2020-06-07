@@ -28,93 +28,68 @@
 16    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 16-->D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml:10:5-79
 16-->D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml:10:22-76
-17    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-17-->[com.amitshekhar.android:debug-db-base:1.0.6] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\da0f6e277e755a96469593d537367161\jetified-debug-db-base-1.0.6\AndroidManifest.xml:30:5-76
-17-->[com.amitshekhar.android:debug-db-base:1.0.6] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\da0f6e277e755a96469593d537367161\jetified-debug-db-base-1.0.6\AndroidManifest.xml:30:22-73
-18
-19    <application
-19-->D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml:12:5-31:19
-20        android:allowBackup="true"
-20-->D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml:13:9-35
-21        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
-21-->[androidx.core:core:1.1.0] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\e9dab9c67c1ee3668e0bbf86c6d8cbd8\core-1.1.0\AndroidManifest.xml:24:18-86
-22        android:debuggable="true"
-23        android:icon="@mipmap/rsis_launcher"
-23-->D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml:14:9-45
-24        android:label="@string/app_name"
-24-->D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml:15:9-41
-25        android:roundIcon="@mipmap/ic_launcher_round"
-25-->D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml:16:9-54
-26        android:supportsRtl="true"
-26-->D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml:17:9-35
-27        android:testOnly="true"
-28        android:theme="@style/AppTheme" >
-28-->D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml:18:9-40
-29        <activity android:name="govph.rsis.growapp.EditSeedProductionActivity" />
-29-->D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml:20:9-91
-29-->D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml:20:19-79
-30        <activity android:name="govph.rsis.growapp.SentItemActivity" />
-30-->D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml:21:9-72
-30-->D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml:21:19-69
-31        <activity android:name="govph.rsis.growapp.SeedProductionDetailActivity" />
-31-->D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml:22:9-84
-31-->D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml:22:19-81
-32        <activity android:name="govph.rsis.growapp.HomeActivity" />
-32-->D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml:23:9-68
-32-->D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml:23:19-65
-33        <activity android:name="govph.rsis.growapp.MainActivity" >
-33-->D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml:24:9-30:20
-33-->D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml:24:19-65
-34            <intent-filter>
-34-->D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml:25:13-29:29
-35                <action android:name="android.intent.action.MAIN" />
-35-->D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml:26:17-69
-35-->D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml:26:25-66
-36
-37                <category android:name="android.intent.category.LAUNCHER" />
-37-->D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml:28:17-77
-37-->D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml:28:27-74
-38            </intent-filter>
-39        </activity>
-40
-41        <provider
-41-->[com.amitshekhar.android:debug-db-encrypt:1.0.6] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\27762c4361d4ce6e58b39b2893cdc38b\debug-db-encrypt-1.0.6\AndroidManifest.xml:12:9-16:40
-42            android:name="com.amitshekhar.debug.encrypt.DebugDBEncryptInitProvider"
-42-->[com.amitshekhar.android:debug-db-encrypt:1.0.6] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\27762c4361d4ce6e58b39b2893cdc38b\debug-db-encrypt-1.0.6\AndroidManifest.xml:13:13-84
-43            android:authorities="govph.rsis.growapp.DebugDBEncryptInitProvider"
-43-->[com.amitshekhar.android:debug-db-encrypt:1.0.6] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\27762c4361d4ce6e58b39b2893cdc38b\debug-db-encrypt-1.0.6\AndroidManifest.xml:14:13-78
-44            android:enabled="true"
-44-->[com.amitshekhar.android:debug-db-encrypt:1.0.6] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\27762c4361d4ce6e58b39b2893cdc38b\debug-db-encrypt-1.0.6\AndroidManifest.xml:15:13-35
-45            android:exported="false" />
-45-->[com.amitshekhar.android:debug-db-encrypt:1.0.6] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\27762c4361d4ce6e58b39b2893cdc38b\debug-db-encrypt-1.0.6\AndroidManifest.xml:16:13-37
-46        <provider
-46-->[com.amitshekhar.android:debug-db:1.0.6] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\55306c0cb336335b9894e3e4137fe288\debug-db-1.0.6\AndroidManifest.xml:12:9-16:40
-47            android:name="com.amitshekhar.debug.DebugDBInitProvider"
-47-->[com.amitshekhar.android:debug-db:1.0.6] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\55306c0cb336335b9894e3e4137fe288\debug-db-1.0.6\AndroidManifest.xml:13:13-69
-48            android:authorities="govph.rsis.growapp.DebugDBInitProvider"
-48-->[com.amitshekhar.android:debug-db:1.0.6] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\55306c0cb336335b9894e3e4137fe288\debug-db-1.0.6\AndroidManifest.xml:14:13-71
-49            android:enabled="true"
-49-->[com.amitshekhar.android:debug-db:1.0.6] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\55306c0cb336335b9894e3e4137fe288\debug-db-1.0.6\AndroidManifest.xml:15:13-35
-50            android:exported="false" />
-50-->[com.amitshekhar.android:debug-db:1.0.6] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\55306c0cb336335b9894e3e4137fe288\debug-db-1.0.6\AndroidManifest.xml:16:13-37
-51
-52        <service
-52-->[androidx.room:room-runtime:2.2.4] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\11f4c3c7c12bfb2d178ad7664c295997\room-runtime-2.2.4\AndroidManifest.xml:25:9-27:40
-53            android:name="androidx.room.MultiInstanceInvalidationService"
-53-->[androidx.room:room-runtime:2.2.4] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\11f4c3c7c12bfb2d178ad7664c295997\room-runtime-2.2.4\AndroidManifest.xml:26:13-74
-54            android:exported="false" />
-54-->[androidx.room:room-runtime:2.2.4] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\11f4c3c7c12bfb2d178ad7664c295997\room-runtime-2.2.4\AndroidManifest.xml:27:13-37
-55
-56        <provider
-56-->[androidx.lifecycle:lifecycle-process:2.0.0] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\6fbf654d3db04d7d9e48eb73ccf59f45\lifecycle-process-2.0.0\AndroidManifest.xml:23:9-27:43
-57            android:name="androidx.lifecycle.ProcessLifecycleOwnerInitializer"
-57-->[androidx.lifecycle:lifecycle-process:2.0.0] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\6fbf654d3db04d7d9e48eb73ccf59f45\lifecycle-process-2.0.0\AndroidManifest.xml:24:13-79
-58            android:authorities="govph.rsis.growapp.lifecycle-process"
-58-->[androidx.lifecycle:lifecycle-process:2.0.0] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\6fbf654d3db04d7d9e48eb73ccf59f45\lifecycle-process-2.0.0\AndroidManifest.xml:25:13-69
-59            android:exported="false"
-59-->[androidx.lifecycle:lifecycle-process:2.0.0] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\6fbf654d3db04d7d9e48eb73ccf59f45\lifecycle-process-2.0.0\AndroidManifest.xml:26:13-37
-60            android:multiprocess="true" />
-60-->[androidx.lifecycle:lifecycle-process:2.0.0] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\6fbf654d3db04d7d9e48eb73ccf59f45\lifecycle-process-2.0.0\AndroidManifest.xml:27:13-40
-61    </application>
-62
-63</manifest>
+17
+18    <application
+18-->D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml:12:5-31:19
+19        android:allowBackup="true"
+19-->D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml:13:9-35
+20        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+20-->[androidx.core:core:1.1.0] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\e9dab9c67c1ee3668e0bbf86c6d8cbd8\core-1.1.0\AndroidManifest.xml:24:18-86
+21        android:debuggable="true"
+22        android:icon="@mipmap/rsis_launcher"
+22-->D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml:14:9-45
+23        android:label="@string/app_name"
+23-->D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml:15:9-41
+24        android:roundIcon="@mipmap/ic_launcher_round"
+24-->D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml:16:9-54
+25        android:supportsRtl="true"
+25-->D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml:17:9-35
+26        android:theme="@style/AppTheme" >
+26-->D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml:18:9-40
+27        <activity android:name="govph.rsis.growapp.EditSeedProductionActivity" />
+27-->D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml:20:9-91
+27-->D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml:20:19-79
+28        <activity android:name="govph.rsis.growapp.SentItemActivity" />
+28-->D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml:21:9-72
+28-->D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml:21:19-69
+29        <activity android:name="govph.rsis.growapp.SeedProductionDetailActivity" />
+29-->D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml:22:9-84
+29-->D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml:22:19-81
+30        <activity android:name="govph.rsis.growapp.HomeActivity" />
+30-->D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml:23:9-68
+30-->D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml:23:19-65
+31        <activity android:name="govph.rsis.growapp.MainActivity" >
+31-->D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml:24:9-30:20
+31-->D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml:24:19-65
+32            <intent-filter>
+32-->D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml:25:13-29:29
+33                <action android:name="android.intent.action.MAIN" />
+33-->D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml:26:17-69
+33-->D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml:26:25-66
+34
+35                <category android:name="android.intent.category.LAUNCHER" />
+35-->D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml:28:17-77
+35-->D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml:28:27-74
+36            </intent-filter>
+37        </activity>
+38
+39        <service
+39-->[androidx.room:room-runtime:2.2.4] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\11f4c3c7c12bfb2d178ad7664c295997\room-runtime-2.2.4\AndroidManifest.xml:25:9-27:40
+40            android:name="androidx.room.MultiInstanceInvalidationService"
+40-->[androidx.room:room-runtime:2.2.4] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\11f4c3c7c12bfb2d178ad7664c295997\room-runtime-2.2.4\AndroidManifest.xml:26:13-74
+41            android:exported="false" />
+41-->[androidx.room:room-runtime:2.2.4] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\11f4c3c7c12bfb2d178ad7664c295997\room-runtime-2.2.4\AndroidManifest.xml:27:13-37
+42
+43        <provider
+43-->[androidx.lifecycle:lifecycle-process:2.0.0] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\6fbf654d3db04d7d9e48eb73ccf59f45\lifecycle-process-2.0.0\AndroidManifest.xml:23:9-27:43
+44            android:name="androidx.lifecycle.ProcessLifecycleOwnerInitializer"
+44-->[androidx.lifecycle:lifecycle-process:2.0.0] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\6fbf654d3db04d7d9e48eb73ccf59f45\lifecycle-process-2.0.0\AndroidManifest.xml:24:13-79
+45            android:authorities="govph.rsis.growapp.lifecycle-process"
+45-->[androidx.lifecycle:lifecycle-process:2.0.0] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\6fbf654d3db04d7d9e48eb73ccf59f45\lifecycle-process-2.0.0\AndroidManifest.xml:25:13-69
+46            android:exported="false"
+46-->[androidx.lifecycle:lifecycle-process:2.0.0] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\6fbf654d3db04d7d9e48eb73ccf59f45\lifecycle-process-2.0.0\AndroidManifest.xml:26:13-37
+47            android:multiprocess="true" />
+47-->[androidx.lifecycle:lifecycle-process:2.0.0] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\6fbf654d3db04d7d9e48eb73ccf59f45\lifecycle-process-2.0.0\AndroidManifest.xml:27:13-40
+48    </application>
+49
+50</manifest>

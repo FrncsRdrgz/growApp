@@ -188,11 +188,16 @@
                 android:paddingRight="15dp"
                 android:paddingLeft="15dp">
 
-                <Spinner
+                <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                     android:id="@+id/varietyPlantedSpinner"
                     android:layout_width="match_parent"
                     android:background="@drawable/textbackground"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="match_parent" />
+                <!--<Spinner
+                    android:id="@+id/varietyPlantedSpinner"
+                    android:layout_width="match_parent"
+                    android:background="@drawable/textbackground"
+                    android:layout_height="wrap_content"/>-->
             </LinearLayout>
 
             <LinearLayout
