@@ -149,7 +149,7 @@ public class HomeActivity extends AppCompatActivity {
                                     public void onClick (DialogInterface paramDialogInterface , int paramInt) {
                                         if(isOnline()){
                                             queue = Volley.newRequestQueue(HomeActivity.this);
-                                        String url = "https://stagingdev.philrice.gov.ph/rsis/growApp/postData.php";
+                                        String url = DecVar.receiver()+"/postData.php";
 
                                         StringRequest sr = new StringRequest(Request.Method.POST, url,
                                                 new Response.Listener<String>() {

@@ -1093,7 +1093,6 @@ mipmap rsis_launcher
 mipmap rsis_launcher_foreground
 mipmap rsis_launcher_round
 raw data
-string PORT_NUMBER
 string abc_action_bar_home_description
 string abc_action_bar_up_description
 string abc_action_menu_overflow_description

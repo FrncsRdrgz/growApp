@@ -115,7 +115,11 @@ public class EditSeedProductionActivity extends AppCompatActivity implements Loc
 
         //find view of buttons
         scanBtn = (Button) findViewById(R.id.scanBtn);
+        scanBtn.setClickable(false);
+        scanBtn.setBackgroundColor(Color.LTGRAY);
         getLocationBtn = (Button) findViewById(R.id.getLocationBtn);
+        getLocationBtn.setClickable(false);
+        getLocationBtn.setBackgroundColor(Color.LTGRAY);
 
         //find view of all EditText widget
         etDatePlanted = (EditText) findViewById(R.id.etDatePlanted);
@@ -183,12 +187,12 @@ public class EditSeedProductionActivity extends AppCompatActivity implements Loc
         }
 
         //Scanning of qr code
-        scanBtn.setOnClickListener(new View.OnClickListener() {
+        /*scanBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 scanFunction();
             }
-        });
+        });*/
 
         //open datepicker
         etDatePlanted.setOnClickListener(new View.OnClickListener() {
@@ -214,12 +218,12 @@ public class EditSeedProductionActivity extends AppCompatActivity implements Loc
         };
 
         //getting location
-        getLocationBtn.setOnClickListener(new View.OnClickListener() {
+        /*getLocationBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getLocation();
             }
-        });
+        });*/
 
 
         List<Seeds> seeds = database.seedsDao().getSeeds();
