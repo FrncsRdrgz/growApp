@@ -3242,6 +3242,7 @@
         <attr format="reference" name="submitBackground"/>
         <attr name="android:focusable"/>
     </declare-styleable>
+    <declare-styleable name="SearchableSpinner"><attr format="string" name="hintText"/></declare-styleable>
     <declare-styleable name="Spinner">
         <!-- The prompt to display when the spinner's dialog is shown. -->
         <attr name="android:prompt"/>

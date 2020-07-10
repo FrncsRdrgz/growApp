@@ -2,7 +2,7 @@
 2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
 3    package="govph.rsis.growapp"
 4    android:versionCode="1"
-5    android:versionName="growapp v1.0" >
+5    android:versionName="growapp v1.1" >
 6
 7    <uses-sdk
 8        android:minSdkVersion="21"
@@ -44,53 +44,52 @@
 24-->D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml:16:9-54
 25        android:supportsRtl="true"
 25-->D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml:17:9-35
-26        android:testOnly="true"
-27        android:theme="@style/AppTheme" >
-27-->D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml:18:9-40
-28        <activity android:name="govph.rsis.growapp.EditSeedProductionActivity" />
-28-->D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml:20:9-91
-28-->D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml:20:19-79
-29        <activity android:name="govph.rsis.growapp.SentItemActivity" />
-29-->D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml:21:9-72
-29-->D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml:21:19-69
-30        <activity android:name="govph.rsis.growapp.SeedProductionDetailActivity" />
-30-->D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml:22:9-84
-30-->D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml:22:19-81
-31        <activity android:name="govph.rsis.growapp.HomeActivity" />
-31-->D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml:23:9-68
-31-->D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml:23:19-65
-32        <activity android:name="govph.rsis.growapp.MainActivity" >
-32-->D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml:24:9-30:20
-32-->D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml:24:19-65
-33            <intent-filter>
-33-->D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml:25:13-29:29
-34                <action android:name="android.intent.action.MAIN" />
-34-->D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml:26:17-69
-34-->D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml:26:25-66
-35
-36                <category android:name="android.intent.category.LAUNCHER" />
-36-->D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml:28:17-77
-36-->D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml:28:27-74
-37            </intent-filter>
-38        </activity>
-39
-40        <service
-40-->[androidx.room:room-runtime:2.2.4] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\11f4c3c7c12bfb2d178ad7664c295997\room-runtime-2.2.4\AndroidManifest.xml:25:9-27:40
-41            android:name="androidx.room.MultiInstanceInvalidationService"
-41-->[androidx.room:room-runtime:2.2.4] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\11f4c3c7c12bfb2d178ad7664c295997\room-runtime-2.2.4\AndroidManifest.xml:26:13-74
-42            android:exported="false" />
-42-->[androidx.room:room-runtime:2.2.4] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\11f4c3c7c12bfb2d178ad7664c295997\room-runtime-2.2.4\AndroidManifest.xml:27:13-37
-43
-44        <provider
-44-->[androidx.lifecycle:lifecycle-process:2.0.0] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\6fbf654d3db04d7d9e48eb73ccf59f45\lifecycle-process-2.0.0\AndroidManifest.xml:23:9-27:43
-45            android:name="androidx.lifecycle.ProcessLifecycleOwnerInitializer"
-45-->[androidx.lifecycle:lifecycle-process:2.0.0] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\6fbf654d3db04d7d9e48eb73ccf59f45\lifecycle-process-2.0.0\AndroidManifest.xml:24:13-79
-46            android:authorities="govph.rsis.growapp.lifecycle-process"
-46-->[androidx.lifecycle:lifecycle-process:2.0.0] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\6fbf654d3db04d7d9e48eb73ccf59f45\lifecycle-process-2.0.0\AndroidManifest.xml:25:13-69
-47            android:exported="false"
-47-->[androidx.lifecycle:lifecycle-process:2.0.0] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\6fbf654d3db04d7d9e48eb73ccf59f45\lifecycle-process-2.0.0\AndroidManifest.xml:26:13-37
-48            android:multiprocess="true" />
-48-->[androidx.lifecycle:lifecycle-process:2.0.0] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\6fbf654d3db04d7d9e48eb73ccf59f45\lifecycle-process-2.0.0\AndroidManifest.xml:27:13-40
-49    </application>
-50
-51</manifest>
+26        android:theme="@style/AppTheme" >
+26-->D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml:18:9-40
+27        <activity android:name="govph.rsis.growapp.EditSeedProductionActivity" />
+27-->D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml:20:9-91
+27-->D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml:20:19-79
+28        <activity android:name="govph.rsis.growapp.SentItemActivity" />
+28-->D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml:21:9-72
+28-->D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml:21:19-69
+29        <activity android:name="govph.rsis.growapp.SeedProductionDetailActivity" />
+29-->D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml:22:9-84
+29-->D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml:22:19-81
+30        <activity android:name="govph.rsis.growapp.HomeActivity" />
+30-->D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml:23:9-68
+30-->D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml:23:19-65
+31        <activity android:name="govph.rsis.growapp.MainActivity" >
+31-->D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml:24:9-30:20
+31-->D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml:24:19-65
+32            <intent-filter>
+32-->D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml:25:13-29:29
+33                <action android:name="android.intent.action.MAIN" />
+33-->D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml:26:17-69
+33-->D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml:26:25-66
+34
+35                <category android:name="android.intent.category.LAUNCHER" />
+35-->D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml:28:17-77
+35-->D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml:28:27-74
+36            </intent-filter>
+37        </activity>
+38
+39        <service
+39-->[androidx.room:room-runtime:2.2.4] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\11f4c3c7c12bfb2d178ad7664c295997\room-runtime-2.2.4\AndroidManifest.xml:25:9-27:40
+40            android:name="androidx.room.MultiInstanceInvalidationService"
+40-->[androidx.room:room-runtime:2.2.4] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\11f4c3c7c12bfb2d178ad7664c295997\room-runtime-2.2.4\AndroidManifest.xml:26:13-74
+41            android:exported="false" />
+41-->[androidx.room:room-runtime:2.2.4] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\11f4c3c7c12bfb2d178ad7664c295997\room-runtime-2.2.4\AndroidManifest.xml:27:13-37
+42
+43        <provider
+43-->[androidx.lifecycle:lifecycle-process:2.0.0] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\6fbf654d3db04d7d9e48eb73ccf59f45\lifecycle-process-2.0.0\AndroidManifest.xml:23:9-27:43
+44            android:name="androidx.lifecycle.ProcessLifecycleOwnerInitializer"
+44-->[androidx.lifecycle:lifecycle-process:2.0.0] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\6fbf654d3db04d7d9e48eb73ccf59f45\lifecycle-process-2.0.0\AndroidManifest.xml:24:13-79
+45            android:authorities="govph.rsis.growapp.lifecycle-process"
+45-->[androidx.lifecycle:lifecycle-process:2.0.0] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\6fbf654d3db04d7d9e48eb73ccf59f45\lifecycle-process-2.0.0\AndroidManifest.xml:25:13-69
+46            android:exported="false"
+46-->[androidx.lifecycle:lifecycle-process:2.0.0] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\6fbf654d3db04d7d9e48eb73ccf59f45\lifecycle-process-2.0.0\AndroidManifest.xml:26:13-37
+47            android:multiprocess="true" />
+47-->[androidx.lifecycle:lifecycle-process:2.0.0] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\6fbf654d3db04d7d9e48eb73ccf59f45\lifecycle-process-2.0.0\AndroidManifest.xml:27:13-40
+48    </application>
+49
+50</manifest>

@@ -176,6 +176,7 @@ attr gapBetweenBars
 attr goIcon
 attr height
 attr hideOnContentScroll
+attr hintText
 attr homeAsUpIndicator
 attr homeLayout
 attr icon
@@ -811,6 +812,7 @@ id dimensions
 id direct
 id disableHome
 id edit_query
+id empty_view
 id end
 id end_padder
 id etAreaPlanted
@@ -891,6 +893,7 @@ id linear6
 id linear7
 id linear8
 id linear9
+id listItems
 id listMode
 id list_item
 id media_actions
@@ -923,6 +926,7 @@ id scrollIndicatorDown
 id scrollIndicatorUp
 id scrollView
 id scrollView1
+id search
 id search_badge
 id search_bar
 id search_button
@@ -1070,6 +1074,7 @@ layout notification_template_media
 layout notification_template_media_custom
 layout notification_template_part_chronometer
 layout notification_template_part_time
+layout searchable_list_dialog
 layout seed_production_toolbar
 layout select_dialog_item_material
 layout select_dialog_multichoice_material
@@ -1087,6 +1092,7 @@ mipmap ic_launcher_round
 mipmap rsis_launcher
 mipmap rsis_launcher_foreground
 mipmap rsis_launcher_round
+raw data
 string abc_action_bar_home_description
 string abc_action_bar_up_description
 string abc_action_menu_overflow_description
@@ -1547,6 +1553,7 @@ styleable PopupWindowBackgroundState state_above_anchor
 styleable RecycleListView paddingBottomNoButtons paddingTopNoTitle
 styleable RecyclerView android_orientation android_clipToPadding android_descendantFocusability fastScrollEnabled fastScrollHorizontalThumbDrawable fastScrollHorizontalTrackDrawable fastScrollVerticalThumbDrawable fastScrollVerticalTrackDrawable layoutManager reverseLayout spanCount stackFromEnd
 styleable SearchView android_focusable android_maxWidth android_inputType android_imeOptions closeIcon commitIcon defaultQueryHint goIcon iconifiedByDefault layout queryBackground queryHint searchHintIcon searchIcon submitBackground suggestionRowLayout voiceIcon
+styleable SearchableSpinner hintText
 styleable Spinner android_entries android_popupBackground android_prompt android_dropDownWidth popupTheme
 styleable StateListDrawable android_dither android_visible android_variablePadding android_constantSize android_enterFadeDuration android_exitFadeDuration
 styleable StateListDrawableItem android_drawable

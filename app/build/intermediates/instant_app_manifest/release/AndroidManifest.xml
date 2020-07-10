@@ -3,7 +3,7 @@
     package="govph.rsis.growapp"
     android:targetSandboxVersion="2"
     android:versionCode="1"
-    android:versionName="growapp v1.0" >
+    android:versionName="growapp v1.1" >
 
     <uses-sdk
         android:minSdkVersion="21"

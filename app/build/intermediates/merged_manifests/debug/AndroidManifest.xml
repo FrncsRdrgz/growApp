@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="govph.rsis.growapp"
     android:versionCode="1"
-    android:versionName="growapp v1.0" >
+    android:versionName="growapp v1.1" >
 
     <uses-sdk
         android:minSdkVersion="21"
@@ -23,7 +23,6 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:testOnly="true"
         android:theme="@style/AppTheme" >
         <activity android:name="govph.rsis.growapp.EditSeedProductionActivity" />
         <activity android:name="govph.rsis.growapp.SentItemActivity" />
