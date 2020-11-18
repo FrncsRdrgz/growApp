@@ -70,8 +70,8 @@ public class EditSeedProductionActivity extends AppCompatActivity implements Loc
     LinearLayout l10, l11;
     TextView tvLatitude, tvLongitude, tvCancel,tvSave,tvAccredNo;
     Button getLocationBtn,scanBtn;
-    Spinner varietyspinner, sourcespinner,classspinner;
-    EditText etDatePlanted,etSeedClass,etAreaPlanted, etSeedQuantity, etSeedbedArea, etSeedlingAge, etSeedLot, etControlNo, etBarangay, etOtherSource;
+    Spinner varietyspinner, sourcespinner,classspinner,commitmentSpinner;
+    EditText etDatePlanted,etSeedClass,etAreaPlanted, etSeedQuantity, etSeedbedArea, etSeedlingAge, etSeedLot, etControlNo, etBarangay, etOtherSource,etCoop;
     FrameLayout frameLayout;
     ScrollView scrollView;
 
@@ -131,12 +131,12 @@ public class EditSeedProductionActivity extends AppCompatActivity implements Loc
         etControlNo = (EditText) findViewById(R.id.etControlNo);
         etBarangay = (EditText) findViewById(R.id.etBarangay);
         etOtherSource = (EditText) findViewById(R.id.etOtherSeedSource);
-
+        etCoop = (EditText) findViewById(R.id.etCoop);
         //find view of all  Spinner widget
         varietyspinner = (Spinner) findViewById(R.id.varietyPlantedSpinner);
         sourcespinner = (Spinner) findViewById(R.id.seedSourceSpinner);
         classspinner = (Spinner) findViewById(R.id.seedClassSpinner);
-
+        commitmentSpinner = (Spinner) findViewById(R.id.commitmentSpinner);
        // Log.e(TAG, "onClick: " + DebugDB.getAddressLog());
 
         SimpleDateFormat sdf =new SimpleDateFormat("yyyy-MM-dd");//set format of date you receive from db
@@ -161,7 +161,7 @@ public class EditSeedProductionActivity extends AppCompatActivity implements Loc
         etControlNo.setText(seedGrowers.getControlno());
         etBarangay.setText(seedGrowers.getBarangay());
         etOtherSource.setText(seedGrowers.getOtherseedsource());
-
+        etCoop.setText(seedGrowers.getCoop());
 
         tvAccredNo.addTextChangedListener(saveTextWatcher);
         tvLatitude.addTextChangedListener(saveTextWatcher);
@@ -254,10 +254,25 @@ public class EditSeedProductionActivity extends AppCompatActivity implements Loc
                 "Foundation",
                 "Registered"
         };
+
+        String[] commitmentPrograms = new String[]{
+                "Select Rice Program",
+                "National Rice Program",
+                "RCEF",
+                "None"
+        };
+
+        ArrayAdapter<String> spinnerArrayAdapter3 = new ArrayAdapter<>(
+                this, R.layout.spinner_rice_program,commitmentPrograms
+        );
         //spinner for seed  class
         ArrayAdapter<String> spinnerArrayAdapter2 = new ArrayAdapter<>(
                 this, R.layout.spinner_seed_class, classes
         );
+        spinnerArrayAdapter3.setDropDownViewResource(R.layout.spinner_rice_program);
+        commitmentSpinner.setAdapter(spinnerArrayAdapter3);
+        commitmentSpinner.setSelection(spinnerArrayAdapter3.getPosition(seedGrowers.getRiceProgram()));
+
         spinnerArrayAdapter2.setDropDownViewResource(R.layout.spinner_seed_source);
         classspinner.setAdapter(spinnerArrayAdapter2);
         classspinner.setSelection(spinnerArrayAdapter2.getPosition(seedGrowers.getSeedclass()));
@@ -331,6 +346,7 @@ public class EditSeedProductionActivity extends AppCompatActivity implements Loc
         String seedSource = sourcespinner.getSelectedItem().toString();
         String otherSeedSource = etOtherSource.getText().toString();
         String seedClass = classspinner.getSelectedItem().toString();
+        String riceProgram = commitmentSpinner.getSelectedItem().toString();
         if (date == null) {
             dateplanted = "0000-00-00";
         } else {
@@ -343,6 +359,7 @@ public class EditSeedProductionActivity extends AppCompatActivity implements Loc
         String seedLot = etSeedLot.getText().toString();
         String controlNo = etControlNo.getText().toString();
         String barangay = etBarangay.getText().toString();
+        String coop = etCoop.getText().toString();
         String datecollected = newDate.format(new Date());
         Boolean isSent = false;
 
@@ -369,7 +386,7 @@ public class EditSeedProductionActivity extends AppCompatActivity implements Loc
 
         seedGrowerViewModel = ViewModelProviders.of(this).get(SeedGrowerViewModel.class);
         SeedGrower seedGrower = new SeedGrower(uniqueid,accredno,latitude,longitude,seedVariety,seedSource,otherSeedSource,seedClass,dateplanted,
-                areaPlanted,seedQuantity,seedbedArea,seedlingAge,seedLot,controlNo,barangay,datecollected,isSent);
+                areaPlanted,seedQuantity,seedbedArea,seedlingAge,seedLot,controlNo,barangay,datecollected,isSent,riceProgram,coop);
         seedGrower.setSgId(id);
         seedGrowerViewModel.update(seedGrower);
         finish();

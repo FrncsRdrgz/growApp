@@ -329,4 +329,47 @@
             android:layout_weight="1"/>
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/linear16"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:paddingTop="5dp"
+        android:layout_below="@id/linear15"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Affiliated Cooperative"
+            android:layout_weight="1"
+            />
+        <TextView
+            android:id="@+id/textCoop"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linear17"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:paddingTop="5dp"
+        android:layout_below="@id/linear16"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Rice Program"
+            android:layout_weight="1"
+            />
+        <TextView
+            android:id="@+id/textProgram"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+    </LinearLayout>
 </RelativeLayout>

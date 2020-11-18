@@ -190,6 +190,8 @@ public class HomeActivity extends AppCompatActivity {
                                                 params.put("longitude",seedGrower.getLongitude());
                                                 params.put("dateCollected",seedGrower.getDatecollected());
                                                 params.put("androidid",seedGrower.getMacaddress());
+                                                params.put("program",seedGrower.getRiceProgram());
+                                                params.put("coop",seedGrower.getCoop());
                                                 return params;
                                             }
                                         };

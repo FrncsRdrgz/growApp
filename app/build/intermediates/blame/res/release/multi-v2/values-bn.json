@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "D:\\AndroidProjects\\growApp\\app\\build\\intermediates\\incremental\\mergeReleaseResources\\merged.dir\\values-bn\\values-bn.xml",
+            "outputFile": "D:\\android-projects\\growApp\\app\\build\\intermediates\\incremental\\mergeReleaseResources\\merged.dir\\values-bn\\values-bn.xml",
             "map": [
                 {
                     "source": "C:\\Users\\franc\\.gradle\\caches\\transforms-2\\files-2.1\\697f71c0c12135256cbfe98df498a7e4\\appcompat-1.0.2\\res\\values-bn\\values-bn.xml",

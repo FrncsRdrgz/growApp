@@ -21,7 +21,7 @@ public class SentItemActivity extends AppCompatActivity {
 
     TextView tvYourForms, textaccredno1,textseedsource1,textvariety1,textclass1,textplanted1,
             textareaplanted1,textquantity1, textseedbedarea1, textseedlingage1, textlot1, textcontrol1,
-            textbarangay1, textlatitude1, textlongitude1, titlevariety;
+            textbarangay1, textlatitude1, textlongitude1, titlevariety, textCoop, textProgram;
     Toolbar toolbar;
     RecyclerView recyclerView;
     @Override
@@ -84,7 +84,8 @@ public class SentItemActivity extends AppCompatActivity {
                 textlatitude1 = (TextView) dialogView.findViewById(R.id.textlatitude1);
                 textlongitude1 = (TextView) dialogView.findViewById(R.id.textlongitude1);
                 titlevariety = (TextView) dialogView.findViewById(R.id.titlevariety);
-
+                textCoop = (TextView) dialogView.findViewById(R.id.textCoop);
+                textProgram = (TextView) dialogView.findViewById(R.id.textProgram);
 
                 textaccredno1.setText(seedGrower.getAccredno());
                 textseedsource1.setText(seedGrower.getSeedsource());
@@ -101,6 +102,8 @@ public class SentItemActivity extends AppCompatActivity {
                 textlongitude1.setText(seedGrower.getLongitude());
                 textlatitude1.setText(seedGrower.getLatitude());
                 titlevariety.setText(seedGrower.getVariety());
+                textCoop.setText(seedGrower.getCoop());
+                textProgram.setText(seedGrower.getRiceProgram());
 
                 builder.setNegativeButton("OK", null);
                 AlertDialog dialog = builder.create();

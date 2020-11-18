@@ -1,7 +1,7 @@
-#Thu Jul 09 15:20:49 CST 2020
-base.0=D\:\\AndroidStudioProjects\\GrowApp\\app\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\out\\classes.dex
+#Wed Nov 18 09:43:20 CST 2020
+base.0=D\:\\android-projects\\growApp\\app\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\out\\classes.dex
 path.1=classes.dex
 renamed.1=classes2.dex
 path.0=classes.dex
 renamed.0=classes.dex
-base.1=D\:\\AndroidStudioProjects\\GrowApp\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\out\\classes.dex
+base.1=D\:\\android-projects\\growApp\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\out\\classes.dex

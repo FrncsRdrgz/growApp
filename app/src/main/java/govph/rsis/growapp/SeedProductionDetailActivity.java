@@ -73,8 +73,8 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
     LinearLayout l10, l11;
     TextView tvLatitude, tvLongitude, tvCancel,tvSave,tvAccredNo;
     Button getLocationBtn,scanBtn;
-    Spinner varietyspinner, sourcespinner,classspinner;
-    EditText etDatePlanted,etAreaPlanted, etSeedQuantity, etSeedbedArea, etSeedlingAge, etSeedLot, etControlNo, etBarangay, etOtherSource;
+    Spinner varietyspinner, sourcespinner,classspinner,commitmentSpinner;
+    EditText etDatePlanted,etAreaPlanted, etSeedQuantity, etSeedbedArea, etSeedlingAge, etSeedLot, etControlNo, etBarangay, etOtherSource,etCoop;
     FrameLayout frameLayout;
     ScrollView scrollView;
 
@@ -115,10 +115,11 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
         etControlNo = (EditText) findViewById(R.id.etControlNo);
         etBarangay   = (EditText) findViewById(R.id.etBarangay);
         etOtherSource = (EditText) findViewById(R.id.etOtherSeedSource);
-
+        etCoop = (EditText) findViewById(R.id.etCoop);
         varietyspinner = (Spinner) findViewById(R.id.varietyPlantedSpinner);
         sourcespinner = (Spinner) findViewById(R.id.seedSourceSpinner);
         classspinner = (Spinner) findViewById(R.id.seedClassSpinner);
+        commitmentSpinner = (Spinner) findViewById(R.id.commitmentSpinner);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
@@ -205,9 +206,23 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
                 "Registered"
         };
 
+        String[] commitmentPrograms = new String[]{
+                "Select Rice Program",
+                "National Rice Program",
+                "RCEF",
+                "None"
+        };
+
+        ArrayAdapter<String> spinnerArrayAdapter3 = new ArrayAdapter<>(
+          this, R.layout.spinner_rice_program,commitmentPrograms
+        );
         ArrayAdapter<String> spinnerArrayAdapter2 = new ArrayAdapter<>(
                 this,R.layout.spinner_seed_class,classes
         );
+
+        spinnerArrayAdapter3.setDropDownViewResource(R.layout.spinner_rice_program);
+        commitmentSpinner.setAdapter(spinnerArrayAdapter3);
+
         spinnerArrayAdapter2.setDropDownViewResource(R.layout.spinner_seed_source);
         classspinner.setAdapter(spinnerArrayAdapter2);
 
@@ -309,6 +324,9 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
         String seedSource = sourcespinner.getSelectedItem().toString();
         String otherSeedSource = etOtherSource.getText().toString();
         String seedClass = classspinner.getSelectedItem().toString();
+        String riceProgram = commitmentSpinner.getSelectedItem().toString();
+
+
         if(date == null){
             dateplanted = "0000-00-00";
         }else{
@@ -321,12 +339,13 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
         String seedLot = etSeedLot.getText().toString();
         String controlNo = etControlNo.getText().toString();
         String barangay = etBarangay.getText().toString();
+        String coop = etCoop.getText().toString();
         String datecollected = newDate.format(new Date());
         Boolean isSent = false;
 
         seedGrowerViewModel = ViewModelProviders.of(this).get(SeedGrowerViewModel.class);
         SeedGrower seedGrower = new SeedGrower(uniqueid,accredno,latitude,longitude,seedVariety,seedSource,otherSeedSource,seedClass,dateplanted,
-                areaPlanted,seedQuantity,seedbedArea,seedlingAge,seedLot,controlNo,barangay,datecollected,isSent);
+                areaPlanted,seedQuantity,seedbedArea,seedlingAge,seedLot,controlNo,barangay,datecollected,isSent,riceProgram,coop);
         seedGrowerViewModel.insert(seedGrower);
         finish();
     }

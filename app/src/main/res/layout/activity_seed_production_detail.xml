@@ -163,8 +163,74 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/l6"
+                android:id="@+id/lCoopTv"
                 android:layout_below="@id/l5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="7dp"
+                android:paddingRight="15dp"
+                android:paddingLeft="15dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Affiliated Cooperative"
+                    android:textSize="18sp"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/lCoopEt"
+                android:layout_below="@id/lCoopTv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="7dp"
+                android:paddingRight="15dp"
+                android:paddingLeft="15dp">
+
+                <EditText
+                    android:id="@+id/etCoop"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:background="@drawable/textbackground"
+                    android:textSize="18sp" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/lCommitmentTv"
+                android:layout_below="@id/lCoopEt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="7dp"
+                android:paddingRight="15dp"
+                android:paddingLeft="15dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Commitment to Program"
+                    android:textSize="18sp"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/lCommitmentEt"
+                android:layout_below="@id/lCommitmentTv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="7dp"
+                android:paddingRight="15dp"
+                android:paddingLeft="15dp">
+
+                <Spinner
+                    android:id="@+id/commitmentSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/textbackground"/>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/l6"
+                android:layout_below="@id/lCommitmentEt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingTop="7dp"

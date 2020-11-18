@@ -64,8 +64,14 @@ public class SeedGrower {
     @ColumnInfo (name="isSent")
     public Boolean isSent;
 
+    @ColumnInfo (name="riceProgram")
+    public String riceProgram;
+
+    @ColumnInfo (name="coop")
+    public String coop;
+
     public SeedGrower(String macaddress, String accredno, String latitude, String longitude, String variety, String seedsource, String otherseedsource, String seedclass, String dateplanted,
-                       String areaplanted, String quantity, String seedbedarea, String seedlingage, String seedlot, String controlno, String barangay, String datecollected, Boolean isSent){
+                       String areaplanted, String quantity, String seedbedarea, String seedlingage, String seedlot, String controlno, String barangay, String datecollected, Boolean isSent,String riceProgram, String coop){
         this.macaddress = macaddress;
         this.accredno = accredno;
         this.latitude = latitude;
@@ -84,6 +90,8 @@ public class SeedGrower {
         this.barangay = barangay;
         this.datecollected = datecollected;
         this.isSent = isSent;
+        this.riceProgram = riceProgram;
+        this.coop = coop;
     }
 
 
@@ -143,4 +151,7 @@ public class SeedGrower {
 
     public void setIsSent(Boolean isSent) {this.isSent = isSent;}
 
+    public String getRiceProgram() {return riceProgram;}
+
+    public String getCoop() {return coop;}
 }
