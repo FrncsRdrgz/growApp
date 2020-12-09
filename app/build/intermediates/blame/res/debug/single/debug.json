@@ -124,6 +124,10 @@
         "source": "D:\\android-projects\\growApp\\app\\src\\main\\res\\mipmap-hdpi\\ic_launcher_round.png"
     },
     {
+        "merged": "D:\\android-projects\\growApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable_rsisnew.png.flat",
+        "source": "D:\\android-projects\\growApp\\app\\src\\main\\res\\drawable\\rsisnew.png"
+    },
+    {
         "merged": "D:\\android-projects\\growApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi-v4_ic_code_scanner_auto_focus_off.png.flat",
         "source": "C:\\Users\\franc\\.gradle\\caches\\transforms-2\\files-2.1\\ff01aa52d6fc15d3aac5b91441ba64e7\\code-scanner-2.1.0\\res\\drawable-xxhdpi-v4\\ic_code_scanner_auto_focus_off.png"
     },
@@ -294,6 +298,10 @@
     {
         "merged": "D:\\android-projects\\growApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxxhdpi-v4_abc_btn_switch_to_on_mtrl_00012.9.png.flat",
         "source": "C:\\Users\\franc\\.gradle\\caches\\transforms-2\\files-2.1\\697f71c0c12135256cbfe98df498a7e4\\appcompat-1.0.2\\res\\drawable-xxxhdpi-v4\\abc_btn_switch_to_on_mtrl_00012.9.png"
+    },
+    {
+        "merged": "D:\\android-projects\\growApp\\app\\build\\intermediates\\res\\merged\\debug\\layout_activity_scanner.xml.flat",
+        "source": "D:\\android-projects\\growApp\\app\\src\\main\\res\\layout\\activity_scanner.xml"
     },
     {
         "merged": "D:\\android-projects\\growApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi-v4_notification_bg_low_normal.9.png.flat",
@@ -830,10 +838,6 @@
     {
         "merged": "D:\\android-projects\\growApp\\app\\build\\intermediates\\res\\merged\\debug\\layout_abc_action_mode_close_item_material.xml.flat",
         "source": "C:\\Users\\franc\\.gradle\\caches\\transforms-2\\files-2.1\\697f71c0c12135256cbfe98df498a7e4\\appcompat-1.0.2\\res\\layout\\abc_action_mode_close_item_material.xml"
-    },
-    {
-        "merged": "D:\\android-projects\\growApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable_rsis_logo.png.flat",
-        "source": "D:\\android-projects\\growApp\\app\\src\\main\\res\\drawable\\rsis_logo.png"
     },
     {
         "merged": "D:\\android-projects\\growApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi-v4_ic_code_scanner_auto_focus_on.png.flat",
@@ -1510,6 +1514,10 @@
     {
         "merged": "D:\\android-projects\\growApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi-v4_abc_ic_menu_copy_mtrl_am_alpha.png.flat",
         "source": "C:\\Users\\franc\\.gradle\\caches\\transforms-2\\files-2.1\\697f71c0c12135256cbfe98df498a7e4\\appcompat-1.0.2\\res\\drawable-xxhdpi-v4\\abc_ic_menu_copy_mtrl_am_alpha.png"
+    },
+    {
+        "merged": "D:\\android-projects\\growApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable_agency.png.flat",
+        "source": "D:\\android-projects\\growApp\\app\\src\\main\\res\\drawable\\agency.png"
     },
     {
         "merged": "D:\\android-projects\\growApp\\app\\build\\intermediates\\res\\merged\\debug\\layout_abc_popup_menu_item_layout.xml.flat",

@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import android.Manifest;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -55,6 +56,7 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Scanner;
 
 
 public class SeedProductionDetailActivity extends AppCompatActivity implements LocationListener {
@@ -67,7 +69,8 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
     private SeedGrowerViewModel seedGrowerViewModel;
     private boolean mPermissionGranted;
     private List<Seeds> seedSample = new ArrayList<>();
-
+    public static final int REQUEST_CODE_EXAMPLE = 0x9988;
+    Intent intent;
     LocationManager locationManager;
     Toolbar toolbar;
     LinearLayout l10, l11;
@@ -92,7 +95,7 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
 
         telephonyManager = (TelephonyManager) getSystemService(this.TELEPHONY_SERVICE);
         scannerView = findViewById(R.id.scanner_view);
-        mCodeScanner = new CodeScanner(SeedProductionDetailActivity.this, scannerView);
+        //mCodeScanner = new CodeScanner(SeedProductionDetailActivity.this, scannerView);
 
         l10 = (LinearLayout) findViewById(R.id.l10);
         l11 = (LinearLayout) findViewById(R.id.l11);
@@ -180,6 +183,7 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
 
         List<Seeds> seeds = database.seedsDao().getSeeds();
         ArrayList varieties = new ArrayList<>();
+        varieties.add("Select Variety");
         for(Seeds s : seeds){
             varieties.add(s.getVariety());
         }
@@ -343,11 +347,18 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
         String datecollected = newDate.format(new Date());
         Boolean isSent = false;
 
-        seedGrowerViewModel = ViewModelProviders.of(this).get(SeedGrowerViewModel.class);
+        if(seedVariety.matches("Select Variety") || seedSource.matches("Select Seed Source") || seedClass.matches("Select Seed Class")
+        || dateplanted.matches("") || areaPlanted.matches("") || seedQuantity.matches("") || seedbedArea.matches("") || seedlingAge.matches("")
+        || seedLot.matches("") || controlNo.matches("") || barangay.matches("") || riceProgram.matches("Select Rice Program") || coop.matches("")){
+            Toast.makeText(this, "Please fill up all the fields.", Toast.LENGTH_SHORT).show();
+        }else{
+            seedGrowerViewModel = ViewModelProviders.of(this).get(SeedGrowerViewModel.class);
         SeedGrower seedGrower = new SeedGrower(uniqueid,accredno,latitude,longitude,seedVariety,seedSource,otherSeedSource,seedClass,dateplanted,
                 areaPlanted,seedQuantity,seedbedArea,seedlingAge,seedLot,controlNo,barangay,datecollected,isSent,riceProgram,coop);
         seedGrowerViewModel.insert(seedGrower);
         finish();
+        }
+
     }
 
     public void getLocation() {
@@ -411,7 +422,9 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
     }
 
     public void scanFunction() {
-        if(ContextCompat.checkSelfPermission(SeedProductionDetailActivity.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+        intent = new Intent(SeedProductionDetailActivity.this, ScannerActivity.class);
+        startActivityForResult(intent,REQUEST_CODE_EXAMPLE);
+        /*if(ContextCompat.checkSelfPermission(SeedProductionDetailActivity.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
             mPermissionGranted = true;
             frameLayout = (FrameLayout) findViewById(R.id.scannerLayout);
             frameLayout.setVisibility(View.VISIBLE);
@@ -447,6 +460,27 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
         }
         else{
             requestCameraPermission();
+        }*/
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        // First we need to check if the requestCode matches the one we used.
+        if (requestCode == REQUEST_CODE_EXAMPLE) {
+
+            // The resultCode is set by the AnotherActivity
+            // By convention RESULT_OK means that what ever
+            // AnotherActivity did was successful
+            if (resultCode == Activity.RESULT_OK) {
+                // Get the result from the returned Intent
+                final String result = data.getStringExtra(ScannerActivity.SCANNED_QR);
+
+                // Use the data - in this case, display it in a Toast.
+                tvAccredNo.setText(result);
+            } else {
+                // AnotherActivity was not successful. No data to retrieve.
+            }
         }
     }
 
@@ -528,6 +562,7 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
                         public void onClick(DialogInterface dialog, int which) {
                             ActivityCompat.requestPermissions(SeedProductionDetailActivity.this, new String[]{Manifest.permission.CAMERA}, CAMERA_PERMISSION_CODE);
                             mPermissionGranted = true;
+                            mCodeScanner.startPreview();
                         }
                     }).setNegativeButton("cancel", new DialogInterface.OnClickListener() {
                 @Override

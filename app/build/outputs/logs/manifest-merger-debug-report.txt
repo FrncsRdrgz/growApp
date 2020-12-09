@@ -65,10 +65,10 @@ uses-permission#android.permission.ACCESS_FINE_LOCATION
 ADDED from D:\android-projects\growApp\app\src\main\AndroidManifest.xml:5:5-79
 	android:name
 		ADDED from D:\android-projects\growApp\app\src\main\AndroidManifest.xml:5:22-76
-uses-permission#android.permission. ACCESS_COARSE_LOCATION
-ADDED from D:\android-projects\growApp\app\src\main\AndroidManifest.xml:6:5-82
+uses-permission#android.permission.ACCESS_COARSE_LOCATION
+ADDED from D:\android-projects\growApp\app\src\main\AndroidManifest.xml:6:5-81
 	android:name
-		ADDED from D:\android-projects\growApp\app\src\main\AndroidManifest.xml:6:22-79
+		ADDED from D:\android-projects\growApp\app\src\main\AndroidManifest.xml:6:22-78
 uses-permission#android.permission.CAMERA
 ADDED from D:\android-projects\growApp\app\src\main\AndroidManifest.xml:7:5-65
 	android:name
@@ -78,7 +78,7 @@ ADDED from D:\android-projects\growApp\app\src\main\AndroidManifest.xml:8:5-67
 	android:name
 		ADDED from D:\android-projects\growApp\app\src\main\AndroidManifest.xml:8:22-64
 uses-permission#android.permission.READ_PHONE_STATE
-ADDED from D:\android-projects\growApp\app\src\main\AndroidManifest.xml:9:5-74
+ADDED from D:\android-projects\growApp\app\src\main\AndroidManifest.xml:9:5-75
 	android:name
 		ADDED from D:\android-projects\growApp\app\src\main\AndroidManifest.xml:9:22-72
 uses-permission#android.permission.ACCESS_NETWORK_STATE
@@ -117,26 +117,30 @@ MERGED from [androidx.lifecycle:lifecycle-process:2.0.0] C:\Users\franc\.gradle\
 		ADDED from D:\android-projects\growApp\app\src\main\AndroidManifest.xml:13:9-35
 	android:theme
 		ADDED from D:\android-projects\growApp\app\src\main\AndroidManifest.xml:18:9-40
+activity#govph.rsis.growapp.ScannerActivity
+ADDED from D:\android-projects\growApp\app\src\main\AndroidManifest.xml:19:9-62
+	android:name
+		ADDED from D:\android-projects\growApp\app\src\main\AndroidManifest.xml:19:19-50
 activity#govph.rsis.growapp.EditSeedProductionActivity
-ADDED from D:\android-projects\growApp\app\src\main\AndroidManifest.xml:20:9-91
+ADDED from D:\android-projects\growApp\app\src\main\AndroidManifest.xml:20:9-64
 	android:name
-		ADDED from D:\android-projects\growApp\app\src\main\AndroidManifest.xml:20:19-79
+		ADDED from D:\android-projects\growApp\app\src\main\AndroidManifest.xml:20:19-61
 activity#govph.rsis.growapp.SentItemActivity
-ADDED from D:\android-projects\growApp\app\src\main\AndroidManifest.xml:21:9-72
+ADDED from D:\android-projects\growApp\app\src\main\AndroidManifest.xml:21:9-54
 	android:name
-		ADDED from D:\android-projects\growApp\app\src\main\AndroidManifest.xml:21:19-69
+		ADDED from D:\android-projects\growApp\app\src\main\AndroidManifest.xml:21:19-51
 activity#govph.rsis.growapp.SeedProductionDetailActivity
-ADDED from D:\android-projects\growApp\app\src\main\AndroidManifest.xml:22:9-84
+ADDED from D:\android-projects\growApp\app\src\main\AndroidManifest.xml:22:9-66
 	android:name
-		ADDED from D:\android-projects\growApp\app\src\main\AndroidManifest.xml:22:19-81
+		ADDED from D:\android-projects\growApp\app\src\main\AndroidManifest.xml:22:19-63
 activity#govph.rsis.growapp.HomeActivity
-ADDED from D:\android-projects\growApp\app\src\main\AndroidManifest.xml:23:9-68
+ADDED from D:\android-projects\growApp\app\src\main\AndroidManifest.xml:23:9-50
 	android:name
-		ADDED from D:\android-projects\growApp\app\src\main\AndroidManifest.xml:23:19-65
+		ADDED from D:\android-projects\growApp\app\src\main\AndroidManifest.xml:23:19-47
 activity#govph.rsis.growapp.MainActivity
 ADDED from D:\android-projects\growApp\app\src\main\AndroidManifest.xml:24:9-30:20
 	android:name
-		ADDED from D:\android-projects\growApp\app\src\main\AndroidManifest.xml:24:19-65
+		ADDED from D:\android-projects\growApp\app\src\main\AndroidManifest.xml:24:19-47
 intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
 ADDED from D:\android-projects\growApp\app\src\main\AndroidManifest.xml:25:13-29:29
 action#android.intent.action.MAIN

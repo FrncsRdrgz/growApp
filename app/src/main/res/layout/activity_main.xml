@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/cardview_light_background"
     tools:context="govph.rsis.growapp.MainActivity">
 
     <ImageView
@@ -13,17 +14,26 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="55dp"
-        app:srcCompat="@drawable/rsis_logo" />
+        app:srcCompat="@drawable/rsisnew" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="294dp"
+        android:layout_height="115dp"
+        android:layout_below="@id/imageView3"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        app:srcCompat="@drawable/agency" />
 
     <TextView
         android:id="@+id/textView1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/imageView3"
+        android:layout_below="@id/imageView4"
         android:text="@string/app_name"
         android:textSize="20sp"
         android:gravity="center"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="30dp"
         />
 
     <TextView

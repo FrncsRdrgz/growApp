@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -43,7 +45,8 @@ public class HomeActivity extends AppCompatActivity {
     public static final String EXTRA_ARRAY = "com.example.releasingapp.EXTRA_ARRAY";
     private static final String TAG = "HomeActivity";
     private SeedGrowerViewModel seedGrowerViewModel;
-
+    private int CAMERA_PERMISSION_CODE = 1;
+    private boolean mPermissionGranted;
     TextView tvDeleteAll,tvEmptyView;
     Toolbar toolbar;
     Intent intent;
@@ -56,7 +59,7 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
+        requestCameraPermission();
         //Log.e(TAG, "onClick: "+ DebugDB.getAddressLog() );
         database = SeedGrowerDatabase.getInstance(this);
         toolbar = findViewById(R.id.toolbar);
@@ -257,5 +260,28 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
+    private void requestCameraPermission() {
+        if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA)){
+            new AlertDialog.Builder(this)
+                    .setTitle("Permission needed")
+                    .setMessage("Allow this app to access camera to scan your QR CODE.")
+                    .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            ActivityCompat.requestPermissions(HomeActivity.this, new String[]{Manifest.permission.CAMERA}, CAMERA_PERMISSION_CODE);
+                            mPermissionGranted = true;
+
+                        }
+                    }).setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            }).create().show();
+        } else {
+            ActivityCompat.requestPermissions(HomeActivity.this, new String[]{Manifest.permission.CAMERA}, CAMERA_PERMISSION_CODE);
+            mPermissionGranted = false;
+        }
+    }
 
 }

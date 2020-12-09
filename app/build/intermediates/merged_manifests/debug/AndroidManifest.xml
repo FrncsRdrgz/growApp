@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="govph.rsis.growapp"
-    android:versionCode="3"
-    android:versionName="growapp v1.2" >
+    android:versionCode="4"
+    android:versionName="growapp v1.21" >
 
     <uses-sdk
         android:minSdkVersion="21"
         android:targetSdkVersion="29" />
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission. ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
@@ -23,7 +23,9 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:testOnly="true"
         android:theme="@style/AppTheme" >
+        <activity android:name="govph.rsis.growapp.ScannerActivity" />
         <activity android:name="govph.rsis.growapp.EditSeedProductionActivity" />
         <activity android:name="govph.rsis.growapp.SentItemActivity" />
         <activity android:name="govph.rsis.growapp.SeedProductionDetailActivity" />

@@ -92,8 +92,8 @@ public class EditSeedProductionActivity extends AppCompatActivity implements Loc
         toolbar = findViewById(R.id.spToolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        scannerView = findViewById(R.id.scanner_view);
-        mCodeScanner = new CodeScanner(EditSeedProductionActivity.this, scannerView);
+        //scannerView = findViewById(R.id.scanner_view);
+        //mCodeScanner = new CodeScanner(EditSeedProductionActivity.this, scannerView);
         database = SeedGrowerDatabase.getInstance(this);
         intent = getIntent();
         String formId = intent.getStringExtra(HomeActivity.EXTRA_MESSAGE);
@@ -383,13 +383,19 @@ public class EditSeedProductionActivity extends AppCompatActivity implements Loc
         seedGrowers.setBarangay(barangay);
         seedGrowers.setDatecollected(datecollected);*/
 
-
-        seedGrowerViewModel = ViewModelProviders.of(this).get(SeedGrowerViewModel.class);
-        SeedGrower seedGrower = new SeedGrower(uniqueid,accredno,latitude,longitude,seedVariety,seedSource,otherSeedSource,seedClass,dateplanted,
-                areaPlanted,seedQuantity,seedbedArea,seedlingAge,seedLot,controlNo,barangay,datecollected,isSent,riceProgram,coop);
-        seedGrower.setSgId(id);
-        seedGrowerViewModel.update(seedGrower);
-        finish();
+        if(seedVariety.matches("Select Variety") || seedSource.matches("Select Seed Source") || seedClass.matches("Select Seed Class")
+                || dateplanted.matches("") || areaPlanted.matches("") || seedQuantity.matches("") || seedbedArea.matches("") || seedlingAge.matches("")
+                || seedLot.matches("") || controlNo.matches("") || barangay.matches("") || riceProgram.matches("Select Rice Program") || coop.matches("")){
+            Toast.makeText(this, "Please fill up all the fields.", Toast.LENGTH_SHORT).show();
+        }
+        else{
+            seedGrowerViewModel = ViewModelProviders.of(this).get(SeedGrowerViewModel.class);
+            SeedGrower seedGrower = new SeedGrower(uniqueid,accredno,latitude,longitude,seedVariety,seedSource,otherSeedSource,seedClass,dateplanted,
+                    areaPlanted,seedQuantity,seedbedArea,seedlingAge,seedLot,controlNo,barangay,datecollected,isSent,riceProgram,coop);
+            seedGrower.setSgId(id);
+            seedGrowerViewModel.update(seedGrower);
+            finish();
+        }
     }
     private TextWatcher saveTextWatcher = new TextWatcher() {
         @Override
