@@ -882,6 +882,8 @@ id lCommitmentEt
 id lCommitmentTv
 id lCoopEt
 id lCoopTv
+id lStationEt
+id lStationTv
 id left
 id line1
 id line3
@@ -967,6 +969,7 @@ id src_in
 id src_over
 id standard
 id start
+id stationSpinner
 id status_bar_latest_event_content
 id submenuarrow
 id submit_area

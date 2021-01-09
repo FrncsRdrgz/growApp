@@ -139,10 +139,38 @@
                     android:layout_weight="1"
                     android:textSize="18sp"/>
             </LinearLayout>
-
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/lStationTv"
+                android:layout_below="@id/l5"
+                android:paddingTop="7dp"
+                android:paddingRight="15dp"
+                android:paddingLeft="15dp">
+                    <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Station"
+                    android:textSize="18sp"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/lStationEt"
+                android:layout_below="@id/lStationTv"
+                android:paddingTop="7dp"
+                android:paddingRight="15dp"
+                android:paddingLeft="15dp">
+                <Spinner
+                    android:id="@+id/stationSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/textbackground"/>
+            </LinearLayout>
             <LinearLayout
                 android:id="@+id/lCoopTv"
-                android:layout_below="@id/l5"
+                android:layout_below="@id/lStationEt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingTop="7dp"

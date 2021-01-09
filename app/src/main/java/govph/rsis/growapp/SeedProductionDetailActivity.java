@@ -70,13 +70,14 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
     private boolean mPermissionGranted;
     private List<Seeds> seedSample = new ArrayList<>();
     public static final int REQUEST_CODE_EXAMPLE = 0x9988;
+    private String userCategory;
     Intent intent;
     LocationManager locationManager;
     Toolbar toolbar;
-    LinearLayout l10, l11;
+    LinearLayout l1,l2,l8,l9,l10, l11,lCoopTv,lCoopEt,lCommitmentTv,lCommitmentEt;
     TextView tvLatitude, tvLongitude, tvCancel,tvSave,tvAccredNo;
     Button getLocationBtn,scanBtn;
-    Spinner varietyspinner, sourcespinner,classspinner,commitmentSpinner;
+    Spinner varietyspinner, sourcespinner,classspinner,commitmentSpinner,stationSpinner;
     EditText etDatePlanted,etAreaPlanted, etSeedQuantity, etSeedbedArea, etSeedlingAge, etSeedLot, etControlNo, etBarangay, etOtherSource,etCoop;
     FrameLayout frameLayout;
     ScrollView scrollView;
@@ -92,188 +93,12 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_seed_production_detail);
-
-        telephonyManager = (TelephonyManager) getSystemService(this.TELEPHONY_SERVICE);
-        scannerView = findViewById(R.id.scanner_view);
-        //mCodeScanner = new CodeScanner(SeedProductionDetailActivity.this, scannerView);
-
-        l10 = (LinearLayout) findViewById(R.id.l10);
-        l11 = (LinearLayout) findViewById(R.id.l11);
-        tvCancel = (TextView) findViewById(R.id.tvCancel);
-        tvSave = (TextView) findViewById(R.id.tvSave);
-        tvAccredNo = (TextView) findViewById(R.id.tvAccreditationNo);
-        getLocationBtn = (Button) findViewById(R.id.getLocationBtn);
-        scanBtn = (Button) findViewById(R.id.scanBtn);
-        tvLatitude = (TextView) findViewById(R.id.tvLatitude);
-        tvLongitude = (TextView) findViewById(R.id.tvLongitude);
-        toolbar = findViewById(R.id.spToolbar);
-
-        etDatePlanted = (EditText) findViewById(R.id.etDatePlanted);
-
-        etAreaPlanted = (EditText) findViewById(R.id.etAreaPlanted);
-        etSeedQuantity = (EditText) findViewById(R.id.etSeedQuantity);
-        etSeedbedArea = (EditText) findViewById(R.id.etSeedbedArea);
-        etSeedlingAge = (EditText) findViewById(R.id.etSeedlingAge);
-        etSeedLot = (EditText) findViewById(R.id.etSeedLot);
-        etControlNo = (EditText) findViewById(R.id.etControlNo);
-        etBarangay   = (EditText) findViewById(R.id.etBarangay);
-        etOtherSource = (EditText) findViewById(R.id.etOtherSeedSource);
-        etCoop = (EditText) findViewById(R.id.etCoop);
-        varietyspinner = (Spinner) findViewById(R.id.varietyPlantedSpinner);
-        sourcespinner = (Spinner) findViewById(R.id.seedSourceSpinner);
-        classspinner = (Spinner) findViewById(R.id.seedClassSpinner);
-        commitmentSpinner = (Spinner) findViewById(R.id.commitmentSpinner);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-
-        database = SeedGrowerDatabase.getInstance(this);
-
-        tvAccredNo.addTextChangedListener(saveTextWatcher);
-        tvLatitude.addTextChangedListener(saveTextWatcher);
-        tvLongitude.addTextChangedListener(saveTextWatcher);
-        if(ContextCompat.checkSelfPermission(SeedProductionDetailActivity.this, Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED){
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                uniqueId = Settings.Secure.getString(getContentResolver(),
-                        Settings.Secure.ANDROID_ID);
-            } else {
-                uniqueId = telephonyManager.getDeviceId();
-            }
-
-
+        userCategory = getIntent().getStringExtra("category");
+        if(userCategory.equals("PhilRice")){
+            philriceForm();
+        }else if(userCategory.equals("SeedGrower")){
+            seedGrowerForm();
         }
-
-        //Scanning of qr code
-        scanBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                scanFunction();
-            }
-        });
-
-        //open datepicker
-        etDatePlanted.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                Calendar cal = Calendar.getInstance();
-                int year = cal.get(Calendar.YEAR);
-                int month = cal.get(Calendar.MONTH);
-                int day = cal.get(Calendar.DAY_OF_MONTH);
-
-                DatePickerDialog dialog = new DatePickerDialog(SeedProductionDetailActivity.this, android.R.style.Theme_Holo_Dialog_MinWidth,mDateSetListener,year,month,day);
-                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                dialog.show();
-            }
-        });
-
-        mDateSetListener = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                String date = MONTHS[month] + " " + dayOfMonth + ", "+year;
-                etDatePlanted.setText(date);
-            }
-        };
-
-        //getting location
-        getLocationBtn.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                getLocation();
-            }
-        });
-
-        List<Seeds> seeds = database.seedsDao().getSeeds();
-        ArrayList varieties = new ArrayList<>();
-        varieties.add("Select Variety");
-        for(Seeds s : seeds){
-            varieties.add(s.getVariety());
-        }
-        String[] stations = new String[] {
-                "Select Seed Source",
-                "PhilRice CES",
-                "PhilRice Midsayap",
-                "PhilRice Los Baños",
-                "PhilRice Agusan",
-                "PhilRice Batac",
-                "PhilRice Isabela",
-                "PhilRice Negros",
-                "PhilRice Bicol",
-                "PhilRice CMU",
-                "PhilRice Zamboanga",
-                "PhilRice Samar",
-                "PhilRice Mindoro",
-                "Others"
-        };
-
-        String[] classes = new String []{
-                "Select Seed Class",
-                "Foundation",
-                "Registered"
-        };
-
-        String[] commitmentPrograms = new String[]{
-                "Select Rice Program",
-                "National Rice Program",
-                "RCEF",
-                "None"
-        };
-
-        ArrayAdapter<String> spinnerArrayAdapter3 = new ArrayAdapter<>(
-          this, R.layout.spinner_rice_program,commitmentPrograms
-        );
-        ArrayAdapter<String> spinnerArrayAdapter2 = new ArrayAdapter<>(
-                this,R.layout.spinner_seed_class,classes
-        );
-
-        spinnerArrayAdapter3.setDropDownViewResource(R.layout.spinner_rice_program);
-        commitmentSpinner.setAdapter(spinnerArrayAdapter3);
-
-        spinnerArrayAdapter2.setDropDownViewResource(R.layout.spinner_seed_source);
-        classspinner.setAdapter(spinnerArrayAdapter2);
-
-        ArrayAdapter<String> spinnerArrayAdapter1 = new ArrayAdapter<>(
-                this,R.layout.spinner_seed_source,stations
-        );
-        spinnerArrayAdapter1.setDropDownViewResource(R.layout.spinner_seed_source);
-        sourcespinner.setAdapter(spinnerArrayAdapter1);
-
-        sourcespinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String selectedItem = parent.getItemAtPosition(position).toString();
-                if(selectedItem.equals("Others")) {
-                    l10.setVisibility(View.VISIBLE);
-                    l11.setVisibility(View.VISIBLE);
-                }
-                else {
-                    l10.setVisibility(View.GONE);
-                    l11.setVisibility(View.GONE);
-                }
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(
-                this,R.layout.spinner_seed_variety,varieties
-        );
-        spinnerArrayAdapter.setDropDownViewResource(R.layout.spinner_seed_variety);
-        varietyspinner.setAdapter(spinnerArrayAdapter);
-
-        //cancel Button
-        tvCancel.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-
-        tvSave.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                saveForm();
-            }
-        });
     }
 
     private TextWatcher saveTextWatcher = new TextWatcher() {
@@ -300,7 +125,65 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
 
         }
     };
+    public void savePhilRiceForm() {
+        SimpleDateFormat sdf = new SimpleDateFormat("MMMM dd, yyyy");//set format of date you receiving from db
+        Date date = null;
+        String dateplanted;
+        try {
+            date = (Date) sdf.parse(etDatePlanted.getText().toString());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        SimpleDateFormat timestamp = new SimpleDateFormat("dd-MM-yyyy-hh-mm-ss");
+        String format = timestamp.format(new Date());
+        Log.e(TAG, "onCreate: "+format);
 
+        SimpleDateFormat newDate = new SimpleDateFormat("yyyy-MM-dd");//set format of new date
+
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy HH:mm:ss");
+        //String timestamp = dateFormat.format(calendar.getTime());
+
+        String uniqueid = md5(uniqueId+"-"+ getMacAddr()+"-"+ timestamp);
+        String accredno = tvAccredNo.getText().toString();
+        String latitude = tvLatitude.getText().toString();
+        String longitude = tvLongitude.getText().toString();
+        String seedVariety = varietyspinner.getSelectedItem().toString();
+        String seedSource = sourcespinner.getSelectedItem().toString();
+        String otherSeedSource = etOtherSource.getText().toString();
+        String seedClass = classspinner.getSelectedItem().toString();
+        String riceProgram = commitmentSpinner.getSelectedItem().toString();
+
+
+        if(date == null){
+            dateplanted = "0000-00-00";
+        }else{
+            dateplanted = newDate.format(date);// here is your new date !
+        }
+        String areaPlanted = etAreaPlanted.getText().toString();
+        String seedQuantity = etSeedQuantity.getText().toString();
+        String seedbedArea = etSeedbedArea.getText().toString();
+        String seedlingAge = etSeedlingAge.getText().toString();
+        String seedLot = etSeedLot.getText().toString();
+        String controlNo = etControlNo.getText().toString();
+        String barangay = etBarangay.getText().toString();
+        String coop = etCoop.getText().toString();
+        String datecollected = newDate.format(new Date());
+        Boolean isSent = false;
+
+        if(seedVariety.matches("Select Variety") || seedSource.matches("Select Seed Source") || seedClass.matches("Select Seed Class")
+                || dateplanted.matches("") || areaPlanted.matches("") || seedQuantity.matches("") || seedbedArea.matches("") || seedlingAge.matches("")
+                || seedLot.matches("") || controlNo.matches("") || barangay.matches("") || riceProgram.matches("Select Rice Program") || coop.matches("")){
+            Toast.makeText(this, "Please fill up all the fields.", Toast.LENGTH_SHORT).show();
+        }else{
+            seedGrowerViewModel = ViewModelProviders.of(this).get(SeedGrowerViewModel.class);
+            SeedGrower seedGrower = new SeedGrower(uniqueid,accredno,latitude,longitude,seedVariety,seedSource,otherSeedSource,seedClass,dateplanted,
+                    areaPlanted,seedQuantity,seedbedArea,seedlingAge,seedLot,controlNo,barangay,datecollected,isSent,riceProgram,coop);
+            seedGrowerViewModel.insert(seedGrower);
+            finish();
+        }
+
+    }
     public void saveForm() {
         SimpleDateFormat sdf = new SimpleDateFormat("MMMM dd, yyyy");//set format of date you receiving from db
         Date date = null;
@@ -625,7 +508,349 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
         }
         return "";
     }
+    private void philriceForm(){
+        telephonyManager = (TelephonyManager) getSystemService(this.TELEPHONY_SERVICE);
+        scannerView = findViewById(R.id.scanner_view);
+        //mCodeScanner = new CodeScanner(SeedProductionDetailActivity.this, scannerView);
+        l1 = (LinearLayout) findViewById(R.id.l1);
+        l2 = (LinearLayout) findViewById(R.id.l2);
+        l8 = (LinearLayout) findViewById(R.id.l8);
+        l9 = (LinearLayout) findViewById(R.id.l9);
+        lCommitmentTv = (LinearLayout) findViewById(R.id.lCommitmentTv);
+        lCommitmentEt = (LinearLayout) findViewById(R.id.lCommitmentEt);
+        lCoopTv = (LinearLayout) findViewById(R.id.lCoopTv);
+        lCoopEt = (LinearLayout) findViewById(R.id.lCoopEt);
+        l10 = (LinearLayout) findViewById(R.id.l10);
+        l11 = (LinearLayout) findViewById(R.id.l11);
+        tvCancel = (TextView) findViewById(R.id.tvCancel);
+        tvSave = (TextView) findViewById(R.id.tvSave);
+        tvAccredNo = (TextView) findViewById(R.id.tvAccreditationNo);
+        getLocationBtn = (Button) findViewById(R.id.getLocationBtn);
+        scanBtn = (Button) findViewById(R.id.scanBtn);
+        tvLatitude = (TextView) findViewById(R.id.tvLatitude);
+        tvLongitude = (TextView) findViewById(R.id.tvLongitude);
+        toolbar = findViewById(R.id.spToolbar);
+
+        etDatePlanted = (EditText) findViewById(R.id.etDatePlanted);
+
+        etAreaPlanted = (EditText) findViewById(R.id.etAreaPlanted);
+        etSeedQuantity = (EditText) findViewById(R.id.etSeedQuantity);
+        etSeedbedArea = (EditText) findViewById(R.id.etSeedbedArea);
+        etSeedlingAge = (EditText) findViewById(R.id.etSeedlingAge);
+        etSeedLot = (EditText) findViewById(R.id.etSeedLot);
+        etControlNo = (EditText) findViewById(R.id.etControlNo);
+        etBarangay   = (EditText) findViewById(R.id.etBarangay);
+        etOtherSource = (EditText) findViewById(R.id.etOtherSeedSource);
+        etCoop = (EditText) findViewById(R.id.etCoop);
+        varietyspinner = (Spinner) findViewById(R.id.varietyPlantedSpinner);
+        sourcespinner = (Spinner) findViewById(R.id.seedSourceSpinner);
+        classspinner = (Spinner) findViewById(R.id.seedClassSpinner);
+        commitmentSpinner = (Spinner) findViewById(R.id.commitmentSpinner);
+        stationSpinner = (Spinner) findViewById(R.id.stationSpinner);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        database = SeedGrowerDatabase.getInstance(this);
+
+        tvAccredNo.addTextChangedListener(saveTextWatcher);
+        tvLatitude.addTextChangedListener(saveTextWatcher);
+        tvLongitude.addTextChangedListener(saveTextWatcher);
+        if(ContextCompat.checkSelfPermission(SeedProductionDetailActivity.this, Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED){
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                uniqueId = Settings.Secure.getString(getContentResolver(),
+                        Settings.Secure.ANDROID_ID);
+            } else {
+                uniqueId = telephonyManager.getDeviceId();
+            }
 
 
+        }
+
+        //Set visibility to invisible
+        l1.setVisibility(View.GONE);
+        l2.setVisibility(View.GONE);
+        l8.setVisibility(View.GONE);
+        l9.setVisibility(View.GONE);
+        lCoopEt.setVisibility(View.GONE);
+        lCoopTv.setVisibility(View.GONE);
+        lCommitmentEt.setVisibility(View.GONE);
+        lCommitmentTv.setVisibility(View.GONE);
+
+        //open datepicker
+        etDatePlanted.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Calendar cal = Calendar.getInstance();
+                int year = cal.get(Calendar.YEAR);
+                int month = cal.get(Calendar.MONTH);
+                int day = cal.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog dialog = new DatePickerDialog(SeedProductionDetailActivity.this, android.R.style.Theme_Holo_Dialog_MinWidth,mDateSetListener,year,month,day);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.show();
+            }
+        });
+
+        mDateSetListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                String date = MONTHS[month] + " " + dayOfMonth + ", "+year;
+                etDatePlanted.setText(date);
+            }
+        };
+
+        //getting location
+        getLocationBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                getLocation();
+            }
+        });
+
+        List<Seeds> seeds = database.seedsDao().getSeeds();
+        ArrayList varieties = new ArrayList<>();
+        varieties.add("Select Variety");
+        for(Seeds s : seeds){
+            varieties.add(s.getVariety());
+        }
+
+        String[] classes = new String []{
+                "Select Seed Class",
+                "Breeder",
+                "Foundation",
+                "Registered"
+        };
+
+        String[] stations = new String []{
+                "Select PhilRice Station",
+                "Central Experiment Station",
+                "Midsayap",
+                "Los Baños",
+                "Agusan",
+                "Batac",
+                "Isabela",
+                "Negros",
+                "Bicol",
+                "CMU",
+                "Zamboanga",
+                "Samar",
+                "Mindoro"
+        };
+
+        ArrayAdapter<String> stationArrayAdapter = new ArrayAdapter<>(
+                this,R.layout.spinner_seed_source,stations
+        );
+        stationArrayAdapter.setDropDownViewResource(R.layout.spinner_seed_source);
+        stationSpinner.setAdapter(stationArrayAdapter);
+
+        ArrayAdapter<String> spinnerArrayAdapter2 = new ArrayAdapter<>(
+                this,R.layout.spinner_seed_class,classes
+        );
+        spinnerArrayAdapter2.setDropDownViewResource(R.layout.spinner_seed_class);
+        classspinner.setAdapter(spinnerArrayAdapter2);
+
+        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(
+                this,R.layout.spinner_seed_variety,varieties
+        );
+        spinnerArrayAdapter.setDropDownViewResource(R.layout.spinner_seed_variety);
+        varietyspinner.setAdapter(spinnerArrayAdapter);
+
+        //cancel Button
+        tvCancel.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        tvSave.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                savePhilRiceForm();
+            }
+        });
+    }
+    private void seedGrowerForm(){
+        telephonyManager = (TelephonyManager) getSystemService(this.TELEPHONY_SERVICE);
+        scannerView = findViewById(R.id.scanner_view);
+        //mCodeScanner = new CodeScanner(SeedProductionDetailActivity.this, scannerView);
+        l10 = (LinearLayout) findViewById(R.id.l10);
+        l11 = (LinearLayout) findViewById(R.id.l11);
+        tvCancel = (TextView) findViewById(R.id.tvCancel);
+        tvSave = (TextView) findViewById(R.id.tvSave);
+        tvAccredNo = (TextView) findViewById(R.id.tvAccreditationNo);
+        getLocationBtn = (Button) findViewById(R.id.getLocationBtn);
+        scanBtn = (Button) findViewById(R.id.scanBtn);
+        tvLatitude = (TextView) findViewById(R.id.tvLatitude);
+        tvLongitude = (TextView) findViewById(R.id.tvLongitude);
+        toolbar = findViewById(R.id.spToolbar);
+
+        etDatePlanted = (EditText) findViewById(R.id.etDatePlanted);
+
+        etAreaPlanted = (EditText) findViewById(R.id.etAreaPlanted);
+        etSeedQuantity = (EditText) findViewById(R.id.etSeedQuantity);
+        etSeedbedArea = (EditText) findViewById(R.id.etSeedbedArea);
+        etSeedlingAge = (EditText) findViewById(R.id.etSeedlingAge);
+        etSeedLot = (EditText) findViewById(R.id.etSeedLot);
+        etControlNo = (EditText) findViewById(R.id.etControlNo);
+        etBarangay   = (EditText) findViewById(R.id.etBarangay);
+        etOtherSource = (EditText) findViewById(R.id.etOtherSeedSource);
+        etCoop = (EditText) findViewById(R.id.etCoop);
+        varietyspinner = (Spinner) findViewById(R.id.varietyPlantedSpinner);
+        sourcespinner = (Spinner) findViewById(R.id.seedSourceSpinner);
+        classspinner = (Spinner) findViewById(R.id.seedClassSpinner);
+        commitmentSpinner = (Spinner) findViewById(R.id.commitmentSpinner);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        database = SeedGrowerDatabase.getInstance(this);
+
+        tvAccredNo.addTextChangedListener(saveTextWatcher);
+        tvLatitude.addTextChangedListener(saveTextWatcher);
+        tvLongitude.addTextChangedListener(saveTextWatcher);
+        if(ContextCompat.checkSelfPermission(SeedProductionDetailActivity.this, Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED){
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                uniqueId = Settings.Secure.getString(getContentResolver(),
+                        Settings.Secure.ANDROID_ID);
+            } else {
+                uniqueId = telephonyManager.getDeviceId();
+            }
+
+
+        }
+
+        //Scanning of qr code
+        scanBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                scanFunction();
+            }
+        });
+
+        //open datepicker
+        etDatePlanted.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Calendar cal = Calendar.getInstance();
+                int year = cal.get(Calendar.YEAR);
+                int month = cal.get(Calendar.MONTH);
+                int day = cal.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog dialog = new DatePickerDialog(SeedProductionDetailActivity.this, android.R.style.Theme_Holo_Dialog_MinWidth,mDateSetListener,year,month,day);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.show();
+            }
+        });
+
+        mDateSetListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                String date = MONTHS[month] + " " + dayOfMonth + ", "+year;
+                etDatePlanted.setText(date);
+            }
+        };
+
+        //getting location
+        getLocationBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                getLocation();
+            }
+        });
+
+        List<Seeds> seeds = database.seedsDao().getSeeds();
+        ArrayList varieties = new ArrayList<>();
+        varieties.add("Select Variety");
+        for(Seeds s : seeds){
+            varieties.add(s.getVariety());
+        }
+        String[] stations = new String[] {
+                "Select Seed Source",
+                "PhilRice CES",
+                "PhilRice Midsayap",
+                "PhilRice Los Baños",
+                "PhilRice Agusan",
+                "PhilRice Batac",
+                "PhilRice Isabela",
+                "PhilRice Negros",
+                "PhilRice Bicol",
+                "PhilRice CMU",
+                "PhilRice Zamboanga",
+                "PhilRice Samar",
+                "PhilRice Mindoro",
+                "Others"
+        };
+
+        String[] classes = new String []{
+                "Select Seed Class",
+                "Foundation",
+                "Registered"
+        };
+
+        String[] commitmentPrograms = new String[]{
+                "Select Rice Program",
+                "National Rice Program",
+                "RCEF",
+                "None"
+        };
+
+        ArrayAdapter<String> spinnerArrayAdapter3 = new ArrayAdapter<>(
+                this, R.layout.spinner_rice_program,commitmentPrograms
+        );
+        ArrayAdapter<String> spinnerArrayAdapter2 = new ArrayAdapter<>(
+                this,R.layout.spinner_seed_class,classes
+        );
+
+        spinnerArrayAdapter3.setDropDownViewResource(R.layout.spinner_rice_program);
+        commitmentSpinner.setAdapter(spinnerArrayAdapter3);
+
+        spinnerArrayAdapter2.setDropDownViewResource(R.layout.spinner_seed_source);
+        classspinner.setAdapter(spinnerArrayAdapter2);
+
+        ArrayAdapter<String> spinnerArrayAdapter1 = new ArrayAdapter<>(
+                this,R.layout.spinner_seed_source,stations
+        );
+        spinnerArrayAdapter1.setDropDownViewResource(R.layout.spinner_seed_source);
+        sourcespinner.setAdapter(spinnerArrayAdapter1);
+
+        sourcespinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selectedItem = parent.getItemAtPosition(position).toString();
+                if(selectedItem.equals("Others")) {
+                    l10.setVisibility(View.VISIBLE);
+                    l11.setVisibility(View.VISIBLE);
+                }
+                else {
+                    l10.setVisibility(View.GONE);
+                    l11.setVisibility(View.GONE);
+                }
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(
+                this,R.layout.spinner_seed_variety,varieties
+        );
+        spinnerArrayAdapter.setDropDownViewResource(R.layout.spinner_seed_variety);
+        varietyspinner.setAdapter(spinnerArrayAdapter);
+
+        //cancel Button
+        tvCancel.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        tvSave.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                saveForm();
+            }
+        });
+    }
 
 }

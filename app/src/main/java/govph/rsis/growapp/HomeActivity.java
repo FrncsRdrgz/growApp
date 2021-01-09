@@ -227,8 +227,7 @@ public class HomeActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.addBtn:
-                intent = new Intent(this, SeedProductionDetailActivity.class);
-                startActivity(intent);
+                selectCategory();
                 return true;
 
 
@@ -284,4 +283,38 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
+    private void selectCategory(){
+        final Intent intent;
+        intent = new Intent(HomeActivity.this,SeedProductionDetailActivity.class);
+
+        final android.app.AlertDialog.Builder categoryDialog = new android.app.AlertDialog.Builder(HomeActivity.this);
+        categoryDialog.setTitle("What is your Designation?");
+        categoryDialog.setCancelable(false);
+        String[] pictureDialogItems = {
+                "PhilRice Staff",
+                "SeedGrower"
+        };
+
+        categoryDialog.setItems(pictureDialogItems,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which) {
+                            case 0:
+                                intent.putExtra("category", "PhilRice");
+                                startActivity(intent);
+                                break;
+                            case 1:
+
+                                intent.putExtra("category", "SeedGrower");
+                                startActivity(intent);
+                                break;
+
+                            case 2:
+                                dialog.cancel();
+                        }
+                    }
+                });
+        categoryDialog.show();
+    }
 }
