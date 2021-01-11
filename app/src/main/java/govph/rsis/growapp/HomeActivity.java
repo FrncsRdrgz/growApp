@@ -158,11 +158,18 @@ public class HomeActivity extends AppCompatActivity {
                                                 new Response.Listener<String>() {
                                                     @Override
                                                     public void onResponse(String response) {
-                                                        seedGrower.setIsSent(true);
-                                                        seedGrowerViewModel.update(seedGrower);
-                                                        new AlertDialog.Builder(HomeActivity.this)
-                                                                .setMessage("Successfully sent form data")
-                                                                .setNegativeButton("Ok",null).show();
+                                                        if(!response.equals("Success")){
+                                                            new AlertDialog.Builder(HomeActivity.this)
+                                                                    .setMessage("Error while sending to server.")
+                                                                    .setNegativeButton("Try Again",null).show();
+                                                        }
+                                                        else{
+                                                            seedGrower.setIsSent(true);
+                                                            seedGrowerViewModel.update(seedGrower);
+                                                            new AlertDialog.Builder(HomeActivity.this)
+                                                                    .setMessage("Successfully sent form data")
+                                                                    .setNegativeButton("Ok",null).show();
+                                                        }
                                                     }
                                                 },
                                                 new Response.ErrorListener() {
@@ -176,7 +183,8 @@ public class HomeActivity extends AppCompatActivity {
                                             protected Map<String,String> getParams(){
                                                 Map<String,String> params = new HashMap<>();
                                                 params.put("formId","0");
-                                                params.put("accredNo",seedGrower.getAccredno());
+                                                params.put("accredNo","");
+                                                params.put("serial_number",seedGrower.getAccredno());
                                                 params.put("seedSource",seedGrower.getSeedsource());
                                                 params.put("otherSource",seedGrower.getOtherseedsource());
                                                 params.put("variety",seedGrower.getVariety());

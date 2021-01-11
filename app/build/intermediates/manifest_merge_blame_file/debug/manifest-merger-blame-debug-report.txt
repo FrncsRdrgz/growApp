@@ -2,7 +2,7 @@
 2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
 3    package="govph.rsis.growapp"
 4    android:versionCode="4"
-5    android:versionName="growapp v1.21" >
+5    android:versionName="growapp v1.22" >
 6
 7    <uses-sdk
 8        android:minSdkVersion="21"
