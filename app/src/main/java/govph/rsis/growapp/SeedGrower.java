@@ -10,6 +10,9 @@ public class SeedGrower {
     @PrimaryKey(autoGenerate = true)
     public int sgId;
 
+    @ColumnInfo(name = "station")
+    public String station;
+
     @ColumnInfo(name = "macaddress")
     public String macaddress;
 
@@ -70,8 +73,12 @@ public class SeedGrower {
     @ColumnInfo (name="coop")
     public String coop;
 
-    public SeedGrower(String macaddress, String accredno, String latitude, String longitude, String variety, String seedsource, String otherseedsource, String seedclass, String dateplanted,
+    @ColumnInfo (name="designation")
+    public String designation;
+
+    public SeedGrower(String station,String macaddress, String accredno, String latitude, String longitude, String variety, String seedsource, String otherseedsource, String seedclass, String dateplanted,
                        String areaplanted, String quantity, String seedbedarea, String seedlingage, String seedlot, String controlno, String barangay, String datecollected, Boolean isSent,String riceProgram, String coop){
+        this.station = station;
         this.macaddress = macaddress;
         this.accredno = accredno;
         this.latitude = latitude;
@@ -96,8 +103,11 @@ public class SeedGrower {
 
 
     public int getSgId() {return sgId;}
-    public void setSgId(int sgId) {this.sgId = sgId;
-    }
+    public void setSgId(int sgId) {this.sgId = sgId; }
+
+    public String getStation(){return station;}
+    public void setStation(String station){this.station = station;}
+
     public String getMacaddress() {return macaddress;}
     public void setMacaddress(String macaddress) {this.macaddress = macaddress;}
 
@@ -154,4 +164,7 @@ public class SeedGrower {
     public String getRiceProgram() {return riceProgram;}
 
     public String getCoop() {return coop;}
+
+    public String getDesignation(){return designation;}
+    public void setDesignation(String designation){this.designation = designation;}
 }

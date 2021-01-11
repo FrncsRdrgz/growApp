@@ -7,6 +7,7 @@ public class DecVar {
         String production = "https://rsis.philrice.gov.ph/growApp";
         String training = "https://rsistraining.philrice.gov.ph/growApp";
 
+        String localhost = "http://192.168.43.5/growApp";
         return production;
     }
 }

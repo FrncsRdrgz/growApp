@@ -74,7 +74,7 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
     Intent intent;
     LocationManager locationManager;
     Toolbar toolbar;
-    LinearLayout l1,l2,l8,l9,l10, l11,lCoopTv,lCoopEt,lCommitmentTv,lCommitmentEt;
+    LinearLayout l1,l2,l8,l9,l10, l11,lCoopTv,lCoopEt,lCommitmentTv,lCommitmentEt,lStationEt,lStationTv;
     TextView tvLatitude, tvLongitude, tvCancel,tvSave,tvAccredNo;
     Button getLocationBtn,scanBtn;
     Spinner varietyspinner, sourcespinner,classspinner,commitmentSpinner,stationSpinner;
@@ -118,9 +118,16 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
             String latitude = tvLatitude.getText().toString().trim();
             String longitude = tvLongitude.getText().toString().trim();
 
-            if(!accredNo.isEmpty() && !latitude.isEmpty() && !longitude.isEmpty()){
-                tvSave.setEnabled(true);
-                tvSave.setTextColor(Color.BLACK);
+            if(userCategory.equals("PhilRice")){
+                if(!latitude.isEmpty() && !longitude.isEmpty()){
+                    tvSave.setEnabled(true);
+                    tvSave.setTextColor(Color.BLACK);
+                }
+            }else{
+                if(!accredNo.isEmpty() && !latitude.isEmpty() && !longitude.isEmpty()){
+                    tvSave.setEnabled(true);
+                    tvSave.setTextColor(Color.BLACK);
+                }
             }
 
         }
@@ -144,15 +151,16 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
         SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy HH:mm:ss");
         //String timestamp = dateFormat.format(calendar.getTime());
 
+        String station = stationSpinner.getSelectedItem().toString();
         String uniqueid = md5(uniqueId+"-"+ getMacAddr()+"-"+ timestamp);
-        String accredno = tvAccredNo.getText().toString();
+        String accredno = "";
         String latitude = tvLatitude.getText().toString();
         String longitude = tvLongitude.getText().toString();
         String seedVariety = varietyspinner.getSelectedItem().toString();
-        String seedSource = sourcespinner.getSelectedItem().toString();
-        String otherSeedSource = etOtherSource.getText().toString();
+        String seedSource = "";
+        String otherSeedSource = "";
         String seedClass = classspinner.getSelectedItem().toString();
-        String riceProgram = commitmentSpinner.getSelectedItem().toString();
+        String riceProgram = "";
 
 
         if(date == null){
@@ -167,18 +175,19 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
         String seedLot = etSeedLot.getText().toString();
         String controlNo = etControlNo.getText().toString();
         String barangay = etBarangay.getText().toString();
-        String coop = etCoop.getText().toString();
+        String coop = "";
         String datecollected = newDate.format(new Date());
         Boolean isSent = false;
 
-        if(seedVariety.matches("Select Variety") || seedSource.matches("Select Seed Source") || seedClass.matches("Select Seed Class")
+        if(seedVariety.matches("Select Variety") || seedClass.matches("Select Seed Class")
                 || dateplanted.matches("") || areaPlanted.matches("") || seedQuantity.matches("") || seedbedArea.matches("") || seedlingAge.matches("")
-                || seedLot.matches("") || controlNo.matches("") || barangay.matches("") || riceProgram.matches("Select Rice Program") || coop.matches("")){
+                || seedLot.matches("") || controlNo.matches("") || barangay.matches("")){
             Toast.makeText(this, "Please fill up all the fields.", Toast.LENGTH_SHORT).show();
         }else{
             seedGrowerViewModel = ViewModelProviders.of(this).get(SeedGrowerViewModel.class);
-            SeedGrower seedGrower = new SeedGrower(uniqueid,accredno,latitude,longitude,seedVariety,seedSource,otherSeedSource,seedClass,dateplanted,
+            SeedGrower seedGrower = new SeedGrower(station,uniqueid,accredno,latitude,longitude,seedVariety,seedSource,otherSeedSource,seedClass,dateplanted,
                     areaPlanted,seedQuantity,seedbedArea,seedlingAge,seedLot,controlNo,barangay,datecollected,isSent,riceProgram,coop);
+            seedGrower.setDesignation(userCategory);
             seedGrowerViewModel.insert(seedGrower);
             finish();
         }
@@ -211,6 +220,7 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
         String seedSource = sourcespinner.getSelectedItem().toString();
         String otherSeedSource = etOtherSource.getText().toString();
         String seedClass = classspinner.getSelectedItem().toString();
+        String station = "";
         String riceProgram = commitmentSpinner.getSelectedItem().toString();
 
 
@@ -230,14 +240,16 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
         String datecollected = newDate.format(new Date());
         Boolean isSent = false;
 
-        if(seedVariety.matches("Select Variety") || seedSource.matches("Select Seed Source") || seedClass.matches("Select Seed Class")
+        if(seedVariety.matches("Select Variety") || seedSource.matches("Select Seed Surce") || riceProgram.matches("Select Rice Program") || seedClass.matches("Select Seed Class")
         || dateplanted.matches("") || areaPlanted.matches("") || seedQuantity.matches("") || seedbedArea.matches("") || seedlingAge.matches("")
-        || seedLot.matches("") || controlNo.matches("") || barangay.matches("") || riceProgram.matches("Select Rice Program") || coop.matches("")){
+        || seedLot.matches("") || controlNo.matches("") || barangay.matches("") || coop.matches("")){
             Toast.makeText(this, "Please fill up all the fields.", Toast.LENGTH_SHORT).show();
         }else{
+
             seedGrowerViewModel = ViewModelProviders.of(this).get(SeedGrowerViewModel.class);
-        SeedGrower seedGrower = new SeedGrower(uniqueid,accredno,latitude,longitude,seedVariety,seedSource,otherSeedSource,seedClass,dateplanted,
+        SeedGrower seedGrower = new SeedGrower(station,uniqueid,accredno,latitude,longitude,seedVariety,seedSource,otherSeedSource,seedClass,dateplanted,
                 areaPlanted,seedQuantity,seedbedArea,seedlingAge,seedLot,controlNo,barangay,datecollected,isSent,riceProgram,coop);
+        seedGrower.setDesignation(userCategory);
         seedGrowerViewModel.insert(seedGrower);
         finish();
         }
@@ -676,6 +688,9 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
         //mCodeScanner = new CodeScanner(SeedProductionDetailActivity.this, scannerView);
         l10 = (LinearLayout) findViewById(R.id.l10);
         l11 = (LinearLayout) findViewById(R.id.l11);
+        lStationEt = (LinearLayout) findViewById(R.id.lStationEt);
+        lStationTv = (LinearLayout) findViewById(R.id.lStationTv);
+
         tvCancel = (TextView) findViewById(R.id.tvCancel);
         tvSave = (TextView) findViewById(R.id.tvSave);
         tvAccredNo = (TextView) findViewById(R.id.tvAccreditationNo);
@@ -718,6 +733,10 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
 
 
         }
+
+        //set visibility to GONE
+        lStationTv.setVisibility(View.GONE);
+        lStationEt.setVisibility(View.GONE);
 
         //Scanning of qr code
         scanBtn.setOnClickListener(new View.OnClickListener() {

@@ -905,6 +905,7 @@ id linear6
 id linear7
 id linear8
 id linear9
+id linearStation
 id listItems
 id listMode
 id list_item
@@ -988,6 +989,7 @@ id textCoop
 id textProgram
 id textSpacerNoButtons
 id textSpacerNoTitle
+id textStation
 id textView1
 id textViewDateplanted
 id textViewVariety
@@ -1110,6 +1112,7 @@ mipmap rsis_launcher
 mipmap rsis_launcher_foreground
 mipmap rsis_launcher_round
 raw data
+string PORT_NUMBER
 string abc_action_bar_home_description
 string abc_action_bar_up_description
 string abc_action_menu_overflow_description

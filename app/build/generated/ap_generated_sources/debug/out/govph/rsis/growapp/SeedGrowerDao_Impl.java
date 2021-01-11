@@ -37,113 +37,123 @@ public final class SeedGrowerDao_Impl implements SeedGrowerDao {
     this.__insertionAdapterOfSeedGrower = new EntityInsertionAdapter<SeedGrower>(__db) {
       @Override
       public String createQuery() {
-        return "INSERT OR ABORT INTO `SeedGrower` (`sgId`,`macaddress`,`accredno`,`latitude`,`longitude`,`variety`,`seedsource`,`otherseedsource`,`seedclass`,`dateplanted`,`areaplanted`,`quantity`,`seedbedarea`,`seedlingage`,`seedlot`,`controlno`,`barangay`,`datecollected`,`isSent`,`riceProgram`,`coop`) VALUES (nullif(?, 0),?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        return "INSERT OR ABORT INTO `SeedGrower` (`sgId`,`station`,`macaddress`,`accredno`,`latitude`,`longitude`,`variety`,`seedsource`,`otherseedsource`,`seedclass`,`dateplanted`,`areaplanted`,`quantity`,`seedbedarea`,`seedlingage`,`seedlot`,`controlno`,`barangay`,`datecollected`,`isSent`,`riceProgram`,`coop`,`designation`) VALUES (nullif(?, 0),?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
       }
 
       @Override
       public void bind(SupportSQLiteStatement stmt, SeedGrower value) {
         stmt.bindLong(1, value.sgId);
-        if (value.macaddress == null) {
+        if (value.station == null) {
           stmt.bindNull(2);
         } else {
-          stmt.bindString(2, value.macaddress);
+          stmt.bindString(2, value.station);
         }
-        if (value.accredno == null) {
+        if (value.macaddress == null) {
           stmt.bindNull(3);
         } else {
-          stmt.bindString(3, value.accredno);
+          stmt.bindString(3, value.macaddress);
         }
-        if (value.latitude == null) {
+        if (value.accredno == null) {
           stmt.bindNull(4);
         } else {
-          stmt.bindString(4, value.latitude);
+          stmt.bindString(4, value.accredno);
         }
-        if (value.longitude == null) {
+        if (value.latitude == null) {
           stmt.bindNull(5);
         } else {
-          stmt.bindString(5, value.longitude);
+          stmt.bindString(5, value.latitude);
         }
-        if (value.variety == null) {
+        if (value.longitude == null) {
           stmt.bindNull(6);
         } else {
-          stmt.bindString(6, value.variety);
+          stmt.bindString(6, value.longitude);
         }
-        if (value.seedsource == null) {
+        if (value.variety == null) {
           stmt.bindNull(7);
         } else {
-          stmt.bindString(7, value.seedsource);
+          stmt.bindString(7, value.variety);
         }
-        if (value.otherseedsource == null) {
+        if (value.seedsource == null) {
           stmt.bindNull(8);
         } else {
-          stmt.bindString(8, value.otherseedsource);
+          stmt.bindString(8, value.seedsource);
         }
-        if (value.seedclass == null) {
+        if (value.otherseedsource == null) {
           stmt.bindNull(9);
         } else {
-          stmt.bindString(9, value.seedclass);
+          stmt.bindString(9, value.otherseedsource);
         }
-        if (value.dateplanted == null) {
+        if (value.seedclass == null) {
           stmt.bindNull(10);
         } else {
-          stmt.bindString(10, value.dateplanted);
+          stmt.bindString(10, value.seedclass);
         }
-        if (value.areaplanted == null) {
+        if (value.dateplanted == null) {
           stmt.bindNull(11);
         } else {
-          stmt.bindString(11, value.areaplanted);
+          stmt.bindString(11, value.dateplanted);
         }
-        if (value.quantity == null) {
+        if (value.areaplanted == null) {
           stmt.bindNull(12);
         } else {
-          stmt.bindString(12, value.quantity);
+          stmt.bindString(12, value.areaplanted);
         }
-        if (value.seedbedarea == null) {
+        if (value.quantity == null) {
           stmt.bindNull(13);
         } else {
-          stmt.bindString(13, value.seedbedarea);
+          stmt.bindString(13, value.quantity);
         }
-        if (value.seedlingage == null) {
+        if (value.seedbedarea == null) {
           stmt.bindNull(14);
         } else {
-          stmt.bindString(14, value.seedlingage);
+          stmt.bindString(14, value.seedbedarea);
         }
-        if (value.seedlot == null) {
+        if (value.seedlingage == null) {
           stmt.bindNull(15);
         } else {
-          stmt.bindString(15, value.seedlot);
+          stmt.bindString(15, value.seedlingage);
         }
-        if (value.controlno == null) {
+        if (value.seedlot == null) {
           stmt.bindNull(16);
         } else {
-          stmt.bindString(16, value.controlno);
+          stmt.bindString(16, value.seedlot);
         }
-        if (value.barangay == null) {
+        if (value.controlno == null) {
           stmt.bindNull(17);
         } else {
-          stmt.bindString(17, value.barangay);
+          stmt.bindString(17, value.controlno);
         }
-        if (value.datecollected == null) {
+        if (value.barangay == null) {
           stmt.bindNull(18);
         } else {
-          stmt.bindString(18, value.datecollected);
+          stmt.bindString(18, value.barangay);
+        }
+        if (value.datecollected == null) {
+          stmt.bindNull(19);
+        } else {
+          stmt.bindString(19, value.datecollected);
         }
         final Integer _tmp;
         _tmp = value.isSent == null ? null : (value.isSent ? 1 : 0);
         if (_tmp == null) {
-          stmt.bindNull(19);
-        } else {
-          stmt.bindLong(19, _tmp);
-        }
-        if (value.riceProgram == null) {
           stmt.bindNull(20);
         } else {
-          stmt.bindString(20, value.riceProgram);
+          stmt.bindLong(20, _tmp);
         }
-        if (value.coop == null) {
+        if (value.riceProgram == null) {
           stmt.bindNull(21);
         } else {
-          stmt.bindString(21, value.coop);
+          stmt.bindString(21, value.riceProgram);
+        }
+        if (value.coop == null) {
+          stmt.bindNull(22);
+        } else {
+          stmt.bindString(22, value.coop);
+        }
+        if (value.designation == null) {
+          stmt.bindNull(23);
+        } else {
+          stmt.bindString(23, value.designation);
         }
       }
     };
@@ -161,115 +171,125 @@ public final class SeedGrowerDao_Impl implements SeedGrowerDao {
     this.__updateAdapterOfSeedGrower = new EntityDeletionOrUpdateAdapter<SeedGrower>(__db) {
       @Override
       public String createQuery() {
-        return "UPDATE OR ABORT `SeedGrower` SET `sgId` = ?,`macaddress` = ?,`accredno` = ?,`latitude` = ?,`longitude` = ?,`variety` = ?,`seedsource` = ?,`otherseedsource` = ?,`seedclass` = ?,`dateplanted` = ?,`areaplanted` = ?,`quantity` = ?,`seedbedarea` = ?,`seedlingage` = ?,`seedlot` = ?,`controlno` = ?,`barangay` = ?,`datecollected` = ?,`isSent` = ?,`riceProgram` = ?,`coop` = ? WHERE `sgId` = ?";
+        return "UPDATE OR ABORT `SeedGrower` SET `sgId` = ?,`station` = ?,`macaddress` = ?,`accredno` = ?,`latitude` = ?,`longitude` = ?,`variety` = ?,`seedsource` = ?,`otherseedsource` = ?,`seedclass` = ?,`dateplanted` = ?,`areaplanted` = ?,`quantity` = ?,`seedbedarea` = ?,`seedlingage` = ?,`seedlot` = ?,`controlno` = ?,`barangay` = ?,`datecollected` = ?,`isSent` = ?,`riceProgram` = ?,`coop` = ?,`designation` = ? WHERE `sgId` = ?";
       }
 
       @Override
       public void bind(SupportSQLiteStatement stmt, SeedGrower value) {
         stmt.bindLong(1, value.sgId);
-        if (value.macaddress == null) {
+        if (value.station == null) {
           stmt.bindNull(2);
         } else {
-          stmt.bindString(2, value.macaddress);
+          stmt.bindString(2, value.station);
         }
-        if (value.accredno == null) {
+        if (value.macaddress == null) {
           stmt.bindNull(3);
         } else {
-          stmt.bindString(3, value.accredno);
+          stmt.bindString(3, value.macaddress);
         }
-        if (value.latitude == null) {
+        if (value.accredno == null) {
           stmt.bindNull(4);
         } else {
-          stmt.bindString(4, value.latitude);
+          stmt.bindString(4, value.accredno);
         }
-        if (value.longitude == null) {
+        if (value.latitude == null) {
           stmt.bindNull(5);
         } else {
-          stmt.bindString(5, value.longitude);
+          stmt.bindString(5, value.latitude);
         }
-        if (value.variety == null) {
+        if (value.longitude == null) {
           stmt.bindNull(6);
         } else {
-          stmt.bindString(6, value.variety);
+          stmt.bindString(6, value.longitude);
         }
-        if (value.seedsource == null) {
+        if (value.variety == null) {
           stmt.bindNull(7);
         } else {
-          stmt.bindString(7, value.seedsource);
+          stmt.bindString(7, value.variety);
         }
-        if (value.otherseedsource == null) {
+        if (value.seedsource == null) {
           stmt.bindNull(8);
         } else {
-          stmt.bindString(8, value.otherseedsource);
+          stmt.bindString(8, value.seedsource);
         }
-        if (value.seedclass == null) {
+        if (value.otherseedsource == null) {
           stmt.bindNull(9);
         } else {
-          stmt.bindString(9, value.seedclass);
+          stmt.bindString(9, value.otherseedsource);
         }
-        if (value.dateplanted == null) {
+        if (value.seedclass == null) {
           stmt.bindNull(10);
         } else {
-          stmt.bindString(10, value.dateplanted);
+          stmt.bindString(10, value.seedclass);
         }
-        if (value.areaplanted == null) {
+        if (value.dateplanted == null) {
           stmt.bindNull(11);
         } else {
-          stmt.bindString(11, value.areaplanted);
+          stmt.bindString(11, value.dateplanted);
         }
-        if (value.quantity == null) {
+        if (value.areaplanted == null) {
           stmt.bindNull(12);
         } else {
-          stmt.bindString(12, value.quantity);
+          stmt.bindString(12, value.areaplanted);
         }
-        if (value.seedbedarea == null) {
+        if (value.quantity == null) {
           stmt.bindNull(13);
         } else {
-          stmt.bindString(13, value.seedbedarea);
+          stmt.bindString(13, value.quantity);
         }
-        if (value.seedlingage == null) {
+        if (value.seedbedarea == null) {
           stmt.bindNull(14);
         } else {
-          stmt.bindString(14, value.seedlingage);
+          stmt.bindString(14, value.seedbedarea);
         }
-        if (value.seedlot == null) {
+        if (value.seedlingage == null) {
           stmt.bindNull(15);
         } else {
-          stmt.bindString(15, value.seedlot);
+          stmt.bindString(15, value.seedlingage);
         }
-        if (value.controlno == null) {
+        if (value.seedlot == null) {
           stmt.bindNull(16);
         } else {
-          stmt.bindString(16, value.controlno);
+          stmt.bindString(16, value.seedlot);
         }
-        if (value.barangay == null) {
+        if (value.controlno == null) {
           stmt.bindNull(17);
         } else {
-          stmt.bindString(17, value.barangay);
+          stmt.bindString(17, value.controlno);
         }
-        if (value.datecollected == null) {
+        if (value.barangay == null) {
           stmt.bindNull(18);
         } else {
-          stmt.bindString(18, value.datecollected);
+          stmt.bindString(18, value.barangay);
+        }
+        if (value.datecollected == null) {
+          stmt.bindNull(19);
+        } else {
+          stmt.bindString(19, value.datecollected);
         }
         final Integer _tmp;
         _tmp = value.isSent == null ? null : (value.isSent ? 1 : 0);
         if (_tmp == null) {
-          stmt.bindNull(19);
-        } else {
-          stmt.bindLong(19, _tmp);
-        }
-        if (value.riceProgram == null) {
           stmt.bindNull(20);
         } else {
-          stmt.bindString(20, value.riceProgram);
+          stmt.bindLong(20, _tmp);
         }
-        if (value.coop == null) {
+        if (value.riceProgram == null) {
           stmt.bindNull(21);
         } else {
-          stmt.bindString(21, value.coop);
+          stmt.bindString(21, value.riceProgram);
         }
-        stmt.bindLong(22, value.sgId);
+        if (value.coop == null) {
+          stmt.bindNull(22);
+        } else {
+          stmt.bindString(22, value.coop);
+        }
+        if (value.designation == null) {
+          stmt.bindNull(23);
+        } else {
+          stmt.bindString(23, value.designation);
+        }
+        stmt.bindLong(24, value.sgId);
       }
     };
     this.__preparedStmtOfDeleteAll = new SharedSQLiteStatement(__db) {
@@ -341,6 +361,7 @@ public final class SeedGrowerDao_Impl implements SeedGrowerDao {
         final Cursor _cursor = DBUtil.query(__db, _statement, false, null);
         try {
           final int _cursorIndexOfSgId = CursorUtil.getColumnIndexOrThrow(_cursor, "sgId");
+          final int _cursorIndexOfStation = CursorUtil.getColumnIndexOrThrow(_cursor, "station");
           final int _cursorIndexOfMacaddress = CursorUtil.getColumnIndexOrThrow(_cursor, "macaddress");
           final int _cursorIndexOfAccredno = CursorUtil.getColumnIndexOrThrow(_cursor, "accredno");
           final int _cursorIndexOfLatitude = CursorUtil.getColumnIndexOrThrow(_cursor, "latitude");
@@ -361,9 +382,12 @@ public final class SeedGrowerDao_Impl implements SeedGrowerDao {
           final int _cursorIndexOfIsSent = CursorUtil.getColumnIndexOrThrow(_cursor, "isSent");
           final int _cursorIndexOfRiceProgram = CursorUtil.getColumnIndexOrThrow(_cursor, "riceProgram");
           final int _cursorIndexOfCoop = CursorUtil.getColumnIndexOrThrow(_cursor, "coop");
+          final int _cursorIndexOfDesignation = CursorUtil.getColumnIndexOrThrow(_cursor, "designation");
           final List<SeedGrower> _result = new ArrayList<SeedGrower>(_cursor.getCount());
           while(_cursor.moveToNext()) {
             final SeedGrower _item;
+            final String _tmpStation;
+            _tmpStation = _cursor.getString(_cursorIndexOfStation);
             final String _tmpMacaddress;
             _tmpMacaddress = _cursor.getString(_cursorIndexOfMacaddress);
             final String _tmpAccredno;
@@ -410,8 +434,9 @@ public final class SeedGrowerDao_Impl implements SeedGrowerDao {
             _tmpRiceProgram = _cursor.getString(_cursorIndexOfRiceProgram);
             final String _tmpCoop;
             _tmpCoop = _cursor.getString(_cursorIndexOfCoop);
-            _item = new SeedGrower(_tmpMacaddress,_tmpAccredno,_tmpLatitude,_tmpLongitude,_tmpVariety,_tmpSeedsource,_tmpOtherseedsource,_tmpSeedclass,_tmpDateplanted,_tmpAreaplanted,_tmpQuantity,_tmpSeedbedarea,_tmpSeedlingage,_tmpSeedlot,_tmpControlno,_tmpBarangay,_tmpDatecollected,_tmpIsSent,_tmpRiceProgram,_tmpCoop);
+            _item = new SeedGrower(_tmpStation,_tmpMacaddress,_tmpAccredno,_tmpLatitude,_tmpLongitude,_tmpVariety,_tmpSeedsource,_tmpOtherseedsource,_tmpSeedclass,_tmpDateplanted,_tmpAreaplanted,_tmpQuantity,_tmpSeedbedarea,_tmpSeedlingage,_tmpSeedlot,_tmpControlno,_tmpBarangay,_tmpDatecollected,_tmpIsSent,_tmpRiceProgram,_tmpCoop);
             _item.sgId = _cursor.getInt(_cursorIndexOfSgId);
+            _item.designation = _cursor.getString(_cursorIndexOfDesignation);
             _result.add(_item);
           }
           return _result;
@@ -437,6 +462,7 @@ public final class SeedGrowerDao_Impl implements SeedGrowerDao {
         final Cursor _cursor = DBUtil.query(__db, _statement, false, null);
         try {
           final int _cursorIndexOfSgId = CursorUtil.getColumnIndexOrThrow(_cursor, "sgId");
+          final int _cursorIndexOfStation = CursorUtil.getColumnIndexOrThrow(_cursor, "station");
           final int _cursorIndexOfMacaddress = CursorUtil.getColumnIndexOrThrow(_cursor, "macaddress");
           final int _cursorIndexOfAccredno = CursorUtil.getColumnIndexOrThrow(_cursor, "accredno");
           final int _cursorIndexOfLatitude = CursorUtil.getColumnIndexOrThrow(_cursor, "latitude");
@@ -457,9 +483,12 @@ public final class SeedGrowerDao_Impl implements SeedGrowerDao {
           final int _cursorIndexOfIsSent = CursorUtil.getColumnIndexOrThrow(_cursor, "isSent");
           final int _cursorIndexOfRiceProgram = CursorUtil.getColumnIndexOrThrow(_cursor, "riceProgram");
           final int _cursorIndexOfCoop = CursorUtil.getColumnIndexOrThrow(_cursor, "coop");
+          final int _cursorIndexOfDesignation = CursorUtil.getColumnIndexOrThrow(_cursor, "designation");
           final List<SeedGrower> _result = new ArrayList<SeedGrower>(_cursor.getCount());
           while(_cursor.moveToNext()) {
             final SeedGrower _item;
+            final String _tmpStation;
+            _tmpStation = _cursor.getString(_cursorIndexOfStation);
             final String _tmpMacaddress;
             _tmpMacaddress = _cursor.getString(_cursorIndexOfMacaddress);
             final String _tmpAccredno;
@@ -506,8 +535,9 @@ public final class SeedGrowerDao_Impl implements SeedGrowerDao {
             _tmpRiceProgram = _cursor.getString(_cursorIndexOfRiceProgram);
             final String _tmpCoop;
             _tmpCoop = _cursor.getString(_cursorIndexOfCoop);
-            _item = new SeedGrower(_tmpMacaddress,_tmpAccredno,_tmpLatitude,_tmpLongitude,_tmpVariety,_tmpSeedsource,_tmpOtherseedsource,_tmpSeedclass,_tmpDateplanted,_tmpAreaplanted,_tmpQuantity,_tmpSeedbedarea,_tmpSeedlingage,_tmpSeedlot,_tmpControlno,_tmpBarangay,_tmpDatecollected,_tmpIsSent,_tmpRiceProgram,_tmpCoop);
+            _item = new SeedGrower(_tmpStation,_tmpMacaddress,_tmpAccredno,_tmpLatitude,_tmpLongitude,_tmpVariety,_tmpSeedsource,_tmpOtherseedsource,_tmpSeedclass,_tmpDateplanted,_tmpAreaplanted,_tmpQuantity,_tmpSeedbedarea,_tmpSeedlingage,_tmpSeedlot,_tmpControlno,_tmpBarangay,_tmpDatecollected,_tmpIsSent,_tmpRiceProgram,_tmpCoop);
             _item.sgId = _cursor.getInt(_cursorIndexOfSgId);
+            _item.designation = _cursor.getString(_cursorIndexOfDesignation);
             _result.add(_item);
           }
           return _result;
@@ -537,6 +567,7 @@ public final class SeedGrowerDao_Impl implements SeedGrowerDao {
     final Cursor _cursor = DBUtil.query(__db, _statement, false, null);
     try {
       final int _cursorIndexOfSgId = CursorUtil.getColumnIndexOrThrow(_cursor, "sgId");
+      final int _cursorIndexOfStation = CursorUtil.getColumnIndexOrThrow(_cursor, "station");
       final int _cursorIndexOfMacaddress = CursorUtil.getColumnIndexOrThrow(_cursor, "macaddress");
       final int _cursorIndexOfAccredno = CursorUtil.getColumnIndexOrThrow(_cursor, "accredno");
       final int _cursorIndexOfLatitude = CursorUtil.getColumnIndexOrThrow(_cursor, "latitude");
@@ -557,8 +588,11 @@ public final class SeedGrowerDao_Impl implements SeedGrowerDao {
       final int _cursorIndexOfIsSent = CursorUtil.getColumnIndexOrThrow(_cursor, "isSent");
       final int _cursorIndexOfRiceProgram = CursorUtil.getColumnIndexOrThrow(_cursor, "riceProgram");
       final int _cursorIndexOfCoop = CursorUtil.getColumnIndexOrThrow(_cursor, "coop");
+      final int _cursorIndexOfDesignation = CursorUtil.getColumnIndexOrThrow(_cursor, "designation");
       final SeedGrower _result;
       if(_cursor.moveToFirst()) {
+        final String _tmpStation;
+        _tmpStation = _cursor.getString(_cursorIndexOfStation);
         final String _tmpMacaddress;
         _tmpMacaddress = _cursor.getString(_cursorIndexOfMacaddress);
         final String _tmpAccredno;
@@ -605,8 +639,9 @@ public final class SeedGrowerDao_Impl implements SeedGrowerDao {
         _tmpRiceProgram = _cursor.getString(_cursorIndexOfRiceProgram);
         final String _tmpCoop;
         _tmpCoop = _cursor.getString(_cursorIndexOfCoop);
-        _result = new SeedGrower(_tmpMacaddress,_tmpAccredno,_tmpLatitude,_tmpLongitude,_tmpVariety,_tmpSeedsource,_tmpOtherseedsource,_tmpSeedclass,_tmpDateplanted,_tmpAreaplanted,_tmpQuantity,_tmpSeedbedarea,_tmpSeedlingage,_tmpSeedlot,_tmpControlno,_tmpBarangay,_tmpDatecollected,_tmpIsSent,_tmpRiceProgram,_tmpCoop);
+        _result = new SeedGrower(_tmpStation,_tmpMacaddress,_tmpAccredno,_tmpLatitude,_tmpLongitude,_tmpVariety,_tmpSeedsource,_tmpOtherseedsource,_tmpSeedclass,_tmpDateplanted,_tmpAreaplanted,_tmpQuantity,_tmpSeedbedarea,_tmpSeedlingage,_tmpSeedlot,_tmpControlno,_tmpBarangay,_tmpDatecollected,_tmpIsSent,_tmpRiceProgram,_tmpCoop);
         _result.sgId = _cursor.getInt(_cursorIndexOfSgId);
+        _result.designation = _cursor.getString(_cursorIndexOfDesignation);
       } else {
         _result = null;
       }
