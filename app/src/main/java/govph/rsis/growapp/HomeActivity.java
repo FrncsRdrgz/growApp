@@ -151,62 +151,75 @@ public class HomeActivity extends AppCompatActivity {
                                     @Override
                                     public void onClick (DialogInterface paramDialogInterface , int paramInt) {
                                         if(isOnline()){
-                                            queue = Volley.newRequestQueue(HomeActivity.this);
-                                        String url = DecVar.receiver()+"/postData.php";
+                                            if(seedGrower.getVariety().matches("Select Variety") || seedGrower.getSeedsource().matches("Select Seed Source")
+                                                    || seedGrower.getSeedclass().matches("Select Seed Class") || seedGrower.getDateplanted().matches("")
+                                                    || seedGrower.getAreaplanted().matches("") || seedGrower.getQuantity().matches("")
+                                                    || seedGrower.getSeedbedarea().matches("") || seedGrower.getSeedlingage().matches("")
+                                                    || seedGrower.getSeedlot().matches("") || seedGrower.getControlno().matches("")
+                                                    || seedGrower.getBarangay().matches("") || seedGrower.getRiceProgram().matches("Select Rice Program") || seedGrower.getCoop().matches("")){
 
-                                        StringRequest sr = new StringRequest(Request.Method.POST, url,
-                                                new Response.Listener<String>() {
+                                                new AlertDialog.Builder(HomeActivity.this)
+                                                    .setMessage("Please fill out all the fields first before sending data.")
+                                                    .setNegativeButton("Try Again",null).show();
+                                            }else{
+                                                queue = Volley.newRequestQueue(HomeActivity.this);
+                                                String url = DecVar.receiver()+"/postData.php";
+
+                                                StringRequest sr = new StringRequest(Request.Method.POST, url,
+                                                        new Response.Listener<String>() {
+                                                            @Override
+                                                            public void onResponse(String response) {
+                                                                if(!response.equals("Success")){
+                                                                    new AlertDialog.Builder(HomeActivity.this)
+                                                                            .setMessage("Error while sending data to server.")
+                                                                            .setNegativeButton("Try Again",null).show();
+                                                                }
+                                                                else{
+                                                                    seedGrower.setIsSent(true);
+                                                                    seedGrowerViewModel.update(seedGrower);
+                                                                    new AlertDialog.Builder(HomeActivity.this)
+                                                                            .setMessage("Successfully sent form data")
+                                                                            .setNegativeButton("Ok",null).show();
+                                                                }
+                                                            }
+                                                        },
+                                                        new Response.ErrorListener() {
+                                                            @Override
+                                                            public void onErrorResponse(VolleyError error) {
+                                                                Log.e("HttpClient", "error: " + error.toString());
+                                                            }
+                                                        })
+                                                {
                                                     @Override
-                                                    public void onResponse(String response) {
-                                                        if(!response.equals("Success")){
-                                                            new AlertDialog.Builder(HomeActivity.this)
-                                                                    .setMessage("Error while sending to server.")
-                                                                    .setNegativeButton("Try Again",null).show();
-                                                        }
-                                                        else{
-                                                            seedGrower.setIsSent(true);
-                                                            seedGrowerViewModel.update(seedGrower);
-                                                            new AlertDialog.Builder(HomeActivity.this)
-                                                                    .setMessage("Successfully sent form data")
-                                                                    .setNegativeButton("Ok",null).show();
-                                                        }
+                                                    protected Map<String,String> getParams(){
+                                                        Map<String,String> params = new HashMap<>();
+                                                        params.put("formId","0");
+                                                        params.put("accredNo","");
+                                                        params.put("serial_number",seedGrower.getAccredno());
+                                                        params.put("seedSource",seedGrower.getSeedsource());
+                                                        params.put("otherSource",seedGrower.getOtherseedsource());
+                                                        params.put("variety",seedGrower.getVariety());
+                                                        params.put("seedClass",seedGrower.getSeedclass());
+                                                        params.put("datePlanted",seedGrower.getDateplanted());
+                                                        params.put("areaPlanted",seedGrower.getAreaplanted());
+                                                        params.put("quantity",seedGrower.getQuantity());
+                                                        params.put("seedbedArea",seedGrower.getSeedbedarea());
+                                                        params.put("seedlingAge",seedGrower.getSeedlingage());
+                                                        params.put("seedlot",seedGrower.getSeedlot());
+                                                        params.put("controlNo",seedGrower.getControlno());
+                                                        params.put("barangay",seedGrower.getBarangay());
+                                                        params.put("latitude",seedGrower.getLatitude());
+                                                        params.put("longitude",seedGrower.getLongitude());
+                                                        params.put("dateCollected",seedGrower.getDatecollected());
+                                                        params.put("androidid",seedGrower.getMacaddress());
+                                                        params.put("program",seedGrower.getRiceProgram());
+                                                        params.put("coop",seedGrower.getCoop());
+                                                        return params;
                                                     }
-                                                },
-                                                new Response.ErrorListener() {
-                                                    @Override
-                                                    public void onErrorResponse(VolleyError error) {
-                                                        Log.e("HttpClient", "error: " + error.toString());
-                                                    }
-                                                })
-                                        {
-                                            @Override
-                                            protected Map<String,String> getParams(){
-                                                Map<String,String> params = new HashMap<>();
-                                                params.put("formId","0");
-                                                params.put("accredNo","");
-                                                params.put("serial_number",seedGrower.getAccredno());
-                                                params.put("seedSource",seedGrower.getSeedsource());
-                                                params.put("otherSource",seedGrower.getOtherseedsource());
-                                                params.put("variety",seedGrower.getVariety());
-                                                params.put("seedClass",seedGrower.getSeedclass());
-                                                params.put("datePlanted",seedGrower.getDateplanted());
-                                                params.put("areaPlanted",seedGrower.getAreaplanted());
-                                                params.put("quantity",seedGrower.getQuantity());
-                                                params.put("seedbedArea",seedGrower.getSeedbedarea());
-                                                params.put("seedlingAge",seedGrower.getSeedlingage());
-                                                params.put("seedlot",seedGrower.getSeedlot());
-                                                params.put("controlNo",seedGrower.getControlno());
-                                                params.put("barangay",seedGrower.getBarangay());
-                                                params.put("latitude",seedGrower.getLatitude());
-                                                params.put("longitude",seedGrower.getLongitude());
-                                                params.put("dateCollected",seedGrower.getDatecollected());
-                                                params.put("androidid",seedGrower.getMacaddress());
-                                                params.put("program",seedGrower.getRiceProgram());
-                                                params.put("coop",seedGrower.getCoop());
-                                                return params;
+                                                };
+                                                queue.add(sr);
                                             }
-                                        };
-                                        queue.add(sr);
+
                                         }
                                         else{
                                             new AlertDialog.Builder(HomeActivity.this)

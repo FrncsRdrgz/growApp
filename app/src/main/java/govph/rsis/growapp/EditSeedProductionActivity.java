@@ -383,10 +383,8 @@ public class EditSeedProductionActivity extends AppCompatActivity implements Loc
         seedGrowers.setBarangay(barangay);
         seedGrowers.setDatecollected(datecollected);*/
 
-        if(seedVariety.matches("Select Variety") || seedSource.matches("Select Seed Source") || seedClass.matches("Select Seed Class")
-                || dateplanted.matches("") || areaPlanted.matches("") || seedQuantity.matches("") || seedbedArea.matches("") || seedlingAge.matches("")
-                || seedLot.matches("") || controlNo.matches("") || barangay.matches("") || riceProgram.matches("Select Rice Program") || coop.matches("")){
-            Toast.makeText(this, "Please fill up all the fields.", Toast.LENGTH_SHORT).show();
+        if(seedVariety.matches("Select Variety")){
+            Toast.makeText(this, "Please select Seed Variety.", Toast.LENGTH_SHORT).show();
         }
         else{
             seedGrowerViewModel = ViewModelProviders.of(this).get(SeedGrowerViewModel.class);
