@@ -107,9 +107,24 @@ public class HomeActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                seedGrowerViewModel.delete(adapter.getSeedGrowerAt(viewHolder.getAdapterPosition()));
-                Toast.makeText(HomeActivity.this, "Form deleted.", Toast.LENGTH_SHORT).show();
+            public void onSwiped(final @NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                new AlertDialog.Builder(HomeActivity. this )
+                        .setTitle("Delete Form?")
+                        .setMessage( "Are you sure you want to delete this?" )
+                        .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                seedGrowerViewModel.delete(adapter.getSeedGrowerAt(viewHolder.getAdapterPosition()));
+                                Toast.makeText(HomeActivity.this, "Form deleted.", Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                adapter.notifyDataSetChanged();
+                            }
+                        }).show();
+
             }
         }).attachToRecyclerView(rvSeedGrowers);
 
