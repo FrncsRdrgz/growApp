@@ -4077,6 +4077,7 @@ public final class R {
   }
   public static final class raw {
     public static final int data=0x7f0c0000;
+    public static final int result=0x7f0c0001;
   }
   public static final class string {
     public static final int abc_action_bar_home_description=0x7f0d0000;
