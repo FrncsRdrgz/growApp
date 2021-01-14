@@ -7,8 +7,8 @@ android {
         applicationId "govph.rsis.growapp"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 7
-        versionName "growapp v1.24"
+        versionCode 8
+        versionName "growapp v1.25"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

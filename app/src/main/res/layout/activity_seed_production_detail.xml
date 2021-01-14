@@ -594,7 +594,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/controlNo"
+                    android:text="Laboratory No."
                     android:textSize="18sp"
                     />
             </LinearLayout>
@@ -631,7 +631,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/barangay"
+                    android:text="Barangay (Farm Location)"
                     android:textSize="18sp"
                     />
             </LinearLayout>

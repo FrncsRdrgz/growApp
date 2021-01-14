@@ -201,6 +201,9 @@ public class HomeActivity extends AppCompatActivity {
                                                         new Response.ErrorListener() {
                                                             @Override
                                                             public void onErrorResponse(VolleyError error) {
+                                                                new AlertDialog.Builder(HomeActivity.this)
+                                                                        .setMessage("Error while sending data to server.")
+                                                                        .setNegativeButton("Try Again",null).show();
                                                                 Log.e("HttpClient", "error: " + error.toString());
                                                             }
                                                         })
