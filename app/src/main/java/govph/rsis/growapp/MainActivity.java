@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void readCSV() {
         database = SeedGrowerDatabase.getInstance(this);
-        InputStream is = getResources().openRawResource(R.raw.data);
+        InputStream is = getResources().openRawResource(R.raw.result);
         BufferedReader reader = new BufferedReader(
                 new InputStreamReader(is, Charset.forName("UTF-8"))
         );
