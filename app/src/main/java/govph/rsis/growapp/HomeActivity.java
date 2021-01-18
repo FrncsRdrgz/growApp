@@ -21,6 +21,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -165,6 +166,15 @@ public class HomeActivity extends AppCompatActivity {
                                 DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick (DialogInterface paramDialogInterface , int paramInt) {
+                                            LayoutInflater inflater = getLayoutInflater();
+                                            AlertDialog.Builder builder = new AlertDialog.Builder(HomeActivity.this);
+                                            View dialogView = inflater.inflate(R.layout.loading_template,null);
+                                            builder.setCancelable(false);
+                                            builder.setView(dialogView);
+
+                                            final AlertDialog progressDialog = builder.create();
+                                            progressDialog.show();
+
                                         if(isOnline()){
                                             if(seedGrower.getVariety().matches("Select Variety") || seedGrower.getSeedsource().matches("Select Seed Source")
                                                     || seedGrower.getSeedclass().matches("Select Seed Class") || seedGrower.getDateplanted().matches("")
@@ -172,7 +182,7 @@ public class HomeActivity extends AppCompatActivity {
                                                     || seedGrower.getSeedbedarea().matches("") || seedGrower.getSeedlingage().matches("")
                                                     || seedGrower.getSeedlot().matches("") || seedGrower.getControlno().matches("")
                                                     || seedGrower.getBarangay().matches("") || seedGrower.getRiceProgram().matches("Select Rice Program") || seedGrower.getCoop().matches("")){
-
+                                                progressDialog.hide();
                                                 new AlertDialog.Builder(HomeActivity.this)
                                                     .setMessage("Please fill out all the fields first before sending data.")
                                                     .setNegativeButton("Try Again",null).show();
@@ -185,11 +195,13 @@ public class HomeActivity extends AppCompatActivity {
                                                             @Override
                                                             public void onResponse(String response) {
                                                                 if(!response.equals("Success")){
+                                                                    progressDialog.hide();
                                                                     new AlertDialog.Builder(HomeActivity.this)
                                                                             .setMessage("Error while sending data to server.")
                                                                             .setNegativeButton("Try Again",null).show();
                                                                 }
                                                                 else{
+                                                                    progressDialog.hide();
                                                                     seedGrower.setIsSent(true);
                                                                     seedGrowerViewModel.update(seedGrower);
                                                                     new AlertDialog.Builder(HomeActivity.this)
@@ -201,6 +213,7 @@ public class HomeActivity extends AppCompatActivity {
                                                         new Response.ErrorListener() {
                                                             @Override
                                                             public void onErrorResponse(VolleyError error) {
+                                                                progressDialog.hide();
                                                                 new AlertDialog.Builder(HomeActivity.this)
                                                                         .setMessage("Error while sending data to server.")
                                                                         .setNegativeButton("Try Again",null).show();
@@ -240,6 +253,7 @@ public class HomeActivity extends AppCompatActivity {
 
                                         }
                                         else{
+                                            progressDialog.hide();
                                             new AlertDialog.Builder(HomeActivity.this)
                                                     .setTitle("No Internet Connection")
                                                     .setMessage("Internet connection is required to send form data.")

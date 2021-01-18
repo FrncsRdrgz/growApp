@@ -144,6 +144,10 @@
         "source": "C:\\Users\\fmrrodriguez\\.gradle\\caches\\transforms-2\\files-2.1\\697f71c0c12135256cbfe98df498a7e4\\appcompat-1.0.2\\res\\drawable\\abc_list_selector_holo_light.xml"
     },
     {
+        "merged": "D:\\AndroidStudioProjects\\GrowApp\\app\\build\\intermediates\\res\\merged\\debug\\color_chip_material_background.xml.flat",
+        "source": "C:\\Users\\fmrrodriguez\\.gradle\\caches\\transforms-2\\files-2.1\\840f3600b67b923bf91f51182a1244e7\\jetified-nachos-1.1.1\\res\\color\\chip_material_background.xml"
+    },
+    {
         "merged": "D:\\AndroidStudioProjects\\GrowApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_location_on_white_24dp.xml.flat",
         "source": "D:\\AndroidStudioProjects\\GrowApp\\app\\src\\main\\res\\drawable\\ic_location_on_white_24dp.xml"
     },
@@ -826,6 +830,10 @@
     {
         "merged": "D:\\AndroidStudioProjects\\GrowApp\\app\\build\\intermediates\\res\\merged\\debug\\color_abc_secondary_text_material_light.xml.flat",
         "source": "C:\\Users\\fmrrodriguez\\.gradle\\caches\\transforms-2\\files-2.1\\697f71c0c12135256cbfe98df498a7e4\\appcompat-1.0.2\\res\\color\\abc_secondary_text_material_light.xml"
+    },
+    {
+        "merged": "D:\\AndroidStudioProjects\\GrowApp\\app\\build\\intermediates\\res\\merged\\debug\\layout_loading_template.xml.flat",
+        "source": "D:\\AndroidStudioProjects\\GrowApp\\app\\src\\main\\res\\layout\\loading_template.xml"
     },
     {
         "merged": "D:\\AndroidStudioProjects\\GrowApp\\app\\build\\intermediates\\res\\merged\\debug\\layout_abc_alert_dialog_material.xml.flat",
