@@ -1,11 +1,11 @@
 <resources>
     <string name="getLocationBtn">Get My Location</string>
-    <string name="scanBtn">Scan Accreditation QR</string>
+    <string name="scanBtn">Scan ID</string>
     <string name="sendBtn">Send</string>
     <string name="viewBtn">View</string>
     <string name="app_name">GrowApp</string>
     <string name="copyright">Copyright 2020 - RSIS</string>
-    <string name="accreditation">Accreditation No.:</string>
+    <string name="serialNum">Serial Number:</string>
     <string name="latitude">Latitude:</string>
     <string name="longitude">Longitude:</string>
 
@@ -19,7 +19,9 @@
     <string name="seedbedArea">Seedbed Area (sqm)</string>
     <string name="seedlingAge">Seedling Age (days)</string>
     <string name="seedLot">Seed Lot No.</string>
-    <string name="controlNo">Control No.</string>
-    <string name="barangay">Barangay</string>
+    <string name="labNo">Laboratory No.</string>
+    <string name="barangay">Barangay (Farm Location)</string>
+    <string name="riceProgram">Rice Program</string>
+    <string name="coop">Affiliated Cooperative</string>
 
 </resources>

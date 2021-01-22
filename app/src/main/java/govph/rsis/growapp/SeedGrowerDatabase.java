@@ -6,7 +6,10 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-@Database(entities = {SeedGrower.class,Seeds.class}, version = 2, exportSchema = false)
+import govph.rsis.growapp.User.User;
+import govph.rsis.growapp.User.UserDao;
+
+@Database(entities = {SeedGrower.class,Seeds.class, User.class}, version = 3, exportSchema = false)
 public abstract class SeedGrowerDatabase extends RoomDatabase {
     public static final String DB_NAME ="seedgrower";
     private static SeedGrowerDatabase instance;
@@ -15,6 +18,7 @@ public abstract class SeedGrowerDatabase extends RoomDatabase {
         if(instance == null) {
             instance = Room.databaseBuilder(context.getApplicationContext(), SeedGrowerDatabase.class,DB_NAME)
                     .allowMainThreadQueries()
+                    .fallbackToDestructiveMigration()
                     .build();
         }
         return instance;
@@ -22,6 +26,7 @@ public abstract class SeedGrowerDatabase extends RoomDatabase {
 
     public abstract SeedGrowerDao seedGrowerDao();
     public abstract SeedsDao seedsDao();
+    public abstract UserDao userDao();
 
  /*   private static RoomDatabase.Callback roomCallback = new RoomDatabase.Callback(){
         @Override

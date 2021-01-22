@@ -26,6 +26,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,6 +36,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.material.button.MaterialButton;
 
 import java.util.HashMap;
 import java.util.List;
@@ -48,6 +50,7 @@ public class HomeActivity extends AppCompatActivity {
     private SeedGrowerViewModel seedGrowerViewModel;
     private int CAMERA_PERMISSION_CODE = 1;
     private boolean mPermissionGranted;
+    public static final int REQUEST_CODE = 0x9988;
     TextView tvDeleteAll,tvEmptyView;
     Toolbar toolbar;
     Intent intent;
@@ -61,7 +64,6 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         requestCameraPermission();
-        //Log.e(TAG, "onClick: "+ DebugDB.getAddressLog() );
         database = SeedGrowerDatabase.getInstance(this);
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -72,7 +74,26 @@ public class HomeActivity extends AppCompatActivity {
         rvSeedGrowers.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         rvSeedGrowers.setHasFixedSize(true);
 
+        int checkUser = database.userDao().isEmpty();
 
+        if(checkUser < 1){
+            LayoutInflater inflater = getLayoutInflater();
+            AlertDialog.Builder builder = new AlertDialog.Builder(HomeActivity.this);
+            View dialogView = inflater.inflate(R.layout.scan_dialog,null);
+            builder.setCancelable(false);
+            builder.setView(dialogView);
+            MaterialButton scanBtn = (MaterialButton) dialogView.findViewById(R.id.dialogBtnScan);
+            final AlertDialog progressDialog = builder.create();
+            progressDialog.show();
+
+            scanBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    intent = new Intent(HomeActivity.this, ScannerActivity.class);
+                    startActivityForResult(intent,REQUEST_CODE);
+                }
+            });
+        }
 
         final SeedGrowerAdapter adapter = new SeedGrowerAdapter();
         rvSeedGrowers.setAdapter(adapter);
