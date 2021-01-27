@@ -240,10 +240,8 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
         String datecollected = newDate.format(new Date());
         Boolean isSent = false;
 
-        if(seedVariety.matches("Select Variety") || seedSource.matches("Select Seed Surce") || riceProgram.matches("Select Rice Program") || seedClass.matches("Select Seed Class")
-        || dateplanted.matches("") || areaPlanted.matches("") || seedQuantity.matches("") || seedbedArea.matches("") || seedlingAge.matches("")
-        || seedLot.matches("") || controlNo.matches("") || barangay.matches("") || coop.matches("")){
-            Toast.makeText(this, "Please fill up all the fields.", Toast.LENGTH_SHORT).show();
+        if(seedVariety.matches("Select Variety") ){
+            Toast.makeText(this, "Please select variety.", Toast.LENGTH_SHORT).show();
         }else{
 
             seedGrowerViewModel = ViewModelProviders.of(this).get(SeedGrowerViewModel.class);
