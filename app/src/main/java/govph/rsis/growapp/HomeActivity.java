@@ -76,7 +76,7 @@ public class HomeActivity extends AppCompatActivity {
 
         int checkUser = database.userDao().isEmpty();
 
-        if(checkUser < 1){
+        /*if(checkUser < 1){
             LayoutInflater inflater = getLayoutInflater();
             AlertDialog.Builder builder = new AlertDialog.Builder(HomeActivity.this);
             View dialogView = inflater.inflate(R.layout.scan_dialog,null);
@@ -93,7 +93,7 @@ public class HomeActivity extends AppCompatActivity {
                     startActivityForResult(intent,REQUEST_CODE);
                 }
             });
-        }
+        }*/
 
         final SeedGrowerAdapter adapter = new SeedGrowerAdapter();
         rvSeedGrowers.setAdapter(adapter);
@@ -266,6 +266,8 @@ public class HomeActivity extends AppCompatActivity {
                                                         params.put("androidid",seedGrower.getMacaddress());
                                                         params.put("program",seedGrower.getRiceProgram());
                                                         params.put("coop",seedGrower.getCoop());
+                                                        params.put("previouscrop",seedGrower.getPreviousCrop());
+                                                        params.put("previousvariety",seedGrower.getPreviousVariety());
                                                         return params;
                                                     }
                                                 };

@@ -1,8 +1,8 @@
 1<?xml version="1.0" encoding="utf-8"?>
 2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
 3    package="govph.rsis.growapp"
-4    android:versionCode="8"
-5    android:versionName="growapp v1.25" >
+4    android:versionCode="9"
+5    android:versionName="growapp v1.50" >
 6
 7    <uses-sdk
 8        android:minSdkVersion="21"
@@ -34,7 +34,7 @@
 19        android:allowBackup="true"
 19-->D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml:13:9-35
 20        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
-20-->[androidx.core:core:1.1.0] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\e9dab9c67c1ee3668e0bbf86c6d8cbd8\core-1.1.0\AndroidManifest.xml:24:18-86
+20-->[androidx.core:core:1.2.0] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\2c4911487622891b7d804fc82995f4ba\core-1.2.0\AndroidManifest.xml:24:18-86
 21        android:icon="@mipmap/rsis_launcher"
 21-->D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml:14:9-45
 22        android:label="@string/app_name"

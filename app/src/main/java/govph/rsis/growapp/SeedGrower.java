@@ -70,8 +70,15 @@ public class SeedGrower {
     @ColumnInfo (name="coop")
     public String coop;
 
+    @ColumnInfo (name="previousCrop")
+    public String previousCrop;
+
+    @ColumnInfo (name="previousVariety")
+    public String previousVariety;
+
     public SeedGrower(String macaddress, String accredno, String latitude, String longitude, String variety, String seedsource, String otherseedsource, String seedclass, String dateplanted,
-                       String areaplanted, String quantity, String seedbedarea, String seedlingage, String seedlot, String controlno, String barangay, String datecollected, Boolean isSent,String riceProgram, String coop){
+                       String areaplanted, String quantity, String seedbedarea, String seedlingage, String seedlot, String controlno, String barangay, String datecollected, Boolean isSent,
+                      String riceProgram, String coop, String previousCrop, String previousVariety){
         this.macaddress = macaddress;
         this.accredno = accredno;
         this.latitude = latitude;
@@ -92,6 +99,8 @@ public class SeedGrower {
         this.isSent = isSent;
         this.riceProgram = riceProgram;
         this.coop = coop;
+        this.previousCrop = previousCrop;
+        this.previousVariety = previousVariety;
     }
 
 
@@ -154,4 +163,8 @@ public class SeedGrower {
     public String getRiceProgram() {return riceProgram;}
 
     public String getCoop() {return coop;}
+
+    public String getPreviousCrop(){return previousCrop;}
+
+    public String getPreviousVariety() { return previousVariety; }
 }

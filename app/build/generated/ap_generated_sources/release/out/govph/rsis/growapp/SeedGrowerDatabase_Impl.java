@@ -14,6 +14,8 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import androidx.sqlite.db.SupportSQLiteOpenHelper;
 import androidx.sqlite.db.SupportSQLiteOpenHelper.Callback;
 import androidx.sqlite.db.SupportSQLiteOpenHelper.Configuration;
+import govph.rsis.growapp.User.UserDao;
+import govph.rsis.growapp.User.UserDao_Impl;
 import java.lang.Override;
 import java.lang.String;
 import java.lang.SuppressWarnings;
@@ -27,21 +29,25 @@ public final class SeedGrowerDatabase_Impl extends SeedGrowerDatabase {
 
   private volatile SeedsDao _seedsDao;
 
+  private volatile UserDao _userDao;
+
   @Override
   protected SupportSQLiteOpenHelper createOpenHelper(DatabaseConfiguration configuration) {
-    final SupportSQLiteOpenHelper.Callback _openCallback = new RoomOpenHelper(configuration, new RoomOpenHelper.Delegate(2) {
+    final SupportSQLiteOpenHelper.Callback _openCallback = new RoomOpenHelper(configuration, new RoomOpenHelper.Delegate(5) {
       @Override
       public void createAllTables(SupportSQLiteDatabase _db) {
-        _db.execSQL("CREATE TABLE IF NOT EXISTS `SeedGrower` (`sgId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `macaddress` TEXT, `accredno` TEXT, `latitude` TEXT, `longitude` TEXT, `variety` TEXT, `seedsource` TEXT, `otherseedsource` TEXT, `seedclass` TEXT, `dateplanted` TEXT, `areaplanted` TEXT, `quantity` TEXT, `seedbedarea` TEXT, `seedlingage` TEXT, `seedlot` TEXT, `controlno` TEXT, `barangay` TEXT, `datecollected` TEXT, `isSent` INTEGER, `riceProgram` TEXT, `coop` TEXT)");
+        _db.execSQL("CREATE TABLE IF NOT EXISTS `SeedGrower` (`sgId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `macaddress` TEXT, `accredno` TEXT, `latitude` TEXT, `longitude` TEXT, `variety` TEXT, `seedsource` TEXT, `otherseedsource` TEXT, `seedclass` TEXT, `dateplanted` TEXT, `areaplanted` TEXT, `quantity` TEXT, `seedbedarea` TEXT, `seedlingage` TEXT, `seedlot` TEXT, `controlno` TEXT, `barangay` TEXT, `datecollected` TEXT, `isSent` INTEGER, `riceProgram` TEXT, `coop` TEXT, `previousCrop` TEXT, `previousVariety` TEXT)");
         _db.execSQL("CREATE TABLE IF NOT EXISTS `Seeds` (`seed_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `variety` TEXT)");
+        _db.execSQL("CREATE TABLE IF NOT EXISTS `User` (`userId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `serialNum` TEXT, `fullname` TEXT)");
         _db.execSQL("CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)");
-        _db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '8cb601c96442a8c9b4630b1dec013e5a')");
+        _db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '51b7352facf5f7c300fc45ea793d1255')");
       }
 
       @Override
       public void dropAllTables(SupportSQLiteDatabase _db) {
         _db.execSQL("DROP TABLE IF EXISTS `SeedGrower`");
         _db.execSQL("DROP TABLE IF EXISTS `Seeds`");
+        _db.execSQL("DROP TABLE IF EXISTS `User`");
         if (mCallbacks != null) {
           for (int _i = 0, _size = mCallbacks.size(); _i < _size; _i++) {
             mCallbacks.get(_i).onDestructiveMigration(_db);
@@ -80,7 +86,7 @@ public final class SeedGrowerDatabase_Impl extends SeedGrowerDatabase {
 
       @Override
       protected RoomOpenHelper.ValidationResult onValidateSchema(SupportSQLiteDatabase _db) {
-        final HashMap<String, TableInfo.Column> _columnsSeedGrower = new HashMap<String, TableInfo.Column>(21);
+        final HashMap<String, TableInfo.Column> _columnsSeedGrower = new HashMap<String, TableInfo.Column>(23);
         _columnsSeedGrower.put("sgId", new TableInfo.Column("sgId", "INTEGER", true, 1, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsSeedGrower.put("macaddress", new TableInfo.Column("macaddress", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsSeedGrower.put("accredno", new TableInfo.Column("accredno", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
@@ -102,6 +108,8 @@ public final class SeedGrowerDatabase_Impl extends SeedGrowerDatabase {
         _columnsSeedGrower.put("isSent", new TableInfo.Column("isSent", "INTEGER", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsSeedGrower.put("riceProgram", new TableInfo.Column("riceProgram", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsSeedGrower.put("coop", new TableInfo.Column("coop", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsSeedGrower.put("previousCrop", new TableInfo.Column("previousCrop", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsSeedGrower.put("previousVariety", new TableInfo.Column("previousVariety", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
         final HashSet<TableInfo.ForeignKey> _foreignKeysSeedGrower = new HashSet<TableInfo.ForeignKey>(0);
         final HashSet<TableInfo.Index> _indicesSeedGrower = new HashSet<TableInfo.Index>(0);
         final TableInfo _infoSeedGrower = new TableInfo("SeedGrower", _columnsSeedGrower, _foreignKeysSeedGrower, _indicesSeedGrower);
@@ -123,9 +131,22 @@ public final class SeedGrowerDatabase_Impl extends SeedGrowerDatabase {
                   + " Expected:\n" + _infoSeeds + "\n"
                   + " Found:\n" + _existingSeeds);
         }
+        final HashMap<String, TableInfo.Column> _columnsUser = new HashMap<String, TableInfo.Column>(3);
+        _columnsUser.put("userId", new TableInfo.Column("userId", "INTEGER", true, 1, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsUser.put("serialNum", new TableInfo.Column("serialNum", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsUser.put("fullname", new TableInfo.Column("fullname", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        final HashSet<TableInfo.ForeignKey> _foreignKeysUser = new HashSet<TableInfo.ForeignKey>(0);
+        final HashSet<TableInfo.Index> _indicesUser = new HashSet<TableInfo.Index>(0);
+        final TableInfo _infoUser = new TableInfo("User", _columnsUser, _foreignKeysUser, _indicesUser);
+        final TableInfo _existingUser = TableInfo.read(_db, "User");
+        if (! _infoUser.equals(_existingUser)) {
+          return new RoomOpenHelper.ValidationResult(false, "User(govph.rsis.growapp.User.User).\n"
+                  + " Expected:\n" + _infoUser + "\n"
+                  + " Found:\n" + _existingUser);
+        }
         return new RoomOpenHelper.ValidationResult(true, null);
       }
-    }, "8cb601c96442a8c9b4630b1dec013e5a", "b06a76af0fc4f3f04fd03db4e9fc75c4");
+    }, "51b7352facf5f7c300fc45ea793d1255", "d3edd41a6a917734e676cb210aec0228");
     final SupportSQLiteOpenHelper.Configuration _sqliteConfig = SupportSQLiteOpenHelper.Configuration.builder(configuration.context)
         .name(configuration.name)
         .callback(_openCallback)
@@ -138,7 +159,7 @@ public final class SeedGrowerDatabase_Impl extends SeedGrowerDatabase {
   protected InvalidationTracker createInvalidationTracker() {
     final HashMap<String, String> _shadowTablesMap = new HashMap<String, String>(0);
     HashMap<String, Set<String>> _viewTables = new HashMap<String, Set<String>>(0);
-    return new InvalidationTracker(this, _shadowTablesMap, _viewTables, "SeedGrower","Seeds");
+    return new InvalidationTracker(this, _shadowTablesMap, _viewTables, "SeedGrower","Seeds","User");
   }
 
   @Override
@@ -149,6 +170,7 @@ public final class SeedGrowerDatabase_Impl extends SeedGrowerDatabase {
       super.beginTransaction();
       _db.execSQL("DELETE FROM `SeedGrower`");
       _db.execSQL("DELETE FROM `Seeds`");
+      _db.execSQL("DELETE FROM `User`");
       super.setTransactionSuccessful();
     } finally {
       super.endTransaction();
@@ -183,6 +205,20 @@ public final class SeedGrowerDatabase_Impl extends SeedGrowerDatabase {
           _seedsDao = new SeedsDao_Impl(this);
         }
         return _seedsDao;
+      }
+    }
+  }
+
+  @Override
+  public UserDao userDao() {
+    if (_userDao != null) {
+      return _userDao;
+    } else {
+      synchronized(this) {
+        if(_userDao == null) {
+          _userDao = new UserDao_Impl(this);
+        }
+        return _userDao;
       }
     }
   }

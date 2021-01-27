@@ -10,6 +10,7 @@ import android.os.Handler;
 import android.util.Log;
 import android.widget.TextView;
 
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -30,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         tvVersion = (TextView) findViewById(R.id.tvVersion);
         database = SeedGrowerDatabase.getInstance(this);
-
+        //Log.e(TAG, "onCreate: "+ DebugDB.getAddressLog());
         int checkDB = database.seedsDao().isEmpty();
         Log.e(TAG, "onCreate: "+checkDB );
         if(checkDB < 1){

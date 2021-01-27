@@ -23,5 +23,7 @@
     <string name="barangay">Barangay (Farm Location)</string>
     <string name="riceProgram">Rice Program</string>
     <string name="coop">Affiliated Cooperative</string>
+    <string name="previousCrop">Previous Crop Planted</string>
+    <string name="previousVariety">Previous Variety Planted</string>
 
 </resources>

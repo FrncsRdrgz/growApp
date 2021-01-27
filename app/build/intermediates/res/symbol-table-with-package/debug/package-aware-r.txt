@@ -1528,6 +1528,7 @@ id accessibility_custom_action_6
 id accessibility_custom_action_7
 id accessibility_custom_action_8
 id accessibility_custom_action_9
+id actPreviousVariety
 id actRiceProgram
 id actSeedClass
 id actSeedSource
@@ -1715,6 +1716,8 @@ id linearDatePlanted
 id linearLabNo
 id linearLatitude
 id linearLongitude
+id linearPreviousCrop
+id linearPreviousVariety
 id linearRiceProgram
 id linearScanBtn
 id linearSeedBedArea
@@ -1866,6 +1869,7 @@ id tetBarangay
 id tetCoop
 id tetDatePlanted
 id tetLabNo
+id tetPreviousCrop
 id tetSeedBedArea
 id tetSeedLotNo
 id tetSeedQuantity
@@ -1908,6 +1912,8 @@ id tilBarangay
 id tilCooperative
 id tilDatePlanted
 id tilLabNo
+id tilPreviousCrop
+id tilPreviousVariety
 id tilRiceProgram
 id tilSeedBedArea
 id tilSeedClass
@@ -2216,6 +2222,8 @@ string path_password_eye
 string path_password_eye_mask_strike_through
 string path_password_eye_mask_visible
 string path_password_strike_through
+string previousCrop
+string previousVariety
 string riceProgram
 string scanBtn
 string search_menu_title

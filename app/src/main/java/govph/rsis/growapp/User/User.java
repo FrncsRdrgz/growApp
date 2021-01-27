@@ -12,11 +12,16 @@ public class User {
     @ColumnInfo(name = "serialNum")
     public String serialNum;
 
-    public void setSerialNum(String serialNum) {
-        this.serialNum = serialNum;
-    }
+    @ColumnInfo(name ="fullname")
+    public String fullname;
+    @ColumnInfo(name ="testColumn")
+    public String testColumn;
 
-    public String getSerialNum() {
-        return serialNum;
-    }
+    public void setSerialNum(String serialNum) { this.serialNum = serialNum; }
+
+    public String getSerialNum() { return serialNum; }
+
+    public String getFullname() { return fullname; }
+
+    public void setFullname(String fullname) { this.fullname = fullname; }
 }

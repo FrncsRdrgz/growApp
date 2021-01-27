@@ -82,12 +82,11 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
     LinearLayout l10, l11;
     TextView tvLatitude, tvLongitude, tvCancel,tvSave,tvAccredNo;
     Button getLocationBtn,scanBtn;
-    AutoCompleteTextView actVariety,actSeedClass, actSeedSource,actRiceProgram;
+    AutoCompleteTextView actVariety,actSeedClass, actSeedSource,actRiceProgram,actPreviousVariety;
     TextInputLayout tilVariety,tilSeedClass,tilSeedSource, tilRiceProgram,tilDatePlanted,tilAreaPlanted,tilSeedQuantity,tilSeedBedArea,tilSeedlingAge,tilSeedLotNo,tilLabNo,tilCooperative,tilBarangay;
-    ArrayAdapter<String> arrayAdapterVariety,arrayAdapterSeedClass,arrayAdapterSeedSource,arrayAdapterRiceProgram;
-    TextInputEditText tetDatePlanted,tetAreaPlanted,tetSeedQuantity,tetSeedBedArea,tetSeedlingAge,tetSeedLotNo,tetLabNo,tetCoop,tetBarangay;
+    ArrayAdapter<String> arrayAdapterVariety,arrayAdapterSeedClass,arrayAdapterSeedSource,arrayAdapterRiceProgram,arrayAdapterPreviousVariety;
+    TextInputEditText tetDatePlanted,tetAreaPlanted,tetSeedQuantity,tetSeedBedArea,tetSeedlingAge,tetSeedLotNo,tetLabNo,tetCoop,tetBarangay,tetPreviousCrop;
     ArrayList arrayListVarieties,arrayListSeedClass,arrayListSeedSource,arrayListRiceProgram;
-    //EditText etDatePlanted,etAreaPlanted, etSeedQuantity, etSeedbedArea, etSeedlingAge, etSeedLot, etControlNo, etBarangay, etOtherSource,etCoop;
 
     MaterialDatePicker.Builder materialBuilder;
     MaterialDatePicker materialDatePicker;
@@ -133,6 +132,7 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
         actVariety = (AutoCompleteTextView) findViewById(R.id.actVariety);
         actSeedSource = (AutoCompleteTextView) findViewById(R.id.actSeedSource);
         actRiceProgram = (AutoCompleteTextView) findViewById(R.id.actRiceProgram);
+        actPreviousVariety = (AutoCompleteTextView) findViewById(R.id.actPreviousVariety);
 
         tetDatePlanted = (TextInputEditText) findViewById(R.id.tetDatePlanted);
         tetAreaPlanted = (TextInputEditText) findViewById(R.id.tetAreaPlanted);
@@ -143,6 +143,7 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
         tetLabNo = (TextInputEditText) findViewById(R.id.tetLabNo);
         tetCoop = (TextInputEditText) findViewById(R.id.tetCoop);
         tetBarangay = (TextInputEditText) findViewById(R.id.tetCoop);
+        tetPreviousCrop = (TextInputEditText) findViewById(R.id.tetPreviousCrop);
 
         materialBuilder = MaterialDatePicker.Builder.datePicker();
         materialBuilder.setTitleText("Select Date Planted");
@@ -181,11 +182,15 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
         }
         //set layout of the variety
         arrayAdapterVariety = new ArrayAdapter<>(getApplicationContext(),R.layout.spinner_seed_variety,arrayListVarieties);
+        arrayAdapterPreviousVariety = new ArrayAdapter<>(getApplicationContext(),R.layout.spinner_seed_variety,arrayListVarieties);
         actVariety.setAdapter(arrayAdapterVariety);
         actVariety.setThreshold(1);
+        actPreviousVariety.setAdapter(arrayAdapterPreviousVariety);
+        actPreviousVariety.setThreshold(1);
 
         //populate the Arraylist of seed class
         arrayListSeedClass = new ArrayList<>();
+        arrayListSeedClass.add("Breeder");
         arrayListSeedClass.add("Foundation");
         arrayListSeedClass.add("Registered");
 
@@ -241,13 +246,7 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
             }
         });
         //set the Save text clickable
-        tvSave.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
 
-                Log.e(TAG, "Selected Variety " +actVariety.getText() );
-            }
-        });
 
         tetDatePlanted.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -259,6 +258,17 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
             @Override
             public void onPositiveButtonClick(Object selection) {
                 tetDatePlanted.setText(materialDatePicker.getHeaderText());
+            }
+        });
+
+        tvSave.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                if(actVariety.getText().toString().equals("")){
+                    Toast.makeText(SeedProductionDetailActivity.this, "Please select Seed Variety.", Toast.LENGTH_SHORT).show();
+                }else{
+                    saveForm();
+                }
             }
         });
         //open datepicker
@@ -367,12 +377,7 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
             }
         });
 
-        tvSave.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                saveForm();
-            }
-        });*/
+        ;*/
 
 
     }
@@ -402,9 +407,57 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
         }
     };
 
-    /*public void saveForm() {
-        SimpleDateFormat sdf = new SimpleDateFormat("MMMM dd, yyyy");//set format of date you receiving from db
+    public void saveForm() {
         Date date = null;
+        String dateplanted;
+        SimpleDateFormat sdf = new SimpleDateFormat("d MMM yyyy");
+        try {
+            date = (Date) sdf.parse(tetDatePlanted.getText().toString());
+        } catch (ParseException e) {
+            Log.e(TAG, "error parsing date");
+        }
+
+        SimpleDateFormat timestamp = new SimpleDateFormat("dd-MM-yyyy-hh-mm-ss");
+        SimpleDateFormat newDate = new SimpleDateFormat("yyyy-MM-dd");
+        //Log.e(TAG, "onCreate: "+format);
+        Log.e(TAG, "date: "+ date );
+
+        if(date == null){
+            dateplanted = "0000-00-00";
+        }else {
+            dateplanted = newDate.format(date);// here is your new date !
+        }
+
+        String uniqueid = md5(uniqueId+"-"+ getMacAddr()+"-"+ timestamp);
+        String accredno = tvAccredNo.getText().toString();
+        String latitude = tvLatitude.getText().toString();
+        String longitude = tvLongitude.getText().toString();
+        String seedVariety = actVariety.getText().toString();
+        String seedSource = actSeedSource.getText().toString();
+        String otherSeedSource = "";
+        String seedClass = actSeedClass.getText().toString();
+        String riceProgram = actRiceProgram.getText().toString();
+
+        String areaPlanted = tetAreaPlanted.getText().toString();
+        String seedQuantity = tetSeedQuantity.getText().toString();
+        String seedbedArea = tetSeedBedArea.getText().toString();
+        String seedlingAge = tetSeedlingAge.getText().toString();
+        String seedLot = tetSeedLotNo.getText().toString();
+        String controlNo = tetLabNo.getText().toString();
+        String barangay = tetBarangay.getText().toString();
+        String coop = tetCoop.getText().toString();
+        String datecollected = newDate.format(new Date());
+        Boolean isSent = false;
+        String previousCrop = tetPreviousCrop.getText().toString();
+        String previousVariety = actPreviousVariety.getText().toString();
+
+
+            seedGrowerViewModel = ViewModelProviders.of(this).get(SeedGrowerViewModel.class);
+            SeedGrower seedGrower = new SeedGrower(uniqueid,accredno,latitude,longitude,seedVariety,seedSource,otherSeedSource,seedClass,dateplanted,
+                    areaPlanted,seedQuantity,seedbedArea,seedlingAge,seedLot,controlNo,barangay,datecollected,isSent,riceProgram,coop,previousCrop,previousVariety);
+            seedGrowerViewModel.insert(seedGrower);
+            finish();
+        /*Date date = null;
         String dateplanted;
         try {
             date = (Date) sdf.parse(etDatePlanted.getText().toString());
@@ -456,9 +509,9 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
                 areaPlanted,seedQuantity,seedbedArea,seedlingAge,seedLot,controlNo,barangay,datecollected,isSent,riceProgram,coop);
         seedGrowerViewModel.insert(seedGrower);
         finish();
-        }
+        }*/
 
-    }*/
+    }
 
     public void getLocation() {
         if (ContextCompat.checkSelfPermission(SeedProductionDetailActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
