@@ -107,7 +107,7 @@ public class SentItemActivity extends AppCompatActivity {
                     linear17.setVisibility(View.GONE);
 
                     //populate all the textviews according to designation
-                    textStation.setText(seedGrower.getStation());
+                    textStation.setText(seedGrower.getSeedsource());
                     textvariety1.setText(seedGrower.getVariety());
                     textclass1.setText(seedGrower.getSeedclass());
                     textplanted1.setText(seedGrower.getDateplanted());

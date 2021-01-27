@@ -185,7 +185,7 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
             Toast.makeText(this, "Please fill up all the fields.", Toast.LENGTH_SHORT).show();
         }else{
             seedGrowerViewModel = ViewModelProviders.of(this).get(SeedGrowerViewModel.class);
-            SeedGrower seedGrower = new SeedGrower(station,uniqueid,accredno,latitude,longitude,seedVariety,seedSource,otherSeedSource,seedClass,dateplanted,
+            SeedGrower seedGrower = new SeedGrower(uniqueid,accredno,latitude,longitude,seedVariety,seedSource,otherSeedSource,seedClass,dateplanted,
                     areaPlanted,seedQuantity,seedbedArea,seedlingAge,seedLot,controlNo,barangay,datecollected,isSent,riceProgram,coop);
             seedGrower.setDesignation(userCategory);
             seedGrowerViewModel.insert(seedGrower);
@@ -245,7 +245,7 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
         }else{
 
             seedGrowerViewModel = ViewModelProviders.of(this).get(SeedGrowerViewModel.class);
-        SeedGrower seedGrower = new SeedGrower(station,uniqueid,accredno,latitude,longitude,seedVariety,seedSource,otherSeedSource,seedClass,dateplanted,
+        SeedGrower seedGrower = new SeedGrower(uniqueid,accredno,latitude,longitude,seedVariety,seedSource,otherSeedSource,seedClass,dateplanted,
                 areaPlanted,seedQuantity,seedbedArea,seedlingAge,seedLot,controlNo,barangay,datecollected,isSent,riceProgram,coop);
         seedGrower.setDesignation(userCategory);
         seedGrowerViewModel.insert(seedGrower);

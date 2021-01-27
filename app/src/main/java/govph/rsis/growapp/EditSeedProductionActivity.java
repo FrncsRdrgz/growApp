@@ -173,7 +173,7 @@ public class EditSeedProductionActivity extends AppCompatActivity implements Loc
         }
         else{
             seedGrowerViewModel = ViewModelProviders.of(this).get(SeedGrowerViewModel.class);
-            SeedGrower seedGrower = new SeedGrower(station,uniqueid,accredno,latitude,longitude,seedVariety,seedSource,otherSeedSource,seedClass,dateplanted,
+            SeedGrower seedGrower = new SeedGrower(uniqueid,accredno,latitude,longitude,seedVariety,seedSource,otherSeedSource,seedClass,dateplanted,
                     areaPlanted,seedQuantity,seedbedArea,seedlingAge,seedLot,controlNo,barangay,datecollected,isSent,riceProgram,coop);
             seedGrower.setSgId(id);
             seedGrower.setDesignation(seedGrowers.getDesignation());
@@ -246,7 +246,7 @@ public class EditSeedProductionActivity extends AppCompatActivity implements Loc
         }
         else{
             seedGrowerViewModel = ViewModelProviders.of(this).get(SeedGrowerViewModel.class);
-            SeedGrower seedGrower = new SeedGrower(station,uniqueid,accredno,latitude,longitude,seedVariety,seedSource,otherSeedSource,seedClass,dateplanted,
+            SeedGrower seedGrower = new SeedGrower(uniqueid,accredno,latitude,longitude,seedVariety,seedSource,otherSeedSource,seedClass,dateplanted,
                     areaPlanted,seedQuantity,seedbedArea,seedlingAge,seedLot,controlNo,barangay,datecollected,isSent,riceProgram,coop);
             seedGrower.setSgId(id);
             seedGrower.setDesignation(seedGrowers.getDesignation());
@@ -695,7 +695,7 @@ public class EditSeedProductionActivity extends AppCompatActivity implements Loc
         );
         spinnerArrayAdapter1.setDropDownViewResource(R.layout.spinner_seed_source);
         stationSpinner.setAdapter(spinnerArrayAdapter1);
-        stationSpinner.setSelection(spinnerArrayAdapter1.getPosition(seedGrowers.getStation()));
+        stationSpinner.setSelection(spinnerArrayAdapter1.getPosition(seedGrowers.getSeedsource()));
 
         //spinner for Seed Varieties
         ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(

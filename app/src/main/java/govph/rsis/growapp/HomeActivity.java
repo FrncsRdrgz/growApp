@@ -189,7 +189,9 @@ public class HomeActivity extends AppCompatActivity {
                                                     protected Map<String,String> getParams(){
                                                         Map<String,String> params = new HashMap<>();
                                                         params.put("formId","0");
-                                                        params.put("station",seedGrower.getStation());
+                                                        params.put("accredNo",seedGrower.getAccredno());
+                                                        params.put("seedSource",seedGrower.getSeedsource());
+                                                        params.put("otherSource",seedGrower.getOtherseedsource());
                                                         params.put("variety",seedGrower.getVariety());
                                                         params.put("seedClass",seedGrower.getSeedclass());
                                                         params.put("datePlanted",seedGrower.getDateplanted());
@@ -204,6 +206,8 @@ public class HomeActivity extends AppCompatActivity {
                                                         params.put("longitude",seedGrower.getLongitude());
                                                         params.put("dateCollected",seedGrower.getDatecollected());
                                                         params.put("androidid",seedGrower.getMacaddress());
+                                                        params.put("program",seedGrower.getRiceProgram());
+                                                        params.put("coop",seedGrower.getCoop());
                                                         return params;
                                                     }
                                                 };
