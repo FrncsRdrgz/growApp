@@ -4,10 +4,7 @@ ADDED from D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml:2:1
 INJECTED from D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml:2:1-33:12
 INJECTED from D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml:2:1-33:12
 INJECTED from D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml:2:1-33:12
-MERGED from [com.amitshekhar.android:debug-db-encrypt:1.0.6] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\27762c4361d4ce6e58b39b2893cdc38b\debug-db-encrypt-1.0.6\AndroidManifest.xml:2:1-19:12
-MERGED from [com.amitshekhar.android:debug-db:1.0.6] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\55306c0cb336335b9894e3e4137fe288\debug-db-1.0.6\AndroidManifest.xml:2:1-19:12
 MERGED from [com.toptoche.searchablespinner:searchablespinnerlibrary:1.3.1] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\ff4626774921e721d75f44ab97b5a0e6\searchablespinnerlibrary-1.3.1\AndroidManifest.xml:2:1-17:12
-MERGED from [com.amitshekhar.android:debug-db-base:1.0.6] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\f0f0d8ae0c2720574daa29acbfaead5a\jetified-debug-db-base-1.0.6\AndroidManifest.xml:20:1-32:12
 MERGED from [androidx.room:room-runtime:2.2.4] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\11f4c3c7c12bfb2d178ad7664c295997\room-runtime-2.2.4\AndroidManifest.xml:17:1-30:12
 MERGED from [com.budiyev.android:code-scanner:2.1.0] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\ff01aa52d6fc15d3aac5b91441ba64e7\code-scanner-2.1.0\AndroidManifest.xml:2:1-11:12
 MERGED from [com.google.android.material:material:1.2.1] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\5e3effe35f7803107da8da2ed1de9f2e\material-1.2.1\AndroidManifest.xml:17:1-24:12
@@ -19,7 +16,6 @@ MERGED from [com.android.volley:volley:1.1.1] C:\Users\fmrrodriguez\.gradle\cach
 MERGED from [androidx.viewpager2:viewpager2:1.0.0] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\056634285937b2535ff256884ac7cf86\viewpager2-1.0.0\AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.recyclerview:recyclerview:1.1.0] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\a53596bdd308807993a20732db231575\recyclerview-1.1.0\AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.cardview:cardview:1.0.0] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\4fe44ae24daa7cfa2dd483a5d3b65a2f\cardview-1.0.0\AndroidManifest.xml:17:1-22:12
-MERGED from [net.zetetic:android-database-sqlcipher:3.5.9] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\215c9ab417940bcbad2d6938a85bb85c\android-database-sqlcipher-3.5.9\AndroidManifest.xml:2:1-11:12
 MERGED from [androidx.sqlite:sqlite-framework:2.0.1] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\4201d4fddd555218353508e225243933\sqlite-framework-2.0.1\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.sqlite:sqlite:2.0.1] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\97ca5fa275069525f960e29c6644a280\sqlite-2.0.1\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.legacy:legacy-support-core-ui:1.0.0] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\ec593f8d91037f6ef1bbcd6a177afa1c\legacy-support-core-ui-1.0.0\AndroidManifest.xml:17:1-22:12
@@ -86,8 +82,6 @@ ADDED from D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml:7:5
 		ADDED from D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml:7:22-62
 uses-permission#android.permission.INTERNET
 ADDED from D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml:8:5-67
-MERGED from [com.amitshekhar.android:debug-db-base:1.0.6] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\f0f0d8ae0c2720574daa29acbfaead5a\jetified-debug-db-base-1.0.6\AndroidManifest.xml:29:5-67
-MERGED from [com.amitshekhar.android:debug-db-base:1.0.6] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\f0f0d8ae0c2720574daa29acbfaead5a\jetified-debug-db-base-1.0.6\AndroidManifest.xml:29:5-67
 	android:name
 		ADDED from D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml:8:22-64
 uses-permission#android.permission.READ_PHONE_STATE
@@ -100,10 +94,6 @@ ADDED from D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml:10:
 		ADDED from D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml:10:22-76
 application
 ADDED from D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml:12:5-31:19
-MERGED from [com.amitshekhar.android:debug-db-encrypt:1.0.6] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\27762c4361d4ce6e58b39b2893cdc38b\debug-db-encrypt-1.0.6\AndroidManifest.xml:11:5-17:19
-MERGED from [com.amitshekhar.android:debug-db-encrypt:1.0.6] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\27762c4361d4ce6e58b39b2893cdc38b\debug-db-encrypt-1.0.6\AndroidManifest.xml:11:5-17:19
-MERGED from [com.amitshekhar.android:debug-db:1.0.6] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\55306c0cb336335b9894e3e4137fe288\debug-db-1.0.6\AndroidManifest.xml:11:5-17:19
-MERGED from [com.amitshekhar.android:debug-db:1.0.6] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\55306c0cb336335b9894e3e4137fe288\debug-db-1.0.6\AndroidManifest.xml:11:5-17:19
 MERGED from [com.toptoche.searchablespinner:searchablespinnerlibrary:1.3.1] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\ff4626774921e721d75f44ab97b5a0e6\searchablespinnerlibrary-1.3.1\AndroidManifest.xml:11:5-15:19
 MERGED from [com.toptoche.searchablespinner:searchablespinnerlibrary:1.3.1] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\ff4626774921e721d75f44ab97b5a0e6\searchablespinnerlibrary-1.3.1\AndroidManifest.xml:11:5-15:19
 MERGED from [androidx.room:room-runtime:2.2.4] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\11f4c3c7c12bfb2d178ad7664c295997\room-runtime-2.2.4\AndroidManifest.xml:24:5-28:19
@@ -174,14 +164,8 @@ uses-sdk
 INJECTED from D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml
 INJECTED from D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml
-MERGED from [com.amitshekhar.android:debug-db-encrypt:1.0.6] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\27762c4361d4ce6e58b39b2893cdc38b\debug-db-encrypt-1.0.6\AndroidManifest.xml:7:5-9:41
-MERGED from [com.amitshekhar.android:debug-db-encrypt:1.0.6] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\27762c4361d4ce6e58b39b2893cdc38b\debug-db-encrypt-1.0.6\AndroidManifest.xml:7:5-9:41
-MERGED from [com.amitshekhar.android:debug-db:1.0.6] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\55306c0cb336335b9894e3e4137fe288\debug-db-1.0.6\AndroidManifest.xml:7:5-9:41
-MERGED from [com.amitshekhar.android:debug-db:1.0.6] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\55306c0cb336335b9894e3e4137fe288\debug-db-1.0.6\AndroidManifest.xml:7:5-9:41
 MERGED from [com.toptoche.searchablespinner:searchablespinnerlibrary:1.3.1] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\ff4626774921e721d75f44ab97b5a0e6\searchablespinnerlibrary-1.3.1\AndroidManifest.xml:7:5-9:41
 MERGED from [com.toptoche.searchablespinner:searchablespinnerlibrary:1.3.1] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\ff4626774921e721d75f44ab97b5a0e6\searchablespinnerlibrary-1.3.1\AndroidManifest.xml:7:5-9:41
-MERGED from [com.amitshekhar.android:debug-db-base:1.0.6] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\f0f0d8ae0c2720574daa29acbfaead5a\jetified-debug-db-base-1.0.6\AndroidManifest.xml:25:5-27:41
-MERGED from [com.amitshekhar.android:debug-db-base:1.0.6] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\f0f0d8ae0c2720574daa29acbfaead5a\jetified-debug-db-base-1.0.6\AndroidManifest.xml:25:5-27:41
 MERGED from [androidx.room:room-runtime:2.2.4] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\11f4c3c7c12bfb2d178ad7664c295997\room-runtime-2.2.4\AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.room:room-runtime:2.2.4] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\11f4c3c7c12bfb2d178ad7664c295997\room-runtime-2.2.4\AndroidManifest.xml:20:5-22:41
 MERGED from [com.budiyev.android:code-scanner:2.1.0] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\ff01aa52d6fc15d3aac5b91441ba64e7\code-scanner-2.1.0\AndroidManifest.xml:7:5-9:41
@@ -204,8 +188,6 @@ MERGED from [androidx.recyclerview:recyclerview:1.1.0] C:\Users\fmrrodriguez\.gr
 MERGED from [androidx.recyclerview:recyclerview:1.1.0] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\a53596bdd308807993a20732db231575\recyclerview-1.1.0\AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.cardview:cardview:1.0.0] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\4fe44ae24daa7cfa2dd483a5d3b65a2f\cardview-1.0.0\AndroidManifest.xml:20:5-44
 MERGED from [androidx.cardview:cardview:1.0.0] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\4fe44ae24daa7cfa2dd483a5d3b65a2f\cardview-1.0.0\AndroidManifest.xml:20:5-44
-MERGED from [net.zetetic:android-database-sqlcipher:3.5.9] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\215c9ab417940bcbad2d6938a85bb85c\android-database-sqlcipher-3.5.9\AndroidManifest.xml:7:5-9:41
-MERGED from [net.zetetic:android-database-sqlcipher:3.5.9] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\215c9ab417940bcbad2d6938a85bb85c\android-database-sqlcipher-3.5.9\AndroidManifest.xml:7:5-9:41
 MERGED from [androidx.sqlite:sqlite-framework:2.0.1] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\4201d4fddd555218353508e225243933\sqlite-framework-2.0.1\AndroidManifest.xml:20:5-44
 MERGED from [androidx.sqlite:sqlite-framework:2.0.1] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\4201d4fddd555218353508e225243933\sqlite-framework-2.0.1\AndroidManifest.xml:20:5-44
 MERGED from [androidx.sqlite:sqlite:2.0.1] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\97ca5fa275069525f960e29c6644a280\sqlite-2.0.1\AndroidManifest.xml:20:5-44
@@ -286,30 +268,6 @@ INJECTED from D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml
 		INJECTED from D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml
 		ADDED from D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml
 		INJECTED from D:\AndroidStudioProjects\GrowApp\app\src\main\AndroidManifest.xml
-provider#com.amitshekhar.debug.encrypt.DebugDBEncryptInitProvider
-ADDED from [com.amitshekhar.android:debug-db-encrypt:1.0.6] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\27762c4361d4ce6e58b39b2893cdc38b\debug-db-encrypt-1.0.6\AndroidManifest.xml:12:9-16:40
-	android:enabled
-		ADDED from [com.amitshekhar.android:debug-db-encrypt:1.0.6] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\27762c4361d4ce6e58b39b2893cdc38b\debug-db-encrypt-1.0.6\AndroidManifest.xml:15:13-35
-	android:authorities
-		ADDED from [com.amitshekhar.android:debug-db-encrypt:1.0.6] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\27762c4361d4ce6e58b39b2893cdc38b\debug-db-encrypt-1.0.6\AndroidManifest.xml:14:13-78
-	android:exported
-		ADDED from [com.amitshekhar.android:debug-db-encrypt:1.0.6] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\27762c4361d4ce6e58b39b2893cdc38b\debug-db-encrypt-1.0.6\AndroidManifest.xml:16:13-37
-	android:name
-		ADDED from [com.amitshekhar.android:debug-db-encrypt:1.0.6] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\27762c4361d4ce6e58b39b2893cdc38b\debug-db-encrypt-1.0.6\AndroidManifest.xml:13:13-84
-provider#com.amitshekhar.debug.DebugDBInitProvider
-ADDED from [com.amitshekhar.android:debug-db:1.0.6] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\55306c0cb336335b9894e3e4137fe288\debug-db-1.0.6\AndroidManifest.xml:12:9-16:40
-	android:enabled
-		ADDED from [com.amitshekhar.android:debug-db:1.0.6] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\55306c0cb336335b9894e3e4137fe288\debug-db-1.0.6\AndroidManifest.xml:15:13-35
-	android:authorities
-		ADDED from [com.amitshekhar.android:debug-db:1.0.6] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\55306c0cb336335b9894e3e4137fe288\debug-db-1.0.6\AndroidManifest.xml:14:13-71
-	android:exported
-		ADDED from [com.amitshekhar.android:debug-db:1.0.6] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\55306c0cb336335b9894e3e4137fe288\debug-db-1.0.6\AndroidManifest.xml:16:13-37
-	android:name
-		ADDED from [com.amitshekhar.android:debug-db:1.0.6] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\55306c0cb336335b9894e3e4137fe288\debug-db-1.0.6\AndroidManifest.xml:13:13-69
-uses-permission#android.permission.ACCESS_WIFI_STATE
-ADDED from [com.amitshekhar.android:debug-db-base:1.0.6] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\f0f0d8ae0c2720574daa29acbfaead5a\jetified-debug-db-base-1.0.6\AndroidManifest.xml:30:5-76
-	android:name
-		ADDED from [com.amitshekhar.android:debug-db-base:1.0.6] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\f0f0d8ae0c2720574daa29acbfaead5a\jetified-debug-db-base-1.0.6\AndroidManifest.xml:30:22-73
 service#androidx.room.MultiInstanceInvalidationService
 ADDED from [androidx.room:room-runtime:2.2.4] C:\Users\fmrrodriguez\.gradle\caches\transforms-2\files-2.1\11f4c3c7c12bfb2d178ad7664c295997\room-runtime-2.2.4\AndroidManifest.xml:25:9-27:40
 	android:exported

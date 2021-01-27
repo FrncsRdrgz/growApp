@@ -2127,7 +2127,6 @@ mipmap rsis_launcher_round
 plurals mtrl_badge_content_description
 raw data
 raw result
-string PORT_NUMBER
 string abc_action_bar_home_description
 string abc_action_bar_up_description
 string abc_action_menu_overflow_description
