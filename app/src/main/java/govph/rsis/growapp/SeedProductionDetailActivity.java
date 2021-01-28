@@ -502,7 +502,7 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
         Boolean isSent = false;
 
         if(seedVariety.matches("Select Variety")){
-            Toast.makeText(this, "Please select Seed Variety.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please select Seed variety.", Toast.LENGTH_SHORT).show();
         }else{
             seedGrowerViewModel = ViewModelProviders.of(this).get(SeedGrowerViewModel.class);
         SeedGrower seedGrower = new SeedGrower(uniqueid,accredno,latitude,longitude,seedVariety,seedSource,otherSeedSource,seedClass,dateplanted,
