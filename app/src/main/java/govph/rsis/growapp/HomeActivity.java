@@ -197,9 +197,10 @@ public class HomeActivity extends AppCompatActivity {
                                             progressDialog.show();
 
                                         if(isOnline()){
+                                            
                                             if(seedGrower.getVariety().matches("Select Variety") || seedGrower.getSeedsource().matches("Select Seed Source")
                                                     || seedGrower.getSeedclass().matches("Select Seed Class") || seedGrower.getDateplanted().matches("0002-11-30")
-                                                    || seedGrower.getDateplanted().matches("-0001-11-30")
+                                                    || seedGrower.getDateplanted().matches("-0001-11-30") || seedGrower.getDateplanted().matches("0000-00-00")
                                                     || seedGrower.getAreaplanted().matches("") || seedGrower.getQuantity().matches("")
                                                     || seedGrower.getSeedbedarea().matches("") || seedGrower.getSeedlingage().matches("")
                                                     || seedGrower.getSeedlot().matches("") || seedGrower.getControlno().matches("")
