@@ -20,9 +20,9 @@ public abstract class SeedGrowerDatabase extends RoomDatabase {
     static final Migration MIGRATION_2_3 = new Migration(2,3) {
         @Override
         public void migrate(@NonNull SupportSQLiteDatabase database) {
-            database.execSQL("CREATE TABLE `User` (`userId` INTEGER, "
+            database.execSQL("CREATE TABLE `User` (`userId` INTEGER PRIMARY KEY, "
                     + "`serialNum` TEXT,"
-                    +"`fullname` TEXT, PRIMARY KEY(`userId`))");
+                    +"`fullname` TEXT)");
         }
     };
     static final Migration MIGRATION_3_4 = new Migration(3,4) {
