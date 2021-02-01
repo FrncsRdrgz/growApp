@@ -14,8 +14,6 @@ public class User {
 
     @ColumnInfo(name ="fullname")
     public String fullname;
-    @ColumnInfo(name ="testColumn")
-    public String testColumn;
 
     public void setSerialNum(String serialNum) { this.serialNum = serialNum; }
 
