@@ -12,7 +12,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import govph.rsis.growapp.User.User;
 import govph.rsis.growapp.User.UserDao;
 
-@Database(entities = {SeedGrower.class,Seeds.class, User.class}, version = 5, exportSchema = false)
+@Database(entities = {SeedGrower.class,Seeds.class, User.class}, version = 5, exportSchema = true)
 public abstract class SeedGrowerDatabase extends RoomDatabase {
     public static final String DB_NAME ="seedgrower";
     private static SeedGrowerDatabase instance;
@@ -20,7 +20,7 @@ public abstract class SeedGrowerDatabase extends RoomDatabase {
     static final Migration MIGRATION_2_3 = new Migration(2,3) {
         @Override
         public void migrate(@NonNull SupportSQLiteDatabase database) {
-            database.execSQL("CREATE TABLE `User` (`userId` INTEGER PRIMARY KEY, "
+            database.execSQL("CREATE TABLE `User` (`userId` INTEGER PRIMARY KEY NOT NULL, "
                     + "`serialNum` TEXT,"
                     +"`fullname` TEXT)");
         }

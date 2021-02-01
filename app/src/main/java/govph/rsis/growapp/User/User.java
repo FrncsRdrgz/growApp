@@ -7,7 +7,8 @@ import androidx.room.PrimaryKey;
 @Entity
 public class User {
 
-
+    @PrimaryKey(autoGenerate = true)
+    public int userId;
 
     @ColumnInfo(name = "serialNum")
     public String serialNum;
@@ -15,8 +16,6 @@ public class User {
     @ColumnInfo(name ="fullname")
     public String fullname;
     
-    @PrimaryKey(autoGenerate = true)
-    public int userId;
 
     public void setSerialNum(String serialNum) { this.serialNum = serialNum; }
 
