@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="govph.rsis.growapp"
     android:targetSandboxVersion="2"
-    android:versionCode="10"
-    android:versionName="growapp v1.51" >
+    android:versionCode="11"
+    android:versionName="growapp v1.52" >
 
     <uses-sdk
         android:minSdkVersion="21"
@@ -24,7 +24,6 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:testOnly="true"
         android:theme="@style/AppTheme" >
         <activity android:name="govph.rsis.growapp.ScannerActivity" />
         <activity android:name="govph.rsis.growapp.EditSeedProductionActivity" />

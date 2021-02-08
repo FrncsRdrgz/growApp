@@ -62,7 +62,7 @@ import java.util.Date;
 import java.util.List;
 
 public class EditSeedProductionActivity extends AppCompatActivity implements LocationListener {
-    public static final String[] MONTHS = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
+    public static final String[] MONTHS = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sepr", "Oct", "Nov", "Dec"};
     private static final String TAG = "EditSeedProduction";
     private int LOCATION_PERMISSION_CODE = 1;
     private int CAMERA_PERMISSION_CODE = 1;
@@ -270,8 +270,29 @@ public class EditSeedProductionActivity extends AppCompatActivity implements Loc
         });
         //set the Save text clickable
 
-
         tetDatePlanted.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Calendar cal = Calendar.getInstance();
+                int year = cal.get(Calendar.YEAR);
+                int month = cal.get(Calendar.MONTH);
+                int day = cal.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog dialog = new DatePickerDialog(EditSeedProductionActivity.this, android.R.style.Theme_Holo_Dialog_MinWidth, mDateSetListener, year, month, day);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.show();
+            }
+        });
+
+        mDateSetListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                String date = dayOfMonth +" "+MONTHS[month] +" "+year;
+                tetDatePlanted.setText(date);
+            }
+        };
+
+        /*tetDatePlanted.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 materialDatePicker.show(getSupportFragmentManager(),"DATE_PICKER");
@@ -282,7 +303,7 @@ public class EditSeedProductionActivity extends AppCompatActivity implements Loc
             public void onPositiveButtonClick(Object selection) {
                 tetDatePlanted.setText(materialDatePicker.getHeaderText());
             }
-        });
+        });*/
 
         tvSave.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -511,12 +532,20 @@ public class EditSeedProductionActivity extends AppCompatActivity implements Loc
     public void UpdateFunction(){
         Date date = null;
         String dateplanted;
+        //SimpleDateFormat sdf = new SimpleDateFormat("MMMM d, yyyy");
         SimpleDateFormat sdf = new SimpleDateFormat("d MMM yyyy");
+        //SimpleDateFormat otherFormat = new SimpleDateFormat("MMM d, yyyy");
         try {
             date = (Date) sdf.parse(tetDatePlanted.getText().toString());
         } catch (ParseException e) {
             Log.e(TAG, "error parsing date");
         }
+
+        /*try {
+            date = (Date) otherFormat.parse(tetDatePlanted.getText().toString());
+        } catch (ParseException e) {
+            Log.e(TAG, "error parsing date");
+        }*/
 
         SimpleDateFormat timestamp = new SimpleDateFormat("dd-MM-yyyy-hh-mm-ss");
         SimpleDateFormat newDate = new SimpleDateFormat("yyyy-MM-dd");
@@ -552,7 +581,7 @@ public class EditSeedProductionActivity extends AppCompatActivity implements Loc
         String previousCrop = tetPreviousCrop.getText().toString();
         String previousVariety = actPreviousVariety.getText().toString();
 
-        Log.e(TAG, "Accreditation number: "+accredno );
+        Log.e(TAG, "Accreditation number: "+dateplanted );
 
             seedGrowerViewModel = ViewModelProviders.of(this).get(SeedGrowerViewModel.class);
             SeedGrower seedGrower = new SeedGrower(uniqueid,accredno,latitude,longitude,seedVariety,seedSource,otherSeedSource,seedClass,dateplanted,

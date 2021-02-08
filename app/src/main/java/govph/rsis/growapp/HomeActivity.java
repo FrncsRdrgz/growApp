@@ -16,6 +16,8 @@ import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -51,10 +53,9 @@ public class HomeActivity extends AppCompatActivity {
     private int CAMERA_PERMISSION_CODE = 1;
     private boolean mPermissionGranted;
     public static final int REQUEST_CODE = 0x9988;
-    TextView tvDeleteAll,tvEmptyView;
+    TextView tvDeleteAll,tvEmptyView,tvVersion;
     Toolbar toolbar;
     Intent intent;
-
     SeedGrowerDatabase database;
     RecyclerView rvSeedGrowers;
     RequestQueue queue;
@@ -67,12 +68,22 @@ public class HomeActivity extends AppCompatActivity {
         database = SeedGrowerDatabase.getInstance(this);
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+        tvVersion = (TextView) findViewById(R.id.tvVersion);
         tvDeleteAll = (TextView) findViewById(R.id.tvDeleteAll);
         rvSeedGrowers = (RecyclerView) findViewById(R.id.recyclerView1);
         tvEmptyView = findViewById(R.id.empty_view);
         rvSeedGrowers.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         rvSeedGrowers.setHasFixedSize(true);
+
+        try {
+            PackageInfo pInfo = this.getPackageManager().getPackageInfo(getPackageName(), 0);
+            tvVersion.setText("Version: "+ pInfo.versionName);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+
 
         int checkUser = database.userDao().isEmpty();
 

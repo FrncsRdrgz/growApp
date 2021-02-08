@@ -66,7 +66,7 @@ import java.util.Scanner;
 
 
 public class SeedProductionDetailActivity extends AppCompatActivity implements LocationListener {
-    public static final String[] MONTHS = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
+    public static final String[] MONTHS = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sepr", "Oct", "Nov", "Dec"};
     private static final String TAG = "SeedProductionDetail";
     private int LOCATION_PERMISSION_CODE = 1;
     private int CAMERA_PERMISSION_CODE = 1;
@@ -142,7 +142,7 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
         tetSeedLotNo = (TextInputEditText) findViewById(R.id.tetSeedLotNo);
         tetLabNo = (TextInputEditText) findViewById(R.id.tetLabNo);
         tetCoop = (TextInputEditText) findViewById(R.id.tetCoop);
-        tetBarangay = (TextInputEditText) findViewById(R.id.tetCoop);
+        tetBarangay = (TextInputEditText) findViewById(R.id.tetBarangay);
         tetPreviousCrop = (TextInputEditText) findViewById(R.id.tetPreviousCrop);
 
         materialBuilder = MaterialDatePicker.Builder.datePicker();
@@ -247,8 +247,28 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
         });
         //set the Save text clickable
 
+        tetDatePlanted.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Calendar cal = Calendar.getInstance();
+                int year = cal.get(Calendar.YEAR);
+                int month = cal.get(Calendar.MONTH);
+                int day = cal.get(Calendar.DAY_OF_MONTH);
 
-        tetDatePlanted.setOnClickListener(new View.OnClickListener() {
+                DatePickerDialog dialog = new DatePickerDialog(SeedProductionDetailActivity.this, android.R.style.Theme_Holo_Dialog_MinWidth,mDateSetListener,year,month,day);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.show();
+            }
+        });
+
+        mDateSetListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                String date = dayOfMonth +" "+MONTHS[month] +" "+year;
+                tetDatePlanted.setText(date);
+            }
+        };
+        /*tetDatePlanted.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 materialDatePicker.show(getSupportFragmentManager(),"DATE_PICKER");
@@ -259,8 +279,7 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
             public void onPositiveButtonClick(Object selection) {
                 tetDatePlanted.setText(materialDatePicker.getHeaderText());
             }
-        });
-
+        });*/
         tvSave.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -410,12 +429,22 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
     public void saveForm() {
         Date date = null;
         String dateplanted;
+
+        //SimpleDateFormat sdf = new SimpleDateFormat("MMMM d, yyyy");
         SimpleDateFormat sdf = new SimpleDateFormat("d MMM yyyy");
+        //SimpleDateFormat otherFormat = new SimpleDateFormat("MMM d, yyyy");
+        Log.e(TAG, "saveForm: "+ tetDatePlanted.getText().toString() );
         try {
             date = (Date) sdf.parse(tetDatePlanted.getText().toString());
         } catch (ParseException e) {
             Log.e(TAG, "error parsing date");
         }
+
+        /*try {
+            date = (Date) otherFormat.parse(tetDatePlanted.getText().toString());
+        } catch (ParseException e) {
+            Log.e(TAG, "error parsing date");
+        }*/
 
         SimpleDateFormat timestamp = new SimpleDateFormat("dd-MM-yyyy-hh-mm-ss");
         SimpleDateFormat newDate = new SimpleDateFormat("yyyy-MM-dd");
