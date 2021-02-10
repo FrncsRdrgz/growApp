@@ -53,7 +53,9 @@ public class HomeActivity extends AppCompatActivity {
     private int CAMERA_PERMISSION_CODE = 1;
     private boolean mPermissionGranted;
     public static final int REQUEST_CODE = 0x9988;
-    TextView tvDeleteAll,tvEmptyView,tvVersion;
+    TextView tvDeleteAll,tvEmptyView,tvVersion,tvFinalizeAccredNo,titleFinalize,tvFinalizeSeedSource,tvFinalizeVariety,tvFinalizeSeedClass,tvFinalizeDatePlanted,
+            tvFinalizeAreaPlanted, tvFinalizeQuantity,tvFinalizeSeedbedArea,tvFinalizeSeedlingAge,tvFinalizeSeedLot,tvFinalizeLabNo,tvFinalizeBarangay,tvFinalizeLatitude,tvFinalizeLongitude,
+            tvFinalizeCoop,tvFinalizeProgram;
     Toolbar toolbar;
     Intent intent;
     SeedGrowerDatabase database;
@@ -188,12 +190,191 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        adapter.setSendBtnClickedListener(new SeedGrowerAdapter.sendBtnClicked() {
+        //display all the fields before sending to server
+        adapter.setFinalizedBtnClickedListener(new SeedGrowerAdapter.finalizedBtnClicked() {
+            @Override
+            public void finalizeBeforeSending(final SeedGrower seedGrower) {
+                LayoutInflater inflater = getLayoutInflater();
+                AlertDialog.Builder builder = new AlertDialog.Builder(HomeActivity.this);
+                View dialogView = inflater.inflate(R.layout.finalize_layout,null);
+                builder.setCancelable(true);
+                builder.setView(dialogView);
+
+                titleFinalize = (TextView) dialogView.findViewById(R.id.titleFinalize);
+                tvFinalizeAccredNo = (TextView) dialogView.findViewById(R.id.tvFinalizeAccredNo);
+                tvFinalizeSeedSource = (TextView) dialogView.findViewById(R.id.tvFinalizeSeedSource);
+                tvFinalizeVariety = (TextView) dialogView.findViewById(R.id.tvFinalizeVariety);
+                tvFinalizeSeedClass = (TextView) dialogView.findViewById(R.id.tvFinalizeSeedClass);
+                tvFinalizeDatePlanted = (TextView) dialogView.findViewById(R.id.tvFinalizeDatePlanted);
+                tvFinalizeAreaPlanted = (TextView) dialogView.findViewById(R.id.tvFinalizeAreaPlanted);
+                tvFinalizeQuantity = (TextView) dialogView.findViewById(R.id.tvFinalizeQuantity);
+                tvFinalizeSeedbedArea = (TextView) dialogView.findViewById(R.id.tvFinalizeSeedbedArea);
+                tvFinalizeSeedlingAge = (TextView) dialogView.findViewById(R.id.tvFinalizeSeedlingAge);
+                tvFinalizeSeedLot = (TextView) dialogView.findViewById(R.id.tvFinalizeSeedLot);
+                tvFinalizeLabNo = (TextView) dialogView.findViewById(R.id.tvFinalizeLabNo);
+                tvFinalizeBarangay = (TextView) dialogView.findViewById(R.id.tvFinalizeBarangay);
+                tvFinalizeLatitude = (TextView) dialogView.findViewById(R.id.tvFinalizeLatitude);
+                tvFinalizeLongitude = (TextView) dialogView.findViewById(R.id.tvFinalizeLongitude);
+                tvFinalizeCoop = (TextView) dialogView.findViewById(R.id.tvFinalizeCoop);
+                tvFinalizeProgram =  (TextView) dialogView.findViewById(R.id.tvFinalizeProgram);
+
+                titleFinalize.setText(seedGrower.getVariety());
+                tvFinalizeAccredNo.setText(seedGrower.getAccredno());
+                tvFinalizeSeedSource.setText(seedGrower.getSeedsource());
+                tvFinalizeVariety.setText(seedGrower.getVariety());
+                tvFinalizeSeedClass.setText(seedGrower.getSeedclass());
+                tvFinalizeDatePlanted.setText(seedGrower.getDateplanted());
+                tvFinalizeAreaPlanted.setText(seedGrower.getAreaplanted());
+                tvFinalizeQuantity.setText(seedGrower.getQuantity());
+                tvFinalizeSeedbedArea.setText(seedGrower.getSeedbedarea());
+                tvFinalizeSeedlingAge.setText(seedGrower.getSeedlingage());
+                tvFinalizeSeedLot.setText(seedGrower.getSeedlot());
+                tvFinalizeLabNo.setText(seedGrower.getControlno());
+                tvFinalizeBarangay.setText(seedGrower.getBarangay());
+                tvFinalizeLatitude.setText(seedGrower.getLatitude());
+                tvFinalizeLongitude.setText(seedGrower.getLongitude());
+                tvFinalizeCoop.setText(seedGrower.getCoop());
+                tvFinalizeProgram.setText(seedGrower.getRiceProgram());
+
+                builder.setNegativeButton("Back", null);
+                builder.setPositiveButton("Send", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+                final AlertDialog dialog = builder.create();
+                dialog.show();
+
+                dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Boolean wantToCloseDialog = false;
+                        new AlertDialog.Builder(HomeActivity. this )
+                                .setTitle("Finish finalizing the form?")
+                                .setMessage( "Please check the data before sending." )
+                                .setPositiveButton( "Send" , new
+                                        DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick (DialogInterface paramDialogInterface , int paramInt) {
+                                                LayoutInflater inflater = getLayoutInflater();
+                                                AlertDialog.Builder builder = new AlertDialog.Builder(HomeActivity.this);
+                                                View dialogView = inflater.inflate(R.layout.loading_template,null);
+                                                builder.setCancelable(false);
+                                                builder.setView(dialogView);
+
+                                                final AlertDialog progressDialog = builder.create();
+                                                progressDialog.show();
+
+                                                if(isOnline()){
+
+                                                    if(seedGrower.getVariety().matches("Select Variety") || seedGrower.getSeedsource().matches("Select Seed Source")
+                                                            || seedGrower.getSeedclass().matches("Select Seed Class") || seedGrower.getDateplanted().matches("0002-11-30")
+                                                            || seedGrower.getDateplanted().matches("-0001-11-30") || seedGrower.getDateplanted().matches("0000-00-00")
+                                                            || seedGrower.getAreaplanted().matches("") || seedGrower.getQuantity().matches("")
+                                                            || seedGrower.getSeedbedarea().matches("") || seedGrower.getSeedlingage().matches("")
+                                                            || seedGrower.getSeedlot().matches("") || seedGrower.getControlno().matches("")
+                                                            || seedGrower.getBarangay().matches("") || seedGrower.getRiceProgram().matches("Select Rice Program") || seedGrower.getCoop().matches("")){
+                                                        progressDialog.hide();
+                                                        new AlertDialog.Builder(HomeActivity.this)
+                                                                .setMessage("Please fill out all the fields first before sending data.")
+                                                                .setNegativeButton("Try Again",null).show();
+                                                    }else{
+                                                        queue = Volley.newRequestQueue(HomeActivity.this);
+                                                        String url = DecVar.receiver()+"/postData.php";
+
+                                                        StringRequest sr = new StringRequest(Request.Method.POST, url,
+                                                                new Response.Listener<String>() {
+                                                                    @Override
+                                                                    public void onResponse(String response) {
+                                                                        if(!response.equals("Success")){
+                                                                            progressDialog.hide();
+                                                                            new AlertDialog.Builder(HomeActivity.this)
+                                                                                    .setMessage("Error while sending data to server.")
+                                                                                    .setNegativeButton("Try Again",null).show();
+                                                                        }
+                                                                        else{
+                                                                            progressDialog.hide();
+                                                                            seedGrower.setIsSent(true);
+                                                                            seedGrowerViewModel.update(seedGrower);
+                                                                            new AlertDialog.Builder(HomeActivity.this)
+                                                                                    .setMessage("Successfully sent form data")
+                                                                                    .setNegativeButton("Ok",null).show();
+                                                                            dialog.dismiss();
+                                                                        }
+                                                                    }
+                                                                },
+                                                                new Response.ErrorListener() {
+                                                                    @Override
+                                                                    public void onErrorResponse(VolleyError error) {
+                                                                        progressDialog.hide();
+                                                                        new AlertDialog.Builder(HomeActivity.this)
+                                                                                .setMessage("Error while sending data to server.")
+                                                                                .setNegativeButton("Try Again",null).show();
+                                                                        Log.e("HttpClient", "error: " + error.toString());
+                                                                    }
+                                                                })
+                                                        {
+                                                            @Override
+                                                            protected Map<String,String> getParams(){
+                                                                Map<String,String> params = new HashMap<>();
+                                                                params.put("formId","0");
+                                                                params.put("accredNo","");
+                                                                params.put("serial_number",seedGrower.getAccredno());
+                                                                params.put("seedSource",seedGrower.getSeedsource());
+                                                                params.put("otherSource",seedGrower.getOtherseedsource());
+                                                                params.put("variety",seedGrower.getVariety());
+                                                                params.put("seedClass",seedGrower.getSeedclass());
+                                                                params.put("datePlanted",seedGrower.getDateplanted());
+                                                                params.put("areaPlanted",seedGrower.getAreaplanted());
+                                                                params.put("quantity",seedGrower.getQuantity());
+                                                                params.put("seedbedArea",seedGrower.getSeedbedarea());
+                                                                params.put("seedlingAge",seedGrower.getSeedlingage());
+                                                                params.put("seedlot",seedGrower.getSeedlot());
+                                                                params.put("controlNo",seedGrower.getControlno());
+                                                                params.put("barangay",seedGrower.getBarangay());
+                                                                params.put("latitude",seedGrower.getLatitude());
+                                                                params.put("longitude",seedGrower.getLongitude());
+                                                                params.put("dateCollected",seedGrower.getDatecollected());
+                                                                params.put("androidid",seedGrower.getMacaddress());
+                                                                params.put("program",seedGrower.getRiceProgram());
+                                                                params.put("coop",seedGrower.getCoop());
+                                                                params.put("previouscrop",seedGrower.getPreviousCrop());
+                                                                params.put("previousvariety",seedGrower.getPreviousVariety());
+                                                                return params;
+                                                            }
+                                                        };
+                                                        queue.add(sr);
+                                                    }
+
+                                                }
+                                                else{
+                                                    progressDialog.hide();
+                                                    new AlertDialog.Builder(HomeActivity.this)
+                                                            .setTitle("No Internet Connection")
+                                                            .setMessage("Internet connection is required to send form data.")
+                                                            .setNegativeButton("Ok", null)
+                                                            .show();
+                                                }
+
+                                            }
+                                        })
+                                .setNegativeButton( "Cancel" , null )
+                                .show() ;
+
+                        if(wantToCloseDialog)
+                            dialog.dismiss();
+                    }
+                });
+            }
+        });
+
+        /*adapter.setSendBtnClickedListener(new SeedGrowerAdapter.sendBtnClicked() {
             @Override
             public void sendToServer(final SeedGrower seedGrower) {
-                new AlertDialog.Builder(HomeActivity. this )
+                 new AlertDialog.Builder(HomeActivity. this )
                         .setTitle("Send Form?")
-                        .setMessage( "Data will be sent to server." )
+                        .setMessage( "Data willbe sent to server." )
                         .setPositiveButton( "Send" , new
                                 DialogInterface.OnClickListener() {
                                     @Override
@@ -302,7 +483,7 @@ public class HomeActivity extends AppCompatActivity {
                         .setNegativeButton( "Cancel" , null )
                         .show() ;
             }
-        });
+        });*/
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

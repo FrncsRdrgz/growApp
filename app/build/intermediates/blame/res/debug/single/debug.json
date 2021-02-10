@@ -988,6 +988,10 @@
         "source": "C:\\Users\\fmrrodriguez\\.gradle\\caches\\transforms-2\\files-2.1\\6119d746697059b7e1b74aab4d181f56\\appcompat-1.1.0\\res\\drawable-xhdpi-v4\\abc_ic_star_half_black_36dp.png"
     },
     {
+        "merged": "D:\\AndroidStudioProjects\\GrowApp\\app\\build\\intermediates\\res\\merged\\debug\\layout_finalize_layout.xml.flat",
+        "source": "D:\\AndroidStudioProjects\\GrowApp\\app\\src\\main\\res\\layout\\finalize_layout.xml"
+    },
+    {
         "merged": "D:\\AndroidStudioProjects\\GrowApp\\app\\build\\intermediates\\res\\merged\\debug\\layout_custom_dialog.xml.flat",
         "source": "C:\\Users\\fmrrodriguez\\.gradle\\caches\\transforms-2\\files-2.1\\2c4911487622891b7d804fc82995f4ba\\core-1.2.0\\res\\layout\\custom_dialog.xml"
     },

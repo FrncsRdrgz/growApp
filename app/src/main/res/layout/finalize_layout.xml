@@ -1,0 +1,389 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/linear1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/titleFinalize"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:text="Variety Name"
+            android:autoSizeTextType="uniform"
+            android:background="#0349D6"
+            android:gravity="center"
+            android:textColor="#FFFFFF"
+            android:scaleType="center" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linear2"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:paddingTop="5dp"
+        android:layout_below="@id/linear1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:text="Serial Number"
+            android:layout_weight="1"
+            />
+        <TextView
+            android:id="@+id/tvFinalizeAccredNo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Serial Number"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linear3"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:paddingTop="5dp"
+        android:layout_below="@id/linear2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/seedSource"
+            android:layout_weight="1"
+            />
+        <TextView
+            android:id="@+id/tvFinalizeSeedSource"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Seed Source"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linear4"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:paddingTop="5dp"
+        android:layout_below="@id/linear3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/varietyPlanted"
+            android:layout_weight="1"
+            />
+        <TextView
+            android:id="@+id/tvFinalizeVariety"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Variety Planted"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linear5"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:paddingTop="5dp"
+        android:layout_below="@id/linear4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/seedClass"
+            android:layout_weight="1"
+            />
+        <TextView
+            android:id="@+id/tvFinalizeSeedClass"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Seed Class"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linear6"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:paddingTop="5dp"
+        android:layout_below="@id/linear5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/datePlanted"
+            android:layout_weight="1"
+            />
+        <TextView
+            android:id="@+id/tvFinalizeDatePlanted"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Date Planted"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linear7"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:paddingTop="5dp"
+        android:layout_below="@id/linear6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/areaPlanted"
+            android:layout_weight="1"
+            />
+        <TextView
+            android:id="@+id/tvFinalizeAreaPlanted"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Area Planted"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linear8"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:paddingTop="5dp"
+        android:layout_below="@id/linear7"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/seedQuantity"
+            android:layout_weight="1"
+            />
+        <TextView
+            android:id="@+id/tvFinalizeQuantity"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Quantity"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linear9"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:paddingTop="5dp"
+        android:layout_below="@id/linear8"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/seedbedArea"
+            android:layout_weight="1"
+            />
+        <TextView
+            android:id="@+id/tvFinalizeSeedbedArea"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Seedbed Area"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linear10"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:paddingTop="5dp"
+        android:layout_below="@id/linear9"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/seedlingAge"
+            android:layout_weight="1"
+            />
+        <TextView
+            android:id="@+id/tvFinalizeSeedlingAge"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Seedling Age"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linear11"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:paddingTop="5dp"
+        android:layout_below="@id/linear10"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/seedLot"
+            android:layout_weight="1"
+            />
+        <TextView
+            android:id="@+id/tvFinalizeSeedLot"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Seed Lot"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linear12"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:paddingTop="5dp"
+        android:layout_below="@id/linear11"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/labNo"
+            android:layout_weight="1"
+            />
+        <TextView
+            android:id="@+id/tvFinalizeLabNo"
+            android:layout_width="match_parent"
+            android:text="Laboratory No."
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linear13"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:paddingTop="5dp"
+        android:layout_below="@id/linear12"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/barangay"
+            android:layout_weight="1"
+            />
+        <TextView
+            android:id="@+id/tvFinalizeBarangay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Barangay"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linear14"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:paddingTop="5dp"
+        android:layout_below="@id/linear13"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/latitude"
+            android:layout_weight="1"
+            />
+        <TextView
+            android:id="@+id/tvFinalizeLatitude"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linear15"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:paddingTop="5dp"
+        android:layout_below="@id/linear14"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/longitude"
+            android:layout_weight="1"
+            />
+        <TextView
+            android:id="@+id/tvFinalizeLongitude"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linear16"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:paddingTop="5dp"
+        android:layout_below="@id/linear15"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Affiliated Cooperative"
+            android:layout_weight="1"
+            />
+        <TextView
+            android:id="@+id/tvFinalizeCoop"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linear17"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:paddingTop="5dp"
+        android:layout_below="@id/linear16"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Rice Program"
+            android:layout_weight="1"
+            />
+        <TextView
+            android:id="@+id/tvFinalizeProgram"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+    </LinearLayout>
+</RelativeLayout>

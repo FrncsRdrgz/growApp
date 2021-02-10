@@ -23,6 +23,7 @@ public class SeedGrowerAdapter extends RecyclerView.Adapter<SeedGrowerAdapter.Vi
 
     private sendBtnClicked sendBtnClickedListener;
     private sgFormClicked sgFormClickedListener;
+    private finalizedBtnClicked finalizedBtnClickedListener;
 
     @NonNull
     @Override
@@ -46,6 +47,7 @@ public class SeedGrowerAdapter extends RecyclerView.Adapter<SeedGrowerAdapter.Vi
 
         holder.tvVariety.setText(seedGrower.getVariety());
         holder.tvDateplanted.setText(newDate.format(date));
+        holder.tvSeedClass.setText(seedGrower.getSeedclass()+ " seeds");
 
     }
 
@@ -70,6 +72,9 @@ public class SeedGrowerAdapter extends RecyclerView.Adapter<SeedGrowerAdapter.Vi
     public interface sgFormClicked {
         void editSGDetails(SeedGrower seedGrower);
     }
+    public interface  finalizedBtnClicked{
+        void finalizeBeforeSending(SeedGrower seedGrower);
+    }
 
     public void setSgFormClickedListener(SeedGrowerAdapter.sgFormClicked sgFormClickedListener) {
         this.sgFormClickedListener = sgFormClickedListener;
@@ -78,17 +83,23 @@ public class SeedGrowerAdapter extends RecyclerView.Adapter<SeedGrowerAdapter.Vi
     public void setSendBtnClickedListener(SeedGrowerAdapter.sendBtnClicked sendBtnClickedListener) {
         this.sendBtnClickedListener = sendBtnClickedListener;
     }
-
+    public void setFinalizedBtnClickedListener(SeedGrowerAdapter.finalizedBtnClicked finalizedBtnClickedListener){
+        this.finalizedBtnClickedListener = finalizedBtnClickedListener;
+    }
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView tvVariety, tvDateplanted;
-        Button sendBtn;
+        TextView tvVariety, tvDateplanted,tvSeedClass;
+        Button sendBtn,editBtn,finalizeBtn;
 
         public ViewHolder(View itemView) {
             super(itemView);
             tvVariety = (TextView) itemView.findViewById(R.id.tvVariety);
             tvDateplanted = (TextView) itemView.findViewById(R.id.tvDateplanted);
-            sendBtn = (Button) itemView.findViewById(R.id.sendBtn);
-            itemView.setOnClickListener(new View.OnClickListener() {
+            tvSeedClass = (TextView) itemView.findViewById(R.id.tvSeedClass);
+            //sendBtn = (Button) itemView.findViewById(R.id.sendBtn);
+            editBtn = (Button) itemView.findViewById(R.id.editBtn);
+            finalizeBtn = (Button) itemView.findViewById(R.id.finalizeBtn);
+
+            editBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     int position = getAdapterPosition();
@@ -98,7 +109,18 @@ public class SeedGrowerAdapter extends RecyclerView.Adapter<SeedGrowerAdapter.Vi
                 }
             });
 
-            sendBtn.setOnClickListener(new View.OnClickListener() {
+            finalizeBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+
+                    if(finalizedBtnClickedListener != null && position != RecyclerView.NO_POSITION){
+                        finalizedBtnClickedListener.finalizeBeforeSending(seedGrowers.get(position));
+                    }
+                }
+            });
+
+            /*sendBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     int position = getAdapterPosition();
@@ -106,7 +128,7 @@ public class SeedGrowerAdapter extends RecyclerView.Adapter<SeedGrowerAdapter.Vi
                         sendBtnClickedListener.sendToServer(seedGrowers.get(position));
                     }
                 }
-            });
+            });*/
         }
     }
 

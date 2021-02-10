@@ -9,38 +9,80 @@
     android:id="@+id/cardView"
     >
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/lineSeeds"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:padding="8dp"
-        >
 
-        <TextView
-            android:id="@+id/tvVariety"
+        >
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvVariety"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="25dp"
+                android:textColor="#000000"
+                android:text="Variety Name"
+                android:layout_alignParentStart="true" />
+            <TextView
+                android:id="@+id/tvSeedClass"
+                android:layout_below="@id/tvVariety"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Seed Class"
+                android:textColor="#757474"/>
+            <TextView
+                android:id="@+id/tvDateplanted"
+                android:layout_below="@id/tvVariety"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Date Planted"
+                android:textColor="#757474"/>
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="25dp"
-            android:textColor="#000000"
-            android:layout_toStartOf="@id/sendBtn"
-            android:layout_alignParentStart="true"
-            android:layout_weight="1"/>
-        <Button
-            android:id="@+id/sendBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/sendBtn"
-            android:textColor="#FFFFFF"
-            android:layout_alignParentEnd="true"
-            android:background="@drawable/success_button"
-            android:textAllCaps="false"
-            android:drawableStart="@drawable/ic_unarchive_white_24dp"
-            />
-        <TextView
-            android:id="@+id/tvDateplanted"
-            android:layout_below="@id/tvVariety"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#CACACA"/>
-    </RelativeLayout>
+            android:layout_weight=".2"
+            android:gravity="center"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="1dp"
+            android:orientation="vertical"
+            >
+
+            <Button
+                android:id="@+id/editBtn"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:backgroundTint="@color/cardview_dark_background"
+                android:text="@string/editBtn"
+                android:layout_marginTop="0dp"
+
+                android:textAllCaps="false"
+                android:minHeight="0dp"
+                android:minWidth="0dp"
+                android:textColor="#FFFFFF" />
+
+            <Button
+                android:id="@+id/finalizeBtn"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:backgroundTint="#338A2E"
+                android:text="@string/finalizeBtn"
+                android:minHeight="0dp"
+                android:textColor="#FFFFFF"
+                android:textAllCaps="false"
+                />
+
+        </LinearLayout>
+    </LinearLayout>
 </androidx.cardview.widget.CardView>

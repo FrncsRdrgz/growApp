@@ -2,6 +2,8 @@
     <string name="getLocationBtn">Get My Location</string>
     <string name="scanBtn">Scan ID</string>
     <string name="sendBtn">Send</string>
+    <string name="finalizeBtn">Finalize</string>
+    <string name="editBtn">Edit</string>
     <string name="viewBtn">View</string>
     <string name="app_name">GrowApp</string>
     <string name="copyright">Copyright 2020 - RSIS</string>
