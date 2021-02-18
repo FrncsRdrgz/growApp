@@ -655,7 +655,7 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
             // AnotherActivity did was successful
             if (resultCode == Activity.RESULT_OK) {
                 // Get the result from the returned Intent
-                final String result = data.getStringExtra(ScannerActivity.SCANNED_QR);
+                final String result = data.getStringExtra(ScannerActivity.Scanned_value);
 
                 // Use the data - in this case, display it in a Toast.
                 tvAccredNo.setText(result);

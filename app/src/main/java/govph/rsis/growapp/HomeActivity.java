@@ -49,6 +49,7 @@ public class HomeActivity extends AppCompatActivity {
     public static final String EXTRA_MESSAGE = "com.example.releasingapp.MESSAGE";
     public static final String EXTRA_ARRAY = "com.example.releasingapp.EXTRA_ARRAY";
     private static final String TAG = "HomeActivity";
+
     private SeedGrowerViewModel seedGrowerViewModel;
     private int CAMERA_PERMISSION_CODE = 1;
     private boolean mPermissionGranted;
@@ -60,12 +61,14 @@ public class HomeActivity extends AppCompatActivity {
     Intent intent;
     SeedGrowerDatabase database;
     RecyclerView rvSeedGrowers;
+    GlobalFunction globalFunction;
     RequestQueue queue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        globalFunction = new GlobalFunction(getApplicationContext());
         requestCameraPermission();
         database = SeedGrowerDatabase.getInstance(this);
         toolbar = findViewById(R.id.toolbar);
@@ -266,7 +269,7 @@ public class HomeActivity extends AppCompatActivity {
                                                 final AlertDialog progressDialog = builder.create();
                                                 progressDialog.show();
 
-                                                if(isOnline()){
+                                                if(globalFunction.isOnline()){
 
                                                     if(seedGrower.getVariety().matches("Select Variety") || seedGrower.getSeedsource().matches("Select Seed Source")
                                                             || seedGrower.getSeedclass().matches("Select Seed Class") || seedGrower.getDateplanted().matches("0002-11-30")

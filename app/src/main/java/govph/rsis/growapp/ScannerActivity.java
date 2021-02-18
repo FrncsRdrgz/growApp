@@ -11,6 +11,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -21,9 +22,10 @@ import com.google.zxing.Result;
 
 public class ScannerActivity extends AppCompatActivity {
     private CodeScanner mCodeScanner;
+    private static final String TAG = "ScannerActivity";
     private int CAMERA_PERMISSION_CODE = 1;
     private boolean mPermissionGranted;
-    public static final String SCANNED_QR = "com.example.releasingapp.MESSAGE";
+    public static final String Scanned_value = "com.example.releasingapp.MESSAGE";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,8 +68,7 @@ public class ScannerActivity extends AppCompatActivity {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
                                             final Intent data = new Intent();
-                                            data.putExtra(SCANNED_QR,result.getText());
-
+                                            data.putExtra(Scanned_value,result.getText());
                                             setResult(ScannerActivity.this.RESULT_OK,data);
                                             finish();
                                         }

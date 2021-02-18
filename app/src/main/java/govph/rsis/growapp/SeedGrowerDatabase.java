@@ -12,7 +12,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import govph.rsis.growapp.User.User;
 import govph.rsis.growapp.User.UserDao;
 
-@Database(entities = {SeedGrower.class,Seeds.class, User.class}, version = 5, exportSchema = true)
+@Database(entities = {SeedGrower.class,Seeds.class, User.class}, version = 7, exportSchema = true)
 public abstract class SeedGrowerDatabase extends RoomDatabase {
     public static final String DB_NAME ="seedgrower";
     private static SeedGrowerDatabase instance;
@@ -39,11 +39,23 @@ public abstract class SeedGrowerDatabase extends RoomDatabase {
 
         }
     };
+    static final Migration MIGRATION_5_6 = new Migration(5,6) {
+        @Override
+        public void migrate(@NonNull SupportSQLiteDatabase database) {
+            database.execSQL("ALTER  TABLE User ADD COLUMN accredArea TEXT");
+        }
+    };
+    static final Migration MIGRATION_6_7 = new Migration(6,7) {
+        @Override
+        public void migrate(@NonNull SupportSQLiteDatabase database) {
+            database.execSQL("ALTER  TABLE User ADD COLUMN isLoggedIn TEXT");
+        }
+    };
     public static synchronized SeedGrowerDatabase getInstance(Context context) {
         if(instance == null) {
             instance = Room.databaseBuilder(context.getApplicationContext(), SeedGrowerDatabase.class,DB_NAME)
                     .allowMainThreadQueries()
-                    .addMigrations(MIGRATION_2_3,MIGRATION_3_4,MIGRATION_4_5)
+                    .addMigrations(MIGRATION_2_3,MIGRATION_3_4,MIGRATION_4_5,MIGRATION_5_6,MIGRATION_6_7)
                     .build();
         }
         return instance;

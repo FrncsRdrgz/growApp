@@ -9,4 +9,10 @@ public class DecVar {
 
         return production;
     }
+
+    public static final String userLoginDetailsAPI(){
+        String production = "https://rsis.philrice.gov.ph/seed_ordering/seed_ordering/getUserLoginDetails";
+
+        return production;
+    }
 }

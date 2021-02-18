@@ -1410,6 +1410,7 @@ drawable abc_textfield_search_default_mtrl_alpha
 drawable abc_textfield_search_material
 drawable abc_vector_test
 drawable agency
+drawable agency2
 drawable avd_hide_password
 drawable avd_show_password
 drawable borderlines
@@ -1448,6 +1449,7 @@ drawable ic_navigate_before_blue_36dp
 drawable ic_remove_red_eye_white_24dp
 drawable ic_unarchive_black_24dp
 drawable ic_unarchive_white_24dp
+drawable login_background
 drawable material_ic_calendar_black_24dp
 drawable material_ic_clear_black_24dp
 drawable material_ic_edit_black_24dp
@@ -1801,6 +1803,7 @@ id save_non_transition_alpha
 id save_overlay_view
 id scale
 id scanBtn
+id scanIdBtn
 id scannerLayout
 id scanner_view
 id screen
@@ -2041,6 +2044,7 @@ layout abc_select_dialog_material
 layout abc_tooltip
 layout activity_edit_seed_production
 layout activity_home
+layout activity_login
 layout activity_main
 layout activity_scanner
 layout activity_seed_production_detail
