@@ -61,6 +61,9 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import govph.rsis.growapp.User.User;
+import govph.rsis.growapp.User.UserViewModel;
+
 public class EditSeedProductionActivity extends AppCompatActivity implements LocationListener {
     public static final String[] MONTHS = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sepr", "Oct", "Nov", "Dec"};
     private static final String TAG = "EditSeedProduction";
@@ -69,6 +72,8 @@ public class EditSeedProductionActivity extends AppCompatActivity implements Loc
     private boolean mPermissionGranted;
     private DatePickerDialog.OnDateSetListener mDateSetListener;
     private String uniqueId="";
+    private SeedGrowerViewModel seedGrowerViewModel;
+    private UserViewModel userViewModel;
     LocationManager locationManager;
     LocationListener locationListener;
     Toolbar toolbar;
@@ -89,11 +94,10 @@ public class EditSeedProductionActivity extends AppCompatActivity implements Loc
     CodeScannerView scannerView;
 
     SeedGrowerDatabase database;
-    private SeedGrowerViewModel seedGrowerViewModel;
     Intent intent;
     TelephonyManager telephonyManager;
     SeedGrower seedGrowers;
-
+    User user;
     int id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,6 +109,8 @@ public class EditSeedProductionActivity extends AppCompatActivity implements Loc
         //scannerView = findViewById(R.id.scanner_view);
         //mCodeScanner = new CodeScanner(EditSeedProductionActivity.this, scannerView);
         database = SeedGrowerDatabase.getInstance(this);
+        userViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
+        user = userViewModel.getLoggedInUser();
         intent = getIntent();
         String formId = intent.getStringExtra(HomeActivity.EXTRA_MESSAGE);
 
@@ -115,16 +121,14 @@ public class EditSeedProductionActivity extends AppCompatActivity implements Loc
         //find the view of linear layout
         l10 = (LinearLayout) findViewById(R.id.l10);
         l11 = (LinearLayout) findViewById(R.id.l11);
-        scanBtn = (Button) findViewById(R.id.scanBtn);
         getLocationBtn = (Button) findViewById(R.id.getLocationBtn);
-        scanBtn.setClickable(false);
-        scanBtn.setBackgroundColor(Color.LTGRAY);
         getLocationBtn.setClickable(false);
         getLocationBtn.setBackgroundColor(Color.LTGRAY);
         //find view of text views
         tvCancel = (TextView) findViewById(R.id.tvCancel);
         tvSave = (TextView) findViewById(R.id.tvSave);
         tvAccredNo = (TextView) findViewById(R.id.tvAccreditationNo);
+        tvAccredNo.setText(user.getSerialNum());
         tvLatitude = (TextView) findViewById(R.id.tvLatitude);
         tvLongitude = (TextView) findViewById(R.id.tvLongitude);
 

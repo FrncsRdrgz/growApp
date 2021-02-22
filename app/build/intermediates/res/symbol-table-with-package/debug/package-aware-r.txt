@@ -1432,7 +1432,7 @@ drawable design_snackbar_background
 drawable ic_add_black_24dp
 drawable ic_add_location_white_24dp
 drawable ic_archive_black_24dp
-drawable ic_archive_white_24dp
+drawable ic_baseline_logout_24
 drawable ic_center_focus_weak_white_24dp
 drawable ic_code_scanner_auto_focus_off
 drawable ic_code_scanner_auto_focus_on
@@ -1735,6 +1735,7 @@ id linearSerialNumber
 id listItems
 id listMode
 id list_item
+id logoutBtn
 id masked
 id media_actions
 id message
@@ -1967,6 +1968,7 @@ id tvSave
 id tvSeedClass
 id tvVariety
 id tvVersion
+id tvWelcomeName
 id tvYourForms
 id unchecked
 id uniform

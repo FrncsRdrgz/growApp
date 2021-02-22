@@ -36,4 +36,5 @@ public class User {
     public String getAccredArea() { return accredArea; }
 
     public void setLoggedIn(String loggedIn) { isLoggedIn = loggedIn; }
+    public String getIsLoggedIn(){return isLoggedIn;}
 }

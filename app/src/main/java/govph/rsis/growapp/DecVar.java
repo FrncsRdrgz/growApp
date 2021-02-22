@@ -6,13 +6,14 @@ public class DecVar {
         String staging = "https://stagingdev.philrice.gov.ph/rsis/growApp";
         String production = "https://rsis.philrice.gov.ph/growApp";
         String training = "https://rsistraining.philrice.gov.ph/growApp";
-
-        return production;
+        String localhost = "http://192.168.0.187/growApp";
+        return localhost;
     }
 
-    public static final String userLoginDetailsAPI(){
-        String production = "https://rsis.philrice.gov.ph/seed_ordering/seed_ordering/getUserLoginDetails";
-
-        return production;
+    public static final String userCredentialApiUrl(){
+        String production = "https://rsis.philrice.gov.ph/seed_ordering/api/getUserLoginDetails";
+        String localhost = "http://192.168.0.187/seed_ordering/api/getUserCredentials";
+        return localhost;
     }
+    public static boolean isNetworkConnected = false;
 }

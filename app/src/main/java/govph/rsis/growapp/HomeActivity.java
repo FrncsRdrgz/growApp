@@ -1,6 +1,7 @@
 package govph.rsis.growapp;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -21,6 +22,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -44,6 +46,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import govph.rsis.growapp.User.User;
+import govph.rsis.growapp.User.UserViewModel;
+
 
 public class HomeActivity extends AppCompatActivity {
     public static final String EXTRA_MESSAGE = "com.example.releasingapp.MESSAGE";
@@ -51,31 +56,38 @@ public class HomeActivity extends AppCompatActivity {
     private static final String TAG = "HomeActivity";
 
     private SeedGrowerViewModel seedGrowerViewModel;
+    private UserViewModel userViewModel;
     private int CAMERA_PERMISSION_CODE = 1;
     private boolean mPermissionGranted;
     public static final int REQUEST_CODE = 0x9988;
     TextView tvDeleteAll,tvEmptyView,tvVersion,tvFinalizeAccredNo,titleFinalize,tvFinalizeSeedSource,tvFinalizeVariety,tvFinalizeSeedClass,tvFinalizeDatePlanted,
             tvFinalizeAreaPlanted, tvFinalizeQuantity,tvFinalizeSeedbedArea,tvFinalizeSeedlingAge,tvFinalizeSeedLot,tvFinalizeLabNo,tvFinalizeBarangay,tvFinalizeLatitude,tvFinalizeLongitude,
-            tvFinalizeCoop,tvFinalizeProgram;
+            tvFinalizeCoop,tvFinalizeProgram,tvWelcomeName;
     Toolbar toolbar;
     Intent intent;
     SeedGrowerDatabase database;
     RecyclerView rvSeedGrowers;
     GlobalFunction globalFunction;
     RequestQueue queue;
-
+    User user;
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         globalFunction = new GlobalFunction(getApplicationContext());
+        globalFunction.isOnline();
         requestCameraPermission();
+        seedGrowerViewModel = ViewModelProviders.of(this).get(SeedGrowerViewModel.class);
+        userViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
+        user = userViewModel.getLoggedInUser();
         database = SeedGrowerDatabase.getInstance(this);
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         tvVersion = (TextView) findViewById(R.id.tvVersion);
+        tvWelcomeName = (TextView) findViewById(R.id.tvWelcomeName);
         tvDeleteAll = (TextView) findViewById(R.id.tvDeleteAll);
         rvSeedGrowers = (RecyclerView) findViewById(R.id.recyclerView1);
         tvEmptyView = findViewById(R.id.empty_view);
@@ -90,6 +102,8 @@ public class HomeActivity extends AppCompatActivity {
         }
 
 
+        //set the Welcome Name
+        tvWelcomeName.setText("Welcome, "+user.getFullname());
         int checkUser = database.userDao().isEmpty();
 
         /*if(checkUser < 1){
@@ -115,8 +129,8 @@ public class HomeActivity extends AppCompatActivity {
         rvSeedGrowers.setAdapter(adapter);
         //adapter.setSgClickedListener(this);
         //adapter.setSgEditClickedListener(this);
-        seedGrowerViewModel = ViewModelProviders.of(this).get(SeedGrowerViewModel.class);
-        seedGrowerViewModel.getAllSeedGrowers().observe(this, new Observer<List<SeedGrower>>() {
+
+        seedGrowerViewModel.getAllSeedGrowers(user.getSerialNum()).observe(this, new Observer<List<SeedGrower>>() {
             @Override
             public void onChanged(List<SeedGrower> seedGrowers) {
                 //update recyclerview
@@ -269,7 +283,7 @@ public class HomeActivity extends AppCompatActivity {
                                                 final AlertDialog progressDialog = builder.create();
                                                 progressDialog.show();
 
-                                                if(globalFunction.isOnline()){
+                                                if(DecVar.isNetworkConnected){
 
                                                     if(seedGrower.getVariety().matches("Select Variety") || seedGrower.getSeedsource().matches("Select Seed Source")
                                                             || seedGrower.getSeedclass().matches("Select Seed Class") || seedGrower.getDateplanted().matches("0002-11-30")
@@ -509,6 +523,9 @@ public class HomeActivity extends AppCompatActivity {
                 intent = new Intent(this, SentItemActivity.class);
                 startActivity(intent);
                 return true;
+            case R.id.logoutBtn:
+
+                logout();
             default:
                 // If we got here, the user's action was not recognized.
                 // Invoke the superclass to handle it.
@@ -517,14 +534,17 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
-    private boolean isOnline() {
-        ConnectivityManager connMgr = (ConnectivityManager)
-                getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-        return (networkInfo != null && networkInfo.isConnected());
+    public void logout(){
+        Toast.makeText(this, "Logout", Toast.LENGTH_SHORT).show();
+        user.setLoggedIn("LoggedOut");
+        userViewModel.update(user);
 
+        if(userViewModel.getCheckLoggedIn() > 0){
+            intent = new Intent(HomeActivity.this,LoginActivity.class);
+            startActivity(intent);
+            finish();
+        }
     }
-
     public void editSGDetails(String sgId){
         Log.e(TAG, "editSGDetails: "+sgId );
         intent = new Intent(this, EditSeedProductionActivity.class);

@@ -20,4 +20,7 @@ public interface SeedsDao {
 
     @Update
     void updateSeeds(Seeds seeds);
+
+    @Query("DELETE FROM seeds")
+    void deleteAllSeeds();
 }

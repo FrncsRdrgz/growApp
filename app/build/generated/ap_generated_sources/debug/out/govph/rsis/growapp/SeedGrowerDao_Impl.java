@@ -352,9 +352,15 @@ public final class SeedGrowerDao_Impl implements SeedGrowerDao {
   }
 
   @Override
-  public LiveData<List<SeedGrower>> getAll() {
-    final String _sql = "SELECT * from seedgrower WHERE isSent=0 ORDER BY sgId DESC";
-    final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 0);
+  public LiveData<List<SeedGrower>> getAll(final String accredno) {
+    final String _sql = "SELECT * from seedgrower WHERE isSent=0 AND accredno =? ORDER BY sgId DESC";
+    final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 1);
+    int _argIndex = 1;
+    if (accredno == null) {
+      _statement.bindNull(_argIndex);
+    } else {
+      _statement.bindString(_argIndex, accredno);
+    }
     return __db.getInvalidationTracker().createLiveData(new String[]{"seedgrower"}, false, new Callable<List<SeedGrower>>() {
       @Override
       public List<SeedGrower> call() throws Exception {
@@ -454,9 +460,15 @@ public final class SeedGrowerDao_Impl implements SeedGrowerDao {
   }
 
   @Override
-  public LiveData<List<SeedGrower>> getSentForms() {
-    final String _sql = "SELECT * from seedgrower WHERE isSent=1 ORDER BY sgId DESC";
-    final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 0);
+  public LiveData<List<SeedGrower>> getSentForms(final String accredno) {
+    final String _sql = "SELECT * from seedgrower WHERE isSent=1 AND accredno =? ORDER BY sgId DESC";
+    final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 1);
+    int _argIndex = 1;
+    if (accredno == null) {
+      _statement.bindNull(_argIndex);
+    } else {
+      _statement.bindString(_argIndex, accredno);
+    }
     return __db.getInvalidationTracker().createLiveData(new String[]{"seedgrower"}, false, new Callable<List<SeedGrower>>() {
       @Override
       public List<SeedGrower> call() throws Exception {

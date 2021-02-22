@@ -15,8 +15,7 @@ public class SeedGrowerRepository {
     public SeedGrowerRepository(Application application) {
         SeedGrowerDatabase database = SeedGrowerDatabase.getInstance(application);
         seedGrowerDao = database.seedGrowerDao();
-        allSeedGrowers = seedGrowerDao.getAll();
-        allSent = seedGrowerDao.getSentForms();
+        //allSent = seedGrowerDao.getSentForms();
     }
 
     public void insert(SeedGrower seedGrower) {
@@ -35,11 +34,11 @@ public class SeedGrowerRepository {
     }
 
 
-    public LiveData<List<SeedGrower>> getAllSeedGrowers() {
-        return allSeedGrowers;
+    public LiveData<List<SeedGrower>> getAllSeedGrowers(String accredno) {
+        return allSeedGrowers = seedGrowerDao.getAll(accredno);
     }
-    public LiveData<List<SeedGrower>> getAllSent() {
-        return allSent;
+    public LiveData<List<SeedGrower>> getAllSent(String accredno) {
+        return allSent = seedGrowerDao.getSentForms(accredno);
     }
     private static class InsertSeedGrowerAsyncTask extends AsyncTask<SeedGrower, Void, Void> {
         private SeedGrowerDao seedGrowerDao;

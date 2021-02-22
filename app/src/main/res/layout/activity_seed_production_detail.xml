@@ -22,28 +22,7 @@
             android:layout_height="wrap_content" >
 
             <LinearLayout
-                android:id="@+id/linearScanBtn"
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="7dp"
-                android:paddingRight="15dp"
-                android:paddingLeft="15dp"
-                >
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/scanBtn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/scanBtn"
-                    android:textColor="#FFFFFF"
-                    android:textAllCaps="false"
-                    android:drawableStart="@drawable/ic_center_focus_weak_white_24dp"
-                    />
-            </LinearLayout>
-
-            <LinearLayout
                 android:id="@+id/linearSerialNumber"
-                android:layout_below="@id/linearScanBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"

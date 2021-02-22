@@ -18,8 +18,19 @@ public interface UserDao {
     @Query("SELECT count(*) FROM user")
     int isEmpty();
 
+    @Query("SELECT * FROM user where isLoggedIn = 'LoggedIn' ")
+    int checkLoggedIn();
+
+    @Query("SELECT * FROM user where isLoggedIn = 'LoggedIn' ")
+    User getLoggedInUser();
+
+    @Query("SELECT COUNT(*) FROM user where serialNum =:serialNum")
+    int isExisting(String serialNum);
+
+    @Query("UPDATE user SET isLoggedIn =:isLoggedIn WHERE  serialNum =:serialNum")
+    int updateUserStatus(String isLoggedIn, String serialNum);
     @Insert
-    void insetUser(User user);
+    void insertUser(User user);
 
     @Update
     void updateUser(User user);

@@ -15,10 +15,14 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import govph.rsis.growapp.User.User;
+import govph.rsis.growapp.User.UserViewModel;
+
 public class SentItemActivity extends AppCompatActivity {
     public static final String TAG = "SentItemAcitivity";
     private SeedGrowerViewModel seedGrowerViewModel;
-
+    private UserViewModel userViewModel;
+    private User user;
     TextView tvYourForms, textaccredno1,textseedsource1,textvariety1,textclass1,textplanted1,
             textareaplanted1,textquantity1, textseedbedarea1, textseedlingage1, textlot1, textcontrol1,
             textbarangay1, textlatitude1, textlongitude1, titlevariety, textCoop, textProgram;
@@ -27,6 +31,9 @@ public class SentItemActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        seedGrowerViewModel = ViewModelProviders.of(this).get(SeedGrowerViewModel.class);
+        userViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
+        user = userViewModel.getLoggedInUser();
 
         setContentView(R.layout.activity_sent_item);
         toolbar = findViewById(R.id.sent_toolbar);
@@ -40,8 +47,9 @@ public class SentItemActivity extends AppCompatActivity {
         final SentAdapter adapter = new SentAdapter();
         recyclerView.setAdapter(adapter);
 
-        seedGrowerViewModel = ViewModelProviders.of(this).get(SeedGrowerViewModel.class);
-        seedGrowerViewModel.getAllSent().observe(this, new Observer<List<SeedGrower>>() {
+
+
+        seedGrowerViewModel.getAllSent(user.getSerialNum()).observe(this, new Observer<List<SeedGrower>>() {
             @Override
             public void onChanged(List<SeedGrower> seedGrowers) {
                 //update recyclerview

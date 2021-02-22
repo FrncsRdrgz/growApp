@@ -16,8 +16,8 @@ public class SeedGrowerViewModel extends AndroidViewModel {
         super(application);
 
         repository = new SeedGrowerRepository(application);
-        allSeedGrowers = repository.getAllSeedGrowers();
-        allSent = repository.getAllSent();
+        //allSeedGrowers = repository.getAllSeedGrowers();
+        //allSent = repository.getAllSent();
     }
 
     public void insert(SeedGrower seedGrower) {
@@ -34,9 +34,9 @@ public class SeedGrowerViewModel extends AndroidViewModel {
 
     public void deleteAllSeedGrower() {repository.deleteAllSeedGrower();}
 
-    public LiveData<List<SeedGrower>> getAllSeedGrowers() {
-        return allSeedGrowers;
+    public LiveData<List<SeedGrower>> getAllSeedGrowers(String accredno) {
+        return allSeedGrowers = repository.getAllSeedGrowers(accredno);
     }
 
-    public LiveData<List<SeedGrower>> getAllSent() {return allSent;}
+    public LiveData<List<SeedGrower>> getAllSent(String accredno) {return allSent = repository.getAllSent(accredno);}
 }

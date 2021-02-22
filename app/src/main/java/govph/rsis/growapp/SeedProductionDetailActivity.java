@@ -64,6 +64,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
+import govph.rsis.growapp.User.User;
+import govph.rsis.growapp.User.UserViewModel;
+
 
 public class SeedProductionDetailActivity extends AppCompatActivity implements LocationListener {
     public static final String[] MONTHS = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sepr", "Oct", "Nov", "Dec"};
@@ -73,6 +76,7 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
     private DatePickerDialog.OnDateSetListener mDateSetListener;
     private String uniqueId="";
     private SeedGrowerViewModel seedGrowerViewModel;
+    private UserViewModel userViewModel;
     private boolean mPermissionGranted;
     private List<Seeds> seedSample = new ArrayList<>();
     public static final int REQUEST_CODE_EXAMPLE = 0x9988;
@@ -81,7 +85,7 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
     Toolbar toolbar;
     LinearLayout l10, l11;
     TextView tvLatitude, tvLongitude, tvCancel,tvSave,tvAccredNo;
-    Button getLocationBtn,scanBtn;
+    Button getLocationBtn;
     AutoCompleteTextView actVariety,actSeedClass, actSeedSource,actRiceProgram,actPreviousVariety;
     TextInputLayout tilVariety,tilSeedClass,tilSeedSource, tilRiceProgram,tilDatePlanted,tilAreaPlanted,tilSeedQuantity,tilSeedBedArea,tilSeedlingAge,tilSeedLotNo,tilLabNo,tilCooperative,tilBarangay;
     ArrayAdapter<String> arrayAdapterVariety,arrayAdapterSeedClass,arrayAdapterSeedSource,arrayAdapterRiceProgram,arrayAdapterPreviousVariety;
@@ -96,7 +100,7 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
     SeedGrowerDatabase database;
 
     TelephonyManager telephonyManager;
-
+    User user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -104,6 +108,8 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
 
         telephonyManager = (TelephonyManager) getSystemService(this.TELEPHONY_SERVICE);
         scannerView = findViewById(R.id.scanner_view);
+        userViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
+        user = userViewModel.getLoggedInUser();
         //mCodeScanner = new CodeScanner(SeedProductionDetailActivity.this, scannerView);
 
         l10 = (LinearLayout) findViewById(R.id.l10);
@@ -111,7 +117,7 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
         tvCancel = (TextView) findViewById(R.id.tvCancel);
         tvSave = (TextView) findViewById(R.id.tvSave);
         tvAccredNo = (TextView) findViewById(R.id.tvAccreditationNo);
-
+        tvAccredNo.setText(user.getSerialNum());
         tvLatitude = (TextView) findViewById(R.id.tvLatitude);
         tvLongitude = (TextView) findViewById(R.id.tvLongitude);
         toolbar = findViewById(R.id.spToolbar);
@@ -120,7 +126,6 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         getLocationBtn = (Button) findViewById(R.id.getLocationBtn);
-        scanBtn = (Button) findViewById(R.id.scanBtn);
 
         tilVariety = (TextInputLayout) findViewById(R.id.tilVariety);
         tilSeedClass = (TextInputLayout) findViewById(R.id.tilSeedClass);
@@ -166,12 +171,12 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
         }
 
         //Scanning of qr code
-        scanBtn.setOnClickListener(new View.OnClickListener() {
+        /*scanBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 scanFunction();
             }
-        });
+        });*/
 
         //Searchable Spinners here
         //Populate the ArrayListVarieties;

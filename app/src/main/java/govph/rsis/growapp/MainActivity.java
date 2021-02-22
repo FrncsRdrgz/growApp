@@ -1,6 +1,7 @@
 package govph.rsis.growapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -17,6 +18,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 
+import govph.rsis.growapp.User.UserViewModel;
+
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
@@ -24,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private static int SPLASH_TIME_OUT = 2000;
     Intent intent;
     TextView tvVersion;
+    private UserViewModel userViewModel;
     SeedGrowerDatabase database;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,12 +35,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         tvVersion = (TextView) findViewById(R.id.tvVersion);
         database = SeedGrowerDatabase.getInstance(this);
+        userViewModel = ViewModelProviders.of(MainActivity.this).get(UserViewModel.class);
         //Log.e(TAG, "onCreate: "+ DebugDB.getAddressLog());
-        int checkDB = database.seedsDao().isEmpty();
+        /*int checkDB = database.seedsDao().isEmpty();
         Log.e(TAG, "onCreate: "+checkDB );
         if(checkDB < 1){
             readCSV();
-        }
+        }*/
+        readCSV();
 
         try {
             PackageInfo pInfo = this.getPackageManager().getPackageInfo(getPackageName(), 0);
@@ -47,15 +53,21 @@ public class MainActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                intent = new Intent(MainActivity.this,LoginActivity.class);
+                if(userViewModel.getCheckLoggedIn() > 0){
+                    intent = new Intent(MainActivity.this,HomeActivity.class);
+                }else{
+                    intent = new Intent(MainActivity.this,LoginActivity.class);
+                }
                 startActivity(intent);
                 finish();
+
             }
         },SPLASH_TIME_OUT);
     }
 
     private void readCSV() {
         database = SeedGrowerDatabase.getInstance(this);
+        database.seedsDao().deleteAllSeeds();
         InputStream is = getResources().openRawResource(R.raw.result);
         BufferedReader reader = new BufferedReader(
                 new InputStreamReader(is, Charset.forName("UTF-8"))
