@@ -14,6 +14,8 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import androidx.sqlite.db.SupportSQLiteOpenHelper;
 import androidx.sqlite.db.SupportSQLiteOpenHelper.Callback;
 import androidx.sqlite.db.SupportSQLiteOpenHelper.Configuration;
+import govph.rsis.growapp.SeedBought.SeedBoughtDao;
+import govph.rsis.growapp.SeedBought.SeedBoughtDao_Impl;
 import govph.rsis.growapp.User.UserDao;
 import govph.rsis.growapp.User.UserDao_Impl;
 import java.lang.Override;
@@ -31,16 +33,19 @@ public final class SeedGrowerDatabase_Impl extends SeedGrowerDatabase {
 
   private volatile UserDao _userDao;
 
+  private volatile SeedBoughtDao _seedBoughtDao;
+
   @Override
   protected SupportSQLiteOpenHelper createOpenHelper(DatabaseConfiguration configuration) {
-    final SupportSQLiteOpenHelper.Callback _openCallback = new RoomOpenHelper(configuration, new RoomOpenHelper.Delegate(7) {
+    final SupportSQLiteOpenHelper.Callback _openCallback = new RoomOpenHelper(configuration, new RoomOpenHelper.Delegate(8) {
       @Override
       public void createAllTables(SupportSQLiteDatabase _db) {
         _db.execSQL("CREATE TABLE IF NOT EXISTS `SeedGrower` (`sgId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `macaddress` TEXT, `accredno` TEXT, `latitude` TEXT, `longitude` TEXT, `variety` TEXT, `seedsource` TEXT, `otherseedsource` TEXT, `seedclass` TEXT, `dateplanted` TEXT, `areaplanted` TEXT, `quantity` TEXT, `seedbedarea` TEXT, `seedlingage` TEXT, `seedlot` TEXT, `controlno` TEXT, `barangay` TEXT, `datecollected` TEXT, `isSent` INTEGER, `riceProgram` TEXT, `coop` TEXT, `previousCrop` TEXT, `previousVariety` TEXT)");
         _db.execSQL("CREATE TABLE IF NOT EXISTS `Seeds` (`seed_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `variety` TEXT)");
         _db.execSQL("CREATE TABLE IF NOT EXISTS `User` (`userId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `serialNum` TEXT, `fullname` TEXT, `accredArea` TEXT, `isLoggedIn` TEXT)");
+        _db.execSQL("CREATE TABLE IF NOT EXISTS `SeedBought` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `serialNum` TEXT, `palletCode` TEXT, `variety` TEXT, `seedClass` TEXT, `quantity` INTEGER NOT NULL, `usedQuantity` INTEGER NOT NULL, `tableName` TEXT)");
         _db.execSQL("CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)");
-        _db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '736dba695135ca6b14c85b2fddf6f4eb')");
+        _db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '71c17092979ffcf13624a569c5d309c3')");
       }
 
       @Override
@@ -48,6 +53,7 @@ public final class SeedGrowerDatabase_Impl extends SeedGrowerDatabase {
         _db.execSQL("DROP TABLE IF EXISTS `SeedGrower`");
         _db.execSQL("DROP TABLE IF EXISTS `Seeds`");
         _db.execSQL("DROP TABLE IF EXISTS `User`");
+        _db.execSQL("DROP TABLE IF EXISTS `SeedBought`");
         if (mCallbacks != null) {
           for (int _i = 0, _size = mCallbacks.size(); _i < _size; _i++) {
             mCallbacks.get(_i).onDestructiveMigration(_db);
@@ -146,9 +152,27 @@ public final class SeedGrowerDatabase_Impl extends SeedGrowerDatabase {
                   + " Expected:\n" + _infoUser + "\n"
                   + " Found:\n" + _existingUser);
         }
+        final HashMap<String, TableInfo.Column> _columnsSeedBought = new HashMap<String, TableInfo.Column>(8);
+        _columnsSeedBought.put("id", new TableInfo.Column("id", "INTEGER", true, 1, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsSeedBought.put("serialNum", new TableInfo.Column("serialNum", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsSeedBought.put("palletCode", new TableInfo.Column("palletCode", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsSeedBought.put("variety", new TableInfo.Column("variety", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsSeedBought.put("seedClass", new TableInfo.Column("seedClass", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsSeedBought.put("quantity", new TableInfo.Column("quantity", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsSeedBought.put("usedQuantity", new TableInfo.Column("usedQuantity", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsSeedBought.put("tableName", new TableInfo.Column("tableName", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        final HashSet<TableInfo.ForeignKey> _foreignKeysSeedBought = new HashSet<TableInfo.ForeignKey>(0);
+        final HashSet<TableInfo.Index> _indicesSeedBought = new HashSet<TableInfo.Index>(0);
+        final TableInfo _infoSeedBought = new TableInfo("SeedBought", _columnsSeedBought, _foreignKeysSeedBought, _indicesSeedBought);
+        final TableInfo _existingSeedBought = TableInfo.read(_db, "SeedBought");
+        if (! _infoSeedBought.equals(_existingSeedBought)) {
+          return new RoomOpenHelper.ValidationResult(false, "SeedBought(govph.rsis.growapp.SeedBought.SeedBought).\n"
+                  + " Expected:\n" + _infoSeedBought + "\n"
+                  + " Found:\n" + _existingSeedBought);
+        }
         return new RoomOpenHelper.ValidationResult(true, null);
       }
-    }, "736dba695135ca6b14c85b2fddf6f4eb", "c3ff46f8d9c5138fbd50dd89a93f740e");
+    }, "71c17092979ffcf13624a569c5d309c3", "71c2422565a17d2eef4f9bf9243bb0d5");
     final SupportSQLiteOpenHelper.Configuration _sqliteConfig = SupportSQLiteOpenHelper.Configuration.builder(configuration.context)
         .name(configuration.name)
         .callback(_openCallback)
@@ -161,7 +185,7 @@ public final class SeedGrowerDatabase_Impl extends SeedGrowerDatabase {
   protected InvalidationTracker createInvalidationTracker() {
     final HashMap<String, String> _shadowTablesMap = new HashMap<String, String>(0);
     HashMap<String, Set<String>> _viewTables = new HashMap<String, Set<String>>(0);
-    return new InvalidationTracker(this, _shadowTablesMap, _viewTables, "SeedGrower","Seeds","User");
+    return new InvalidationTracker(this, _shadowTablesMap, _viewTables, "SeedGrower","Seeds","User","SeedBought");
   }
 
   @Override
@@ -173,6 +197,7 @@ public final class SeedGrowerDatabase_Impl extends SeedGrowerDatabase {
       _db.execSQL("DELETE FROM `SeedGrower`");
       _db.execSQL("DELETE FROM `Seeds`");
       _db.execSQL("DELETE FROM `User`");
+      _db.execSQL("DELETE FROM `SeedBought`");
       super.setTransactionSuccessful();
     } finally {
       super.endTransaction();
@@ -221,6 +246,20 @@ public final class SeedGrowerDatabase_Impl extends SeedGrowerDatabase {
           _userDao = new UserDao_Impl(this);
         }
         return _userDao;
+      }
+    }
+  }
+
+  @Override
+  public SeedBoughtDao seedBoughtDao() {
+    if (_seedBoughtDao != null) {
+      return _seedBoughtDao;
+    } else {
+      synchronized(this) {
+        if(_seedBoughtDao == null) {
+          _seedBoughtDao = new SeedBoughtDao_Impl(this);
+        }
+        return _seedBoughtDao;
       }
     }
   }

@@ -112,25 +112,49 @@ public class LoginActivity extends AppCompatActivity {
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-
-
                 User user = new User();
                 SeedGrowerDatabase database = SeedGrowerDatabase.getInstance(LoginActivity.this);
                 if(response.equals("204")){
                     Toast.makeText(LoginActivity.this, "Make sure that your Serial Number is correct.", Toast.LENGTH_SHORT).show();
                 }else{
                     try {
-                        JSONArray json = new JSONArray(response);
+                        JSONObject json = new JSONObject(response);
+                        if(json != null || json.length() > 0){
+                            String fullName = json.getString("fullName");
+                            String accredArea = json.getString("accredArea");
+                            String serialNum = json.getString("serialNum");
+                            String data = json.getString("data");
+                            int isExisting = userViewModel.isExisting(serialNum);
 
-                        if(json != null || json.length() >0){
+                            JSONArray jsonArray = json.getJSONArray("data");
 
-                            for(int i = 0; i < json.length(); i++){
+                            if(isExisting > 0 ){
+                                userViewModel.getUpdateUserStatus("LoggedIn",serialNum);
+                            }else{
+                                user.setFullname(fullName);
+                                user.setAccredArea(accredArea);
+                                user.setLoggedIn("LoggedIn");
+                                userViewModel.insert(user);
+                            }
+                            for(int i = 0; i < jsonArray.length(); i++){
+                                JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+                                String palletCode = jsonObject.getString("palletCode");
+                                String variety = jsonObject.getString("variety");
+                                String seedClass = jsonObject.getString("seedClass");
+                                int quantity = jsonObject.getInt("quantity");
+                                String table_name = jsonObject.getString("table_name");
+
+                                Log.e(TAG, "variety: "+variety );
+                            }
+                            /*for(int i = 0; i < json.length(); i++){
                                 JSONObject jsonObject = json.getJSONObject(i);
                                 String fullName = jsonObject.getString("fullName");
                                 String accredArea = jsonObject.getString("accredArea");
                                 String serialNum = jsonObject.getString("serialNum");
                                 user.setSerialNum(serialNum);
                                 int isExisting = userViewModel.isExisting(serialNum);
+
 
                                 if(isExisting > 0 ){
                                     userViewModel.getUpdateUserStatus("LoggedIn",serialNum);
@@ -146,7 +170,7 @@ public class LoginActivity extends AppCompatActivity {
                                 dialog.hide();
                                 intent = new Intent(LoginActivity.this,HomeActivity.class);
                                 startActivity(intent);
-                                finish();
+                                finish();*/
                         }else{
                             Toast.makeText(LoginActivity.this, "No Seed Grower details.", Toast.LENGTH_SHORT).show();
                         }

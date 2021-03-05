@@ -9,10 +9,12 @@ import androidx.room.RoomDatabase;
 import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
+import govph.rsis.growapp.SeedBought.SeedBought;
+import govph.rsis.growapp.SeedBought.SeedBoughtDao;
 import govph.rsis.growapp.User.User;
 import govph.rsis.growapp.User.UserDao;
 
-@Database(entities = {SeedGrower.class,Seeds.class, User.class}, version = 7, exportSchema = true)
+@Database(entities = {SeedGrower.class,Seeds.class, User.class, SeedBought.class}, version = 8, exportSchema = true)
 public abstract class SeedGrowerDatabase extends RoomDatabase {
     public static final String DB_NAME ="seedgrower";
     private static SeedGrowerDatabase instance;
@@ -51,6 +53,20 @@ public abstract class SeedGrowerDatabase extends RoomDatabase {
             database.execSQL("ALTER  TABLE User ADD COLUMN isLoggedIn TEXT");
         }
     };
+
+    static final Migration MIGRATION_7_8 = new Migration(7,8) {
+        @Override
+        public void migrate(@NonNull SupportSQLiteDatabase database) {
+            database.execSQL("CREATE TABLE `SeedBought` (`id` INTEGER PRIMARY KEY NOT NULL, "
+                    + "`serialNum` TEXT,"
+                    +"`palletCode` TEXT,"
+                    +"`variety` TEXT,"
+                    + "`seedClass` TEXT,"
+                    + "`quantity` INTEGER,"
+                    + "`usedQuantity` INTEGER,"
+                    + "`tableName` TEXT)");
+        }
+    };
     public static synchronized SeedGrowerDatabase getInstance(Context context) {
         if(instance == null) {
             instance = Room.databaseBuilder(context.getApplicationContext(), SeedGrowerDatabase.class,DB_NAME)
@@ -64,6 +80,7 @@ public abstract class SeedGrowerDatabase extends RoomDatabase {
     public abstract SeedGrowerDao seedGrowerDao();
     public abstract SeedsDao seedsDao();
     public abstract UserDao userDao();
+    public abstract SeedBoughtDao seedBoughtDao();
 
  /*   private static RoomDatabase.Callback roomCallback = new RoomDatabase.Callback(){
         @Override
