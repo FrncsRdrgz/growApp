@@ -62,8 +62,8 @@ public abstract class SeedGrowerDatabase extends RoomDatabase {
                     +"`palletCode` TEXT,"
                     +"`variety` TEXT,"
                     + "`seedClass` TEXT,"
-                    + "`quantity` INTEGER,"
-                    + "`usedQuantity` INTEGER,"
+                    + "`quantity` INTEGER NOT NULL,"
+                    + "`usedQuantity` INTEGER NOT NULL,"
                     + "`tableName` TEXT)");
         }
     };
@@ -71,7 +71,7 @@ public abstract class SeedGrowerDatabase extends RoomDatabase {
         if(instance == null) {
             instance = Room.databaseBuilder(context.getApplicationContext(), SeedGrowerDatabase.class,DB_NAME)
                     .allowMainThreadQueries()
-                    .addMigrations(MIGRATION_2_3,MIGRATION_3_4,MIGRATION_4_5,MIGRATION_5_6,MIGRATION_6_7)
+                    .addMigrations(MIGRATION_2_3,MIGRATION_3_4,MIGRATION_4_5,MIGRATION_5_6,MIGRATION_6_7,MIGRATION_7_8)
                     .build();
         }
         return instance;

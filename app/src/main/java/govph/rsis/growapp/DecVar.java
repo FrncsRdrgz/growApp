@@ -18,7 +18,7 @@ public class DecVar {
 
     public static final String getUserKioskDetails(){
         String production = "https://rsis.philrice.gov.ph/seed_ordering/api/";
-        String localhost = "http://192.168.0.108/seed_ordering/api/";
+        String localhost = "http://192.168.0.108/seed_ordering/api/getSeedBought";
 
         return localhost;
     }
