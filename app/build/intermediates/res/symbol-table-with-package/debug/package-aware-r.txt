@@ -1875,9 +1875,12 @@ id tetCoop
 id tetDatePlanted
 id tetLabNo
 id tetPreviousCrop
+id tetRiceProgram
 id tetSeedBedArea
+id tetSeedClass
 id tetSeedLotNo
 id tetSeedQuantity
+id tetSeedSource
 id tetSeedlingAge
 id text
 id text2
@@ -1920,11 +1923,14 @@ id tilLabNo
 id tilPreviousCrop
 id tilPreviousVariety
 id tilRiceProgram
+id tilRiceProgram2
 id tilSeedBedArea
 id tilSeedClass
+id tilSeedClass2
 id tilSeedLotNo
 id tilSeedQuantity
 id tilSeedSource
+id tilSeedSource2
 id tilSeedlingAge
 id tilVariety
 id time

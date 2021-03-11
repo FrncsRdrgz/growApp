@@ -13,7 +13,7 @@ import java.util.List;
 public interface SeedBoughtDao {
 
     @Query("SELECT * from seedbought WHERE serialNum =:serialNum ORDER BY id")
-    LiveData<List<SeedBought>> getSeedBought(String serialNum);
+    List<SeedBought> getSeedBought(String serialNum);
 
     @Insert
     void insert(SeedBought seedBought);

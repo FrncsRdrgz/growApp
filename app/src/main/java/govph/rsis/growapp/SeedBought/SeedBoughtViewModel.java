@@ -11,7 +11,7 @@ import java.util.List;
 
 public class SeedBoughtViewModel extends AndroidViewModel {
     private SeedBoughtRepository seedBoughtRepository;
-    private LiveData<List<SeedBought>> allSeedBought;
+    private List<SeedBought> allSeedBought;
 
     public SeedBoughtViewModel(@NonNull Application application){
         super(application);
@@ -20,6 +20,8 @@ public class SeedBoughtViewModel extends AndroidViewModel {
     }
 
     public void insert(SeedBought seedBought){seedBoughtRepository.insert(seedBought);}
-
+    public List<SeedBought> getAllSeedBought(String serialNum){
+        return allSeedBought = seedBoughtRepository.getAllSeedBought(serialNum);
+    }
 
 }

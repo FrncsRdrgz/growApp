@@ -62,8 +62,10 @@ public abstract class SeedGrowerDatabase extends RoomDatabase {
                     +"`palletCode` TEXT,"
                     +"`variety` TEXT,"
                     + "`seedClass` TEXT,"
+                    + "`riceProgram` TEXT,"
                     + "`quantity` INTEGER NOT NULL,"
                     + "`usedQuantity` INTEGER NOT NULL,"
+                    + "`area` DOUBLE NOT NULL,"
                     + "`tableName` TEXT)");
         }
     };

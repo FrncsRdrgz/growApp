@@ -31,6 +31,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import govph.rsis.growapp.SeedBought.SeedBought;
+import govph.rsis.growapp.SeedBought.SeedBoughtViewModel;
 import govph.rsis.growapp.User.User;
 import govph.rsis.growapp.User.UserViewModel;
 
@@ -40,10 +42,12 @@ public class LoginActivity extends AppCompatActivity {
     private int CAMERA_PERMISSION_CODE = 1;
     private boolean mPermissionGranted;
     public static final int REQUEST_CODE = 1;
+    private UserViewModel userViewModel;
+    private SeedBoughtViewModel seedBoughtViewModel;
     LayoutInflater inflater;
     Button scanBtn;
     Intent intent;
-    private UserViewModel userViewModel;
+
     RequestQueue queue;
     AlertDialog.Builder builder;
     AlertDialog dialog;
@@ -58,7 +62,7 @@ public class LoginActivity extends AppCompatActivity {
         globalFunction = new GlobalFunction(getApplicationContext());
         globalFunction.isOnline();
         userViewModel = ViewModelProviders.of(LoginActivity.this).get(UserViewModel.class);
-
+        seedBoughtViewModel = ViewModelProviders.of(LoginActivity.this).get(SeedBoughtViewModel.class);
         builder = new AlertDialog.Builder(this);
         scanBtn = findViewById(R.id.scanIdBtn);
         scanBtn.setOnClickListener(new View.OnClickListener() {
@@ -113,12 +117,14 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 User user = new User();
+
                 SeedGrowerDatabase database = SeedGrowerDatabase.getInstance(LoginActivity.this);
                 if(response.equals("204")){
                     Toast.makeText(LoginActivity.this, "Make sure that your Serial Number is correct.", Toast.LENGTH_SHORT).show();
                 }else{
                     try {
                         JSONObject json = new JSONObject(response);
+                        Log.e(TAG, "onResponse: "+json );
                         if(json != null || json.length() > 0){
                             String fullName = json.getString("fullName");
                             String accredArea = json.getString("accredArea");
@@ -127,26 +133,44 @@ public class LoginActivity extends AppCompatActivity {
                             int isExisting = userViewModel.isExisting(serialNum);
 
                             JSONArray jsonArray = json.getJSONArray("data");
-
                             if(isExisting > 0 ){
                                 userViewModel.getUpdateUserStatus("LoggedIn",serialNum);
                             }else{
+                                user.setSerialNum(serialNum);
                                 user.setFullname(fullName);
                                 user.setAccredArea(accredArea);
                                 user.setLoggedIn("LoggedIn");
                                 userViewModel.insert(user);
                             }
-                            for(int i = 0; i < jsonArray.length(); i++){
-                                JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-                                String palletCode = jsonObject.getString("palletCode");
-                                String variety = jsonObject.getString("variety");
-                                String seedClass = jsonObject.getString("seedClass");
-                                int quantity = jsonObject.getInt("quantity");
-                                String table_name = jsonObject.getString("table_name");
+                            if(jsonArray.length() != 0){
+                                for(int i = 0; i < jsonArray.length(); i++){
+                                    SeedBought seedBought = new SeedBought();
+                                    JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-                                Log.e(TAG, "variety: "+variety );
+                                    String palletCode = jsonObject.getString("palletCode");
+                                    String variety = jsonObject.getString("variety");
+                                    String seedClass = jsonObject.getString("seedClass");
+                                    String riceProgram = jsonObject.getString("riceProgram");
+                                    String table_name = jsonObject.getString("table_name");
+                                    int quantity = jsonObject.getInt("quantity");
+                                    double area = jsonObject.getDouble("area");
+
+
+                                    seedBought.setSerialNum(serialNum);
+                                    seedBought.setVariety(variety);
+                                    seedBought.setSeedClass(seedClass);
+                                    seedBought.setPalletCode(palletCode);
+                                    seedBought.setQuantity(quantity);
+                                    seedBought.setUsedQuantity(0);
+                                    seedBought.setTableName(table_name);
+                                    seedBought.setArea(area);
+                                    seedBought.setRiceProgram(riceProgram);
+
+                                    seedBoughtViewModel.insert(seedBought);
+                                }
                             }
+
                             /*for(int i = 0; i < json.length(); i++){
                                 JSONObject jsonObject = json.getJSONObject(i);
                                 String fullName = jsonObject.getString("fullName");
@@ -165,12 +189,12 @@ public class LoginActivity extends AppCompatActivity {
                                     userViewModel.insert(user);
                                 }
 
-                            }
+                            }*/
                                 //if(userViewModel.isExisting(user.serialNum);)
-                                dialog.hide();
+                                dialog.dismiss();
                                 intent = new Intent(LoginActivity.this,HomeActivity.class);
                                 startActivity(intent);
-                                finish();*/
+                                finish();
                         }else{
                             Toast.makeText(LoginActivity.this, "No Seed Grower details.", Toast.LENGTH_SHORT).show();
                         }
@@ -180,13 +204,11 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 }
 
-
-
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                dialog.hide();
+                dialog.dismiss();
                 Log.e(TAG, "onErrorResponse: "+error );
                 Toast.makeText(LoginActivity.this, "Error", Toast.LENGTH_SHORT).show();
             }

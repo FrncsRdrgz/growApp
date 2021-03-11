@@ -146,6 +146,24 @@
                 android:layout_below="@id/linearSeedVariety">
 
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilSeedClass2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/seedClass"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/tetSeedClass"
+                        android:layout_width="match_parent"
+                        android:inputType="numberDecimal"
+                        android:clickable="false"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
+                        android:layout_height="wrap_content"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:visibility="invisible"
                     android:id="@+id/tilSeedClass"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -168,6 +186,24 @@
                 android:layout_below="@id/linearSeedClass">
 
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilRiceProgram2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/riceProgram"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/tetRiceProgram"
+                        android:layout_width="match_parent"
+                        android:inputType="numberDecimal"
+                        android:clickable="false"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
+                        android:layout_height="wrap_content"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:visibility="invisible"
                     android:id="@+id/tilRiceProgram"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -182,6 +218,7 @@
             </LinearLayout>
 
             <LinearLayout
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingTop="7dp"
@@ -191,6 +228,24 @@
                 android:layout_below="@id/linearRiceProgram">
 
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilSeedSource2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/seedSource"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/tetSeedSource"
+                        android:layout_width="match_parent"
+                        android:inputType="numberDecimal"
+                        android:clickable="false"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
+                        android:layout_height="wrap_content"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:visibility="invisible"
                     android:id="@+id/tilSeedSource"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -210,8 +265,56 @@
                 android:paddingTop="7dp"
                 android:paddingRight="15dp"
                 android:paddingLeft="15dp"
-                android:id="@+id/linearDatePlanted"
+                android:id="@+id/linearSeedQuantity"
                 android:layout_below="@id/linearSeedSource">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilSeedQuantity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/seedQuantity"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/tetSeedQuantity"
+                        android:layout_width="match_parent"
+                        android:inputType="numberDecimal"
+                        android:layout_height="wrap_content"/>
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="7dp"
+                android:paddingRight="15dp"
+                android:paddingLeft="15dp"
+                android:id="@+id/linearAreaPlanted"
+                android:layout_below="@id/linearSeedQuantity">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilAreaPlanted"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/areaPlanted"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/tetAreaPlanted"
+                        android:layout_width="match_parent"
+                        android:inputType="numberDecimal"
+                        android:layout_height="wrap_content"/>
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="7dp"
+                android:paddingRight="15dp"
+                android:paddingLeft="15dp"
+                android:id="@+id/linearDatePlanted"
+                android:layout_below="@id/linearAreaPlanted">
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tilDatePlanted"
@@ -230,52 +333,8 @@
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="7dp"
-                android:paddingRight="15dp"
-                android:paddingLeft="15dp"
-                android:id="@+id/linearAreaPlanted"
-                android:layout_below="@id/linearDatePlanted">
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/tilAreaPlanted"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/areaPlanted"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/tetAreaPlanted"
-                        android:layout_width="match_parent"
-                        android:inputType="numberDecimal"
-                        android:layout_height="wrap_content"/>
-                </com.google.android.material.textfield.TextInputLayout>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="7dp"
-                android:paddingRight="15dp"
-                android:paddingLeft="15dp"
-                android:id="@+id/linearSeedQuantity"
-                android:layout_below="@id/linearAreaPlanted">
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/tilSeedQuantity"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/seedQuantity"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/tetSeedQuantity"
-                        android:layout_width="match_parent"
-                        android:inputType="numberDecimal"
-                        android:layout_height="wrap_content"/>
-                </com.google.android.material.textfield.TextInputLayout>
-            </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -283,7 +342,7 @@
                 android:paddingRight="15dp"
                 android:paddingLeft="15dp"
                 android:id="@+id/linearSeedBedArea"
-                android:layout_below="@id/linearSeedQuantity">
+                android:layout_below="@id/linearDatePlanted">
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tilSeedBedArea"

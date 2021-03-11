@@ -11,7 +11,7 @@ import govph.rsis.growapp.SeedGrowerDatabase;
 
 public class SeedBoughtRepository {
     private SeedBoughtDao seedBoughtDao;
-    private LiveData<List<SeedBought>> allSeedBought;
+    private List<SeedBought> allSeedBought;
 
     public SeedBoughtRepository(Application application){
         SeedGrowerDatabase database = SeedGrowerDatabase.getInstance(application);
@@ -20,6 +20,9 @@ public class SeedBoughtRepository {
 
     public void insert(SeedBought seedBought) {new InsertAsyncTask(seedBoughtDao).execute(seedBought);}
 
+    public List<SeedBought> getAllSeedBought(String serialNum){
+        return allSeedBought = seedBoughtDao.getSeedBought(serialNum);
+    }
     private static class InsertAsyncTask extends AsyncTask<SeedBought, Void, Void> {
         private SeedBoughtDao seedBoughtDao;
 
