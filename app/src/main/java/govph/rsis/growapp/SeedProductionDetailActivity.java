@@ -89,7 +89,7 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
     LocationManager locationManager;
     Toolbar toolbar;
     LinearLayout l10, l11;
-    TextView tvLatitude, tvLongitude, tvCancel,tvSave,tvAccredNo;
+    TextView tvLatitude, tvLongitude, tvCancel,tvSave,tvAccredNo, spTvWelcomeName;
     Button getLocationBtn;
     AutoCompleteTextView actVariety,actSeedClass, actSeedSource,actRiceProgram,actPreviousVariety;
     TextInputLayout tilVariety,tilSeedClass,tilSeedSource, tilRiceProgram,tilDatePlanted,tilSeedClass2,tillSeedSource2,tilRiceProgram2,tilAreaPlanted,tilSeedQuantity,tilSeedBedArea,tilSeedlingAge,tilSeedLotNo,tilLabNo,tilCooperative,tilBarangay;
@@ -107,6 +107,7 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
     TelephonyManager telephonyManager;
     User user;
     List<SeedBought> seedBought;
+    SeedBought selectedSeed;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -119,10 +120,10 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
         user = userViewModel.getLoggedInUser();
 
         //mCodeScanner = new CodeScanner(SeedProductionDetailActivity.this, scannerView);
-
         l10 = (LinearLayout) findViewById(R.id.l10);
         l11 = (LinearLayout) findViewById(R.id.l11);
         tvCancel = (TextView) findViewById(R.id.tvCancel);
+        spTvWelcomeName = (TextView) findViewById(R.id.spTvWelcomeName);
         tvSave = (TextView) findViewById(R.id.tvSave);
         tvAccredNo = (TextView) findViewById(R.id.tvAccreditationNo);
         tvAccredNo.setText(user.getSerialNum());
@@ -130,6 +131,7 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
         tvLongitude = (TextView) findViewById(R.id.tvLongitude);
         toolbar = findViewById(R.id.spToolbar);
 
+        spTvWelcomeName.setText("Welcome, "+ user.getFullname());
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
@@ -170,7 +172,7 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
         materialDatePicker = materialBuilder.build();
 
         database = SeedGrowerDatabase.getInstance(this);
-
+        tvAccredNo.setText("Serial: "+ user.getSerialNum());
         tvAccredNo.addTextChangedListener(saveTextWatcher);
         tvLatitude.addTextChangedListener(saveTextWatcher);
         tvLongitude.addTextChangedListener(saveTextWatcher);
@@ -194,7 +196,7 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
                 scanFunction();
             }
         });*/
-        List<SeedBought> seedBought = seedBoughtViewModel.getAllSeedBought(user.getSerialNum());
+        seedBought = seedBoughtViewModel.getAllSeedBought(user.getSerialNum());
         //int counter = seedBought.size() + 1;
         //Log.e(TAG, "Counter: "+counter );
         final String[] spinnerArraySeeds = new String[seedBought.size()+1];
@@ -305,7 +307,7 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
         actVariety.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.e(TAG, "onItemClick: "+spinnerArraySeeds[position] );
+
                 if(spinnerArraySeeds[position].equals("Others")){
                     tilSeedClass2.setVisibility(View.GONE);
                     tillSeedSource2.setVisibility(View.GONE);
@@ -314,6 +316,8 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
                     tilRiceProgram.setVisibility(View.VISIBLE);
                     tilSeedClass.setVisibility(View.VISIBLE);
                     tilSeedSource.setVisibility(View.VISIBLE);
+                    tetSeedQuantity.setText("");
+                    tetAreaPlanted.setText("");
                 }else{
                     tilSeedClass2.setVisibility(View.VISIBLE);
                     tillSeedSource2.setVisibility(View.VISIBLE);
@@ -323,16 +327,20 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
                     tilSeedClass.setVisibility(View.GONE);
                     tilSeedSource.setVisibility(View.GONE);
 
-                    Log.e(TAG, "onItemClick: "+ spinnerMap.get(position).getVariety() );
-                    Toast.makeText(SeedProductionDetailActivity.this, "quantity" + spinnerMap.get(position).getQuantity(), Toast.LENGTH_SHORT).show();
+                    selectedSeed = spinnerMap.get(position);
+                    Log.e(TAG, "onItemClick: "+selectedSeed );
+                    //Toast.makeText(SeedProductionDetailActivity.this, "quantity" + spinnerMap.get(position).getQuantity(), Toast.LENGTH_SHORT).show();
                     if(spinnerMap.get(position).getSeedClass().equals("RS")){
                         tetSeedClass.setText("Registered");
                     }else if(spinnerMap.get(position).getSeedClass().equals("FS")){
                         tetSeedClass.setText("Foundation");
                     }
-                    int quantity = spinnerMap.get(position).getQuantity();
+                    //wip
+                    int quantity = spinnerMap.get(position).getQuantity() - spinnerMap.get(position).getUsedQuantity();
                     tetRiceProgram.setText(spinnerMap.get(position).getRiceProgram());
-                    tetAreaPlanted.setText(String.valueOf(spinnerMap.get(position).getArea()));
+                    double area =(double) quantity/40;
+
+                    tetAreaPlanted.setText(String.valueOf(area));
                     tetSeedQuantity.setText(String.valueOf(quantity));
                 }
 
@@ -490,7 +498,7 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
 
             if(!accredNo.isEmpty() && !latitude.isEmpty() && !longitude.isEmpty()){
                 tvSave.setEnabled(true);
-                tvSave.setTextColor(Color.BLACK);
+                tvSave.setTextColor(Color.WHITE);
             }
 
         }
@@ -528,7 +536,7 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
         }
 
         String uniqueid = md5(uniqueId+"-"+ getMacAddr()+"-"+ timestamp);
-        String accredno = tvAccredNo.getText().toString();
+        String accredno = user.getSerialNum();
         String latitude = tvLatitude.getText().toString();
         String longitude = tvLongitude.getText().toString();
         String seedVariety = actVariety.getText().toString();
@@ -550,11 +558,13 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
         String previousCrop = tetPreviousCrop.getText().toString();
         String previousVariety = actPreviousVariety.getText().toString();
 
-
-            seedGrowerViewModel = ViewModelProviders.of(this).get(SeedGrowerViewModel.class);
-            SeedGrower seedGrower = new SeedGrower(uniqueid,accredno,latitude,longitude,seedVariety,seedSource,otherSeedSource,seedClass,dateplanted,
-                    areaPlanted,seedQuantity,seedbedArea,seedlingAge,seedLot,controlNo,barangay,datecollected,isSent,riceProgram,coop,previousCrop,previousVariety);
-            seedGrowerViewModel.insert(seedGrower);
+        seedGrowerViewModel = ViewModelProviders.of(this).get(SeedGrowerViewModel.class);
+        SeedGrower seedGrower = new SeedGrower(uniqueid,accredno,latitude,longitude,seedVariety,seedSource,otherSeedSource,seedClass,dateplanted,
+                areaPlanted,seedQuantity,seedbedArea,seedlingAge,seedLot,controlNo,barangay,datecollected,isSent,riceProgram,coop,previousCrop,previousVariety);
+        seedGrower.setBought_id(String.valueOf(selectedSeed.getId()));
+        seedGrowerViewModel.insert(seedGrower);
+        int usedQuantity = Integer.parseInt(seedQuantity) + selectedSeed.getUsedQuantity();
+        seedBoughtViewModel.getUpdateUsedQuantity(user.getSerialNum(),usedQuantity, selectedSeed.getId());
             finish();
         /*Date date = null;
         String dateplanted;

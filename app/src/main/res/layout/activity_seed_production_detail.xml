@@ -6,13 +6,63 @@
     android:layout_height="match_parent"
     tools:context="govph.rsis.growapp.SeedProductionDetailActivity"
     >
+    <LinearLayout
+        android:id="@+id/linearSpToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-    <include layout="@layout/seed_production_toolbar"
-        android:id="@+id/spToolbar"
-        />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFFF"
+            android:paddingBottom="5dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="120dp"
+                android:layout_height="80dp"
+                app:srcCompat="@drawable/rsisnew"
+                >
+            </ImageView>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/spTvWelcomeName"
+                    style="@style/TextAppearance.Widget.AppCompat.Toolbar.Subtitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="10dp"
+                    android:textSize="15sp"
+                    android:background="?attr/selectableItemBackground"
+                    android:drawablePadding="8dp"
+                    android:textColor="#000000"
+                    android:text="Welcome: John Doe"/>
+                <TextView
+                    android:id="@+id/tvAccreditationNo"
+                    style="@style/TextAppearance.Widget.AppCompat.Toolbar.Subtitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="8dp"
+                    android:textSize="20sp"
+                    android:background="?attr/selectableItemBackground"
+                    android:drawablePadding="8dp"
+                    android:textColor="#000000"
+                    android:text="Serial: R-0000xxxx"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <include layout="@layout/seed_production_toolbar"
+            android:id="@+id/spToolbar"
+            />
+    </LinearLayout>
+
     <ScrollView
-        android:layout_below="@id/spToolbar"
-        android:layout_marginTop="20dp"
+        android:layout_below="@id/linearSpToolbar"
         android:id="@+id/scrollView1"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" >
@@ -21,33 +71,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" >
 
-            <LinearLayout
-                android:id="@+id/linearSerialNumber"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingTop="7dp"
-                android:paddingRight="15dp"
-                android:paddingLeft="15dp"
-                >
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="@string/serialNum"
-                    android:layout_weight="1"
-                    android:textSize="18sp"/>
-                <TextView
-                    android:id="@+id/tvAccreditationNo"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:textSize="18sp"/>
-            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/l3"
-                android:layout_below="@id/linearSerialNumber"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingTop="7dp"

@@ -76,6 +76,9 @@ public class SeedGrower {
     @ColumnInfo (name="previousVariety")
     public String previousVariety;
 
+    @ColumnInfo (name="bought_id")
+    public String bought_id;
+
     public SeedGrower(String macaddress, String accredno, String latitude, String longitude, String variety, String seedsource, String otherseedsource, String seedclass, String dateplanted,
                        String areaplanted, String quantity, String seedbedarea, String seedlingage, String seedlot, String controlno, String barangay, String datecollected, Boolean isSent,
                       String riceProgram, String coop, String previousCrop, String previousVariety){
@@ -167,4 +170,7 @@ public class SeedGrower {
     public String getPreviousCrop(){return previousCrop;}
 
     public String getPreviousVariety() { return previousVariety; }
+
+    public void setBought_id(String bought_id) { this.bought_id = bought_id; }
+    public String getBought_id() {return bought_id;}
 }

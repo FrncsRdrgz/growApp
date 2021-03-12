@@ -819,6 +819,7 @@ color checkbox_themeable_attribute_color
 color colorAccent
 color colorPrimary
 color colorPrimaryDark
+color colorWhite
 color design_bottom_navigation_shadow_color
 color design_box_stroke_color
 color design_dark_default_color_background
@@ -1432,6 +1433,8 @@ drawable design_snackbar_background
 drawable ic_add_black_24dp
 drawable ic_add_location_white_24dp
 drawable ic_archive_black_24dp
+drawable ic_baseline_add_24_white
+drawable ic_baseline_archive_24_white
 drawable ic_baseline_logout_24
 drawable ic_center_focus_weak_white_24dp
 drawable ic_code_scanner_auto_focus_off
@@ -1497,6 +1500,7 @@ id SHIFT
 id SYM
 id TOP_END
 id TOP_START
+id aboutBtn
 id accessibility_action_clickable_span
 id accessibility_custom_action_0
 id accessibility_custom_action_1
@@ -1713,6 +1717,7 @@ id linear6
 id linear7
 id linear8
 id linear9
+id linearAppInfo
 id linearAreaPlanted
 id linearBarangay
 id linearCooperative
@@ -1732,6 +1737,8 @@ id linearSeedSource
 id linearSeedVariety
 id linearSeedlingAge
 id linearSerialNumber
+id linearSpToolbar
+id linearToolbar
 id listItems
 id listMode
 id list_item
@@ -1843,6 +1850,7 @@ id snackbar_text
 id snap
 id snapMargins
 id spToolbar
+id spTvWelcomeName
 id spacer
 id split_action_bar
 id spread
@@ -1856,6 +1864,7 @@ id status_bar_latest_event_content
 id stretch
 id submenuarrow
 id submit_area
+id switchAccountBtn
 id tabMode
 id tag_accessibility_actions
 id tag_accessibility_clickable_spans
@@ -1949,6 +1958,7 @@ id transition_position
 id transition_scene_layoutid_cache
 id transition_transform
 id tvAccreditationNo
+id tvAppName
 id tvCancel
 id tvDateplanted
 id tvDeleteAll
@@ -1975,6 +1985,7 @@ id tvSeedClass
 id tvVariety
 id tvVersion
 id tvWelcomeName
+id tvWelcomeSerial
 id tvYourForms
 id unchecked
 id uniform

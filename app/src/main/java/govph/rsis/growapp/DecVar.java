@@ -12,13 +12,13 @@ public class DecVar {
 
     public static final String userCredentialApiUrl(){
         String production = "https://rsis.philrice.gov.ph/seed_ordering/api/getUserLoginDetails";
-        String localhost = "http://192.168.0.108/seed_ordering/api/getUserCredentials";
+        String localhost = "http://192.168.0.187/seed_ordering/api/getUserCredentials";
         return localhost;
     }
 
     public static final String getUserKioskDetails(){
         String production = "https://rsis.philrice.gov.ph/seed_ordering/api/";
-        String localhost = "http://192.168.0.108/seed_ordering/api/getSeedBought";
+        String localhost = "http://192.168.0.187/seed_ordering/api/getSeedBought";
 
         return localhost;
     }

@@ -14,7 +14,7 @@ import govph.rsis.growapp.SeedBought.SeedBoughtDao;
 import govph.rsis.growapp.User.User;
 import govph.rsis.growapp.User.UserDao;
 
-@Database(entities = {SeedGrower.class,Seeds.class, User.class, SeedBought.class}, version = 8, exportSchema = true)
+@Database(entities = {SeedGrower.class,Seeds.class, User.class, SeedBought.class}, version = 9, exportSchema = true)
 public abstract class SeedGrowerDatabase extends RoomDatabase {
     public static final String DB_NAME ="seedgrower";
     private static SeedGrowerDatabase instance;
@@ -69,11 +69,18 @@ public abstract class SeedGrowerDatabase extends RoomDatabase {
                     + "`tableName` TEXT)");
         }
     };
+
+    static final Migration MIGRATION_8_9 = new Migration(8,9) {
+        @Override
+        public void migrate(@NonNull SupportSQLiteDatabase database) {
+            database.execSQL("ALTER  TABLE SeedGrower ADD COLUMN bought_id TEXT");
+        }
+    };
     public static synchronized SeedGrowerDatabase getInstance(Context context) {
         if(instance == null) {
             instance = Room.databaseBuilder(context.getApplicationContext(), SeedGrowerDatabase.class,DB_NAME)
                     .allowMainThreadQueries()
-                    .addMigrations(MIGRATION_2_3,MIGRATION_3_4,MIGRATION_4_5,MIGRATION_5_6,MIGRATION_6_7,MIGRATION_7_8)
+                    .addMigrations(MIGRATION_2_3,MIGRATION_3_4,MIGRATION_4_5,MIGRATION_5_6,MIGRATION_6_7,MIGRATION_7_8,MIGRATION_8_9)
                     .build();
         }
         return instance;

@@ -5,43 +5,116 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="govph.rsis.growapp.HomeActivity">
-    <include
-        android:id="@+id/toolbar"
-        layout="@layout/toolbar"
-        />
-    <TextView
-        android:id="@+id/tvWelcomeName"
+
+    <LinearLayout
+        android:id="@+id/linearToolbar"
         android:layout_width="match_parent"
-        android:layout_below="@id/toolbar"
         android:layout_height="wrap_content"
-        android:paddingLeft="10dp"
-        android:paddingTop="10dp"
-        android:textColor="#000000"
-        android:textSize="17sp"
-        android:text="Welcome!"
-        />
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFFF"
+            android:paddingBottom="5dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="120dp"
+                android:layout_height="80dp"
+                app:srcCompat="@drawable/rsisnew"
+                >
+            </ImageView>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/tvWelcomeName"
+                    style="@style/TextAppearance.Widget.AppCompat.Toolbar.Subtitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="10dp"
+                    android:textSize="15sp"
+                    android:background="?attr/selectableItemBackground"
+                    android:drawablePadding="8dp"
+                    android:textColor="#000000"
+                    android:text="Welcome: John Doe"/>
+                <TextView
+                    android:id="@+id/tvWelcomeSerial"
+                    style="@style/TextAppearance.Widget.AppCompat.Toolbar.Subtitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="8dp"
+                    android:textSize="20sp"
+                    android:background="?attr/selectableItemBackground"
+                    android:drawablePadding="8dp"
+                    android:textColor="#000000"
+                    android:text="Serial: R-0000xxxx"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:orientation="vertical">
+
+            <TextView
+
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/borderlines"
+                android:gravity="center"
+                android:textSize="20sp"
+                android:text="FORM LIST"/>
+        </LinearLayout>
+    </LinearLayout>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView1"
-        android:layout_below="@id/tvWelcomeName"
+        android:layout_below="@id/linearToolbar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/tvVersion"
+        android:layout_above="@id/linearAppInfo"
         tools:listitem="@layout/item_seeds"/>
     <TextView
         android:id="@+id/empty_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:text="No Data."
+        android:text="Empty List."
         android:visibility="gone"/>
 
-    <TextView
-        android:id="@+id/tvVersion"
+    <LinearLayout
+        android:layout_marginTop="5dp"
+        android:id="@+id/linearAppInfo"
+        android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:gravity="center"
-        android:textSize="20sp"
-        android:layout_marginTop="20dp"
-        />
+        android:orientation="vertical"
+        android:paddingBottom="5dp">
+
+        <TextView
+            android:id="@+id/tvVersion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="10sp"
+            android:text="GrowApp Version: growApp v2"
+            />
+        <TextView
+            android:id="@+id/tvAppName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="10sp"
+            android:text="Rice Seed Information System (c) 2021"
+            />
+    </LinearLayout>
 </RelativeLayout>

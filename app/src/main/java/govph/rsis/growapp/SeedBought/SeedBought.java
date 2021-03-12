@@ -55,20 +55,13 @@ public class SeedBought {
 
     //getters
     public String getSerialNum() { return serialNum; }
-
     public String getPalletCode() { return palletCode; }
-
     public String getSeedClass() { return seedClass; }
-
     public String getVariety() { return variety; }
-
     public void setRiceProgram(String riceProgram) { this.riceProgram = riceProgram; }
-
     public String getTableName() { return tableName; }
-
     public int getUsedQuantity() { return usedQuantity; }
-
     public int getQuantity() { return quantity; }
-
+    public int getId() { return id; }
     public double getArea() { return area; }
 }

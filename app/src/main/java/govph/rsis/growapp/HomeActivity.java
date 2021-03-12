@@ -46,6 +46,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import govph.rsis.growapp.SeedBought.SeedBought;
+import govph.rsis.growapp.SeedBought.SeedBoughtViewModel;
 import govph.rsis.growapp.User.User;
 import govph.rsis.growapp.User.UserViewModel;
 
@@ -56,13 +58,14 @@ public class HomeActivity extends AppCompatActivity {
     private static final String TAG = "HomeActivity";
 
     private SeedGrowerViewModel seedGrowerViewModel;
+    private SeedBoughtViewModel seedBoughtViewModel;
     private UserViewModel userViewModel;
     private int CAMERA_PERMISSION_CODE = 1;
     private boolean mPermissionGranted;
     public static final int REQUEST_CODE = 0x9988;
-    TextView tvDeleteAll,tvEmptyView,tvVersion,tvFinalizeAccredNo,titleFinalize,tvFinalizeSeedSource,tvFinalizeVariety,tvFinalizeSeedClass,tvFinalizeDatePlanted,
+    TextView tvDeleteAll,tvEmptyView,tvVersion,tvAppName,tvFinalizeAccredNo,titleFinalize,tvFinalizeSeedSource,tvFinalizeVariety,tvFinalizeSeedClass,tvFinalizeDatePlanted,
             tvFinalizeAreaPlanted, tvFinalizeQuantity,tvFinalizeSeedbedArea,tvFinalizeSeedlingAge,tvFinalizeSeedLot,tvFinalizeLabNo,tvFinalizeBarangay,tvFinalizeLatitude,tvFinalizeLongitude,
-            tvFinalizeCoop,tvFinalizeProgram,tvWelcomeName;
+            tvFinalizeCoop,tvFinalizeProgram,tvWelcomeName,tvWelcomeSerial;
     Toolbar toolbar;
     Intent intent;
     SeedGrowerDatabase database;
@@ -80,6 +83,7 @@ public class HomeActivity extends AppCompatActivity {
         requestCameraPermission();
         seedGrowerViewModel = ViewModelProviders.of(this).get(SeedGrowerViewModel.class);
         userViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
+        seedBoughtViewModel = ViewModelProviders.of(this).get(SeedBoughtViewModel.class);
         user = userViewModel.getLoggedInUser();
         database = SeedGrowerDatabase.getInstance(this);
         toolbar = findViewById(R.id.toolbar);
@@ -87,7 +91,9 @@ public class HomeActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         tvVersion = (TextView) findViewById(R.id.tvVersion);
+        tvAppName = (TextView) findViewById(R.id.tvAppName);
         tvWelcomeName = (TextView) findViewById(R.id.tvWelcomeName);
+        tvWelcomeSerial = (TextView) findViewById(R.id.tvWelcomeSerial);
         tvDeleteAll = (TextView) findViewById(R.id.tvDeleteAll);
         rvSeedGrowers = (RecyclerView) findViewById(R.id.recyclerView1);
         tvEmptyView = findViewById(R.id.empty_view);
@@ -96,7 +102,7 @@ public class HomeActivity extends AppCompatActivity {
 
         try {
             PackageInfo pInfo = this.getPackageManager().getPackageInfo(getPackageName(), 0);
-            tvVersion.setText("Version: "+ pInfo.versionName);
+            tvVersion.setText("GrowApp Version: "+ pInfo.versionName);
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
@@ -104,6 +110,7 @@ public class HomeActivity extends AppCompatActivity {
 
         //set the Welcome Name
         tvWelcomeName.setText("Welcome, "+user.getFullname());
+        tvWelcomeSerial.setText("Serial: " + user.getSerialNum());
         int checkUser = database.userDao().isEmpty();
 
         /*if(checkUser < 1){
@@ -144,7 +151,7 @@ public class HomeActivity extends AppCompatActivity {
                     tvEmptyView.setVisibility(View.GONE);
                     adapter.setSeedGrowers(seedGrowers);
                     tvDeleteAll.setClickable(true);
-                    tvDeleteAll.setTextColor(Color.BLACK);
+                    tvDeleteAll.setTextColor(Color.WHITE);
                 }
 
 
@@ -166,8 +173,23 @@ public class HomeActivity extends AppCompatActivity {
                         .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                seedGrowerViewModel.delete(adapter.getSeedGrowerAt(viewHolder.getAdapterPosition()));
-                                Toast.makeText(HomeActivity.this, "Form deleted.", Toast.LENGTH_SHORT).show();
+                                SeedGrower seedGrower;
+                                SeedBought seedBought;
+                                seedGrower = adapter.getSeedGrowerAt(viewHolder.getAdapterPosition());
+                                int bought_id =Integer.parseInt(seedGrower.getBought_id());
+                                seedBought = seedBoughtViewModel.seedBought(bought_id);
+                                int quantity =seedBought.getUsedQuantity() - Integer.parseInt(seedGrower.getQuantity());
+
+                                int updatedQuantity =seedBoughtViewModel.getReturnQuantity(seedGrower.getAccredno(),bought_id,quantity);
+
+                                if(updatedQuantity > 0){
+                                    seedGrowerViewModel.delete(adapter.getSeedGrowerAt(viewHolder.getAdapterPosition()));
+                                    Toast.makeText(HomeActivity.this, "Form deleted.", Toast.LENGTH_SHORT).show();
+                                }else{
+                                    Toast.makeText(HomeActivity.this, "Error deleting form.", Toast.LENGTH_SHORT).show();
+                                }
+
+
                             }
                         })
                         .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

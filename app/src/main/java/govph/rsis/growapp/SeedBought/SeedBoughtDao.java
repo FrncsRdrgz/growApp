@@ -12,8 +12,17 @@ import java.util.List;
 @Dao
 public interface SeedBoughtDao {
 
-    @Query("SELECT * from seedbought WHERE serialNum =:serialNum ORDER BY id")
+    @Query("SELECT * from seedbought WHERE quantity !=usedQuantity AND serialNum =:serialNum ORDER BY id")
     List<SeedBought> getSeedBought(String serialNum);
+
+    @Query("SELECT * from seedbought WHERE id=:id")
+    SeedBought getById(int id);
+
+    @Query("UPDATE seedbought SET usedQuantity =:usedQuantity WHERE  serialNum =:serialNum AND id =:id")
+    int updateUsedQuantity(String serialNum, int usedQuantity, int id);
+
+    @Query("UPDATE seedbought SET usedQuantity =:usedQuantity WHERE serialNum =:serialNum AND id=:id")
+    int returnQuantity(String serialNum, int id, int usedQuantity);
 
     @Insert
     void insert(SeedBought seedBought);
