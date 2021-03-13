@@ -7,7 +7,7 @@
     app:contentInsetLeft="0dp"
     app:contentInsetStart="0dp"
     app:contentInsetStartWithNavigation="0dp"
-    android:background="@color/toolbarColor"
+    android:background="#1B8040"
     android:elevation="4dp">
 
     <LinearLayout
@@ -26,21 +26,9 @@
             android:drawablePadding="8dp"
             android:gravity="center_vertical"
             android:paddingRight="16dp"
-            android:textColor="#1D6AD2"
-            android:drawableStart="@drawable/ic_navigate_before_blue_36dp"
-            android:text="Your Forms"/>
-        <TextView
-            style="@style/TextAppearance.Widget.AppCompat.Toolbar.Subtitle"
-            android:layout_width="153dp"
-            android:layout_height="match_parent"
-            android:autoSizeTextType="uniform"
-            android:background="?attr/selectableItemBackground"
-            android:drawablePadding="8dp"
-            android:gravity="center_vertical"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:text="Sent Forms"
-            android:textColor="#000000" />
+            android:textColor="#FFFF"
+            android:drawableStart="@drawable/ic_baseline_navigate_before_white_24"
+            android:text="Form List"/>
     </LinearLayout>
 
 </androidx.appcompat.widget.Toolbar>

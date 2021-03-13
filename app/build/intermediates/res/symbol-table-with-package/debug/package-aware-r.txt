@@ -1436,6 +1436,7 @@ drawable ic_archive_black_24dp
 drawable ic_baseline_add_24_white
 drawable ic_baseline_archive_24_white
 drawable ic_baseline_logout_24
+drawable ic_baseline_navigate_before_white_24
 drawable ic_center_focus_weak_white_24dp
 drawable ic_code_scanner_auto_focus_off
 drawable ic_code_scanner_auto_focus_on
@@ -1534,6 +1535,7 @@ id accessibility_custom_action_6
 id accessibility_custom_action_7
 id accessibility_custom_action_8
 id accessibility_custom_action_9
+id actOtherVariety
 id actPreviousVariety
 id actRiceProgram
 id actSeedClass
@@ -1725,6 +1727,7 @@ id linearDatePlanted
 id linearLabNo
 id linearLatitude
 id linearLongitude
+id linearOtherVariety
 id linearPreviousCrop
 id linearPreviousVariety
 id linearRiceProgram
@@ -1736,6 +1739,7 @@ id linearSeedQuantity
 id linearSeedSource
 id linearSeedVariety
 id linearSeedlingAge
+id linearSentToolbar
 id linearSerialNumber
 id linearSpToolbar
 id linearToolbar
@@ -1837,6 +1841,8 @@ id seedSourceSpinner
 id select_dialog_listview
 id selected
 id sentItemBtn
+id sentTvSerial
+id sentTvWelcomeName
 id sent_toolbar
 id shortcut
 id showCustom
@@ -1929,6 +1935,7 @@ id tilBarangay
 id tilCooperative
 id tilDatePlanted
 id tilLabNo
+id tilOtherVariety
 id tilPreviousCrop
 id tilPreviousVariety
 id tilRiceProgram

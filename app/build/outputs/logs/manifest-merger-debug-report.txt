@@ -125,11 +125,11 @@ MERGED from [androidx.lifecycle:lifecycle-process:2.0.0] C:\Users\franc\.gradle\
 	android:allowBackup
 		ADDED from D:\android-projects\growApp\app\src\main\AndroidManifest.xml:13:9-35
 	android:theme
-		ADDED from D:\android-projects\growApp\app\src\main\AndroidManifest.xml:19:9-40
+		ADDED from D:\android-projects\growApp\app\src\main\AndroidManifest.xml:18:9-40
 	android:usesCleartextTraffic
-		ADDED from D:\android-projects\growApp\app\src\main\AndroidManifest.xml:18:9-44
+		ADDED from D:\android-projects\growApp\app\src\main\AndroidManifest.xml:19:9-44
 activity#govph.rsis.growapp.LoginActivity
-ADDED from D:\android-projects\growApp\app\src\main\AndroidManifest.xml:20:9-60
+ADDED from D:\android-projects\growApp\app\src\main\AndroidManifest.xml:20:9-51
 	android:name
 		ADDED from D:\android-projects\growApp\app\src\main\AndroidManifest.xml:20:19-48
 activity#govph.rsis.growapp.ScannerActivity

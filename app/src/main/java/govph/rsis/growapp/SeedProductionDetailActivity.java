@@ -88,13 +88,14 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
     Intent intent;
     LocationManager locationManager;
     Toolbar toolbar;
-    LinearLayout l10, l11;
+    LinearLayout l10, l11, linearPreviousVariety;
     TextView tvLatitude, tvLongitude, tvCancel,tvSave,tvAccredNo, spTvWelcomeName;
     Button getLocationBtn;
-    AutoCompleteTextView actVariety,actSeedClass, actSeedSource,actRiceProgram,actPreviousVariety;
-    TextInputLayout tilVariety,tilSeedClass,tilSeedSource, tilRiceProgram,tilDatePlanted,tilSeedClass2,tillSeedSource2,tilRiceProgram2,tilAreaPlanted,tilSeedQuantity,tilSeedBedArea,tilSeedlingAge,tilSeedLotNo,tilLabNo,tilCooperative,tilBarangay;
-    ArrayAdapter<String> arrayAdapterVariety,arrayAdapterSeedClass,arrayAdapterSeedSource,arrayAdapterRiceProgram,arrayAdapterPreviousVariety;
-    TextInputEditText tetSeedClass,tetSeedSource,tetRiceProgram,tetDatePlanted,tetAreaPlanted,tetSeedQuantity,tetSeedBedArea,tetSeedlingAge,tetSeedLotNo,tetLabNo,tetCoop,tetBarangay,tetPreviousCrop;
+    AutoCompleteTextView actVariety,actOtherVariety,actSeedClass, actSeedSource,actRiceProgram,actPreviousVariety;
+    TextInputLayout tilVariety,tilOtherVariety,tilSeedClass,tilSeedSource, tilRiceProgram,tilDatePlanted,tilSeedClass2,tillSeedSource2,tilRiceProgram2,tilAreaPlanted,tilSeedQuantity,tilSeedBedArea,tilSeedlingAge,tilSeedLotNo,tilLabNo,tilCooperative,tilBarangay;
+    ArrayAdapter<String> arrayAdapterVariety,arrayAdapterSeedClass,arrayAdapterSeedSource,arrayAdapterRiceProgram,arrayAdapterPreviousVariety,arrayAdapterOtherVariety;
+    TextInputEditText tetSeedClass,tetSeedSource,tetRiceProgram,tetDatePlanted,tetAreaPlanted,tetSeedQuantity,tetSeedBedArea,tetSeedlingAge,tetSeedLotNo,tetLabNo,tetCoop,
+            tetBarangay,tetPreviousCrop;
     ArrayList arrayListVarieties,arrayListSeedClass,arrayListSeedSource,arrayListRiceProgram;
 
     MaterialDatePicker.Builder materialBuilder;
@@ -122,6 +123,7 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
         //mCodeScanner = new CodeScanner(SeedProductionDetailActivity.this, scannerView);
         l10 = (LinearLayout) findViewById(R.id.l10);
         l11 = (LinearLayout) findViewById(R.id.l11);
+
         tvCancel = (TextView) findViewById(R.id.tvCancel);
         spTvWelcomeName = (TextView) findViewById(R.id.spTvWelcomeName);
         tvSave = (TextView) findViewById(R.id.tvSave);
@@ -138,6 +140,7 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
         getLocationBtn = (Button) findViewById(R.id.getLocationBtn);
 
         tilVariety = (TextInputLayout) findViewById(R.id.tilVariety);
+        tilOtherVariety = (TextInputLayout) findViewById(R.id.tilOtherVariety);
         tilSeedClass = (TextInputLayout) findViewById(R.id.tilSeedClass);
         tilSeedSource = (TextInputLayout) findViewById(R.id.tilSeedSource);
         tilRiceProgram = (TextInputLayout) findViewById(R.id.tilRiceProgram);
@@ -149,6 +152,8 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
 
         actSeedClass = (AutoCompleteTextView) findViewById(R.id.actSeedClass);
         actVariety = (AutoCompleteTextView) findViewById(R.id.actVariety);
+        actOtherVariety = (AutoCompleteTextView) findViewById(R.id.actOtherVariety);
+
         actSeedSource = (AutoCompleteTextView) findViewById(R.id.actSeedSource);
         actRiceProgram = (AutoCompleteTextView) findViewById(R.id.actRiceProgram);
         actPreviousVariety = (AutoCompleteTextView) findViewById(R.id.actPreviousVariety);
@@ -176,6 +181,7 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
         tvAccredNo.addTextChangedListener(saveTextWatcher);
         tvLatitude.addTextChangedListener(saveTextWatcher);
         tvLongitude.addTextChangedListener(saveTextWatcher);
+        tetSeedQuantity.addTextChangedListener(quantityTextWatcher);
 
 
         if(ContextCompat.checkSelfPermission(SeedProductionDetailActivity.this, Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED){
@@ -216,9 +222,22 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
         List<Seeds> seeds = database.seedsDao().getSeeds();
         arrayListVarieties = new ArrayList<>();
         for(Seeds s : seeds){
+            String seed = s.getVariety().replaceAll("\\s","").toLowerCase();
+            /*for(SeedBought sb :  seedBought){
+                String bought = sb.getVariety().replaceAll("\\s","").toLowerCase();
+
+                if(bought == seed){
+                    Log.e(TAG, "bought: "+bought );
+                    Log.e(TAG, "seed: " +bought );
+                }
+            }*/
             arrayListVarieties.add(s.getVariety());
         }
         //set layout of the variety
+        arrayAdapterOtherVariety = new ArrayAdapter<>(getApplicationContext(),R.layout.spinner_seed_source,arrayListVarieties);
+        actOtherVariety.setAdapter(arrayAdapterOtherVariety);
+        actOtherVariety.setThreshold(1);
+
         arrayAdapterPreviousVariety = new ArrayAdapter<>(getApplicationContext(),R.layout.spinner_seed_variety,arrayListVarieties);
         actPreviousVariety.setAdapter(arrayAdapterPreviousVariety);
         actPreviousVariety.setThreshold(1);
@@ -316,8 +335,10 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
                     tilRiceProgram.setVisibility(View.VISIBLE);
                     tilSeedClass.setVisibility(View.VISIBLE);
                     tilSeedSource.setVisibility(View.VISIBLE);
+                    tilOtherVariety.setVisibility(View.VISIBLE);
                     tetSeedQuantity.setText("");
                     tetAreaPlanted.setText("");
+                    selectedSeed = null;
                 }else{
                     tilSeedClass2.setVisibility(View.VISIBLE);
                     tillSeedSource2.setVisibility(View.VISIBLE);
@@ -326,14 +347,47 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
                     tilRiceProgram.setVisibility(View.GONE);
                     tilSeedClass.setVisibility(View.GONE);
                     tilSeedSource.setVisibility(View.GONE);
+                    tilOtherVariety.setVisibility(View.GONE);
 
                     selectedSeed = spinnerMap.get(position);
+                    String source = spinnerMap.get(position).getTableName().toLowerCase();
                     Log.e(TAG, "onItemClick: "+selectedSeed );
                     //Toast.makeText(SeedProductionDetailActivity.this, "quantity" + spinnerMap.get(position).getQuantity(), Toast.LENGTH_SHORT).show();
                     if(spinnerMap.get(position).getSeedClass().equals("RS")){
                         tetSeedClass.setText("Registered");
                     }else if(spinnerMap.get(position).getSeedClass().equals("FS")){
                         tetSeedClass.setText("Foundation");
+                    }
+
+                    if(source.contains("ces")){
+                        tetSeedSource.setText("PhilRice - Science City of Muñoz");
+                    }
+                    else if(source.contains("bes")){
+                        tetSeedSource.setText("PhilRice - Batac");
+                    }
+                    else if(source.contains("mes")){
+                        tetSeedSource.setText("PhilRice - Midsayap");
+                    }
+                    else if(source.contains("lbs")){
+                        tetSeedSource.setText("PhilRice - Los Baños");
+                    }
+                    else if(source.contains("aes")){
+                        tetSeedSource.setText("PhilRice - Agusan");
+                    }
+                    else if(source.contains("cves")){
+                        tetSeedSource.setText("PhilRice - Isabela");
+                    }
+                    else if(source.contains("prn")){
+                        tetSeedSource.setText("PhilRice - Negros");
+                    }
+                    else if(source.contains("bies")){
+                        tetSeedSource.setText("PhilRice - Bicol");
+                    }
+                    else if(source.contains("cmu")){
+                        tetSeedSource.setText("PhilRice - CMU Satellite Station");
+                    }
+                    else if(source.contains("zss")){
+                        tetSeedSource.setText("PhilRice - Zamboanga Satellite Station");
                     }
                     //wip
                     int quantity = spinnerMap.get(position).getQuantity() - spinnerMap.get(position).getUsedQuantity();
@@ -504,6 +558,44 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
         }
     };
 
+    private TextWatcher quantityTextWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+            String quantity = tetSeedQuantity.getText().toString().trim();
+
+            int boughtQuantity = 0; //selectedSeed.getQuantity() - selectedSeed.getUsedQuantity();
+
+            if(quantity.isEmpty() || quantity.equals("0") ){
+                tetAreaPlanted.setText("");
+            }else{
+                if(selectedSeed != null){
+                    boughtQuantity = selectedSeed.getQuantity() - selectedSeed.getUsedQuantity();
+
+                    if(Integer.parseInt(quantity) > boughtQuantity){
+                        Toast.makeText(SeedProductionDetailActivity.this, "you cannot insert more than "+boughtQuantity, Toast.LENGTH_SHORT).show();
+                        double area =(double) boughtQuantity/40;
+                        tetSeedQuantity.setText(String.valueOf(boughtQuantity));
+                        tetAreaPlanted.setText(String.valueOf(area));
+                    }
+                }
+                else{
+                    double area =(double) Integer.parseInt(quantity)/40;
+                    tetAreaPlanted.setText(String.valueOf(area));
+                }
+
+            }
+        }
+    };
     public void saveForm() {
         Date date = null;
         String dateplanted;

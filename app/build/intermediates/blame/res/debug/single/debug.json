@@ -916,6 +916,10 @@
         "source": "D:\\android-projects\\growApp\\app\\src\\main\\res\\layout\\toolbar.xml"
     },
     {
+        "merged": "D:\\android-projects\\growApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_baseline_navigate_before_white_24.xml.flat",
+        "source": "D:\\android-projects\\growApp\\app\\src\\main\\res\\drawable\\ic_baseline_navigate_before_white_24.xml"
+    },
+    {
         "merged": "D:\\android-projects\\growApp\\app\\build\\intermediates\\res\\merged\\debug\\color_design_icon_tint.xml.flat",
         "source": "C:\\Users\\franc\\.gradle\\caches\\transforms-2\\files-2.1\\5e3effe35f7803107da8da2ed1de9f2e\\material-1.2.1\\res\\color\\design_icon_tint.xml"
     },

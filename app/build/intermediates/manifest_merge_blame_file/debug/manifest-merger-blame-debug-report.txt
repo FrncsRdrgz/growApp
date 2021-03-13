@@ -46,11 +46,11 @@
 25-->D:\android-projects\growApp\app\src\main\AndroidManifest.xml:17:9-35
 26        android:testOnly="true"
 27        android:theme="@style/AppTheme"
-27-->D:\android-projects\growApp\app\src\main\AndroidManifest.xml:19:9-40
+27-->D:\android-projects\growApp\app\src\main\AndroidManifest.xml:18:9-40
 28        android:usesCleartextTraffic="true" >
-28-->D:\android-projects\growApp\app\src\main\AndroidManifest.xml:18:9-44
+28-->D:\android-projects\growApp\app\src\main\AndroidManifest.xml:19:9-44
 29        <activity android:name="govph.rsis.growapp.LoginActivity" />
-29-->D:\android-projects\growApp\app\src\main\AndroidManifest.xml:20:9-60
+29-->D:\android-projects\growApp\app\src\main\AndroidManifest.xml:20:9-51
 29-->D:\android-projects\growApp\app\src\main\AndroidManifest.xml:20:19-48
 30        <activity android:name="govph.rsis.growapp.ScannerActivity" />
 30-->D:\android-projects\growApp\app\src\main\AndroidManifest.xml:21:9-53

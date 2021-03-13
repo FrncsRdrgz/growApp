@@ -25,7 +25,7 @@ public class SentItemActivity extends AppCompatActivity {
     private User user;
     TextView tvYourForms, textaccredno1,textseedsource1,textvariety1,textclass1,textplanted1,
             textareaplanted1,textquantity1, textseedbedarea1, textseedlingage1, textlot1, textcontrol1,
-            textbarangay1, textlatitude1, textlongitude1, titlevariety, textCoop, textProgram;
+            textbarangay1, textlatitude1, textlongitude1, titlevariety, textCoop, textProgram, sentTvWelcomeName, sentTvSerial;
     Toolbar toolbar;
     RecyclerView recyclerView;
     @Override
@@ -38,6 +38,11 @@ public class SentItemActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sent_item);
         toolbar = findViewById(R.id.sent_toolbar);
         tvYourForms = findViewById(R.id.tvYourForms);
+        sentTvWelcomeName = (TextView) findViewById(R.id.sentTvWelcomeName);
+        sentTvSerial = (TextView) findViewById(R.id.sentTvSerial);
+
+        sentTvSerial.setText("Serial: "+user.getSerialNum());
+        sentTvWelcomeName.setText("Welcome, "+user.getFullname());
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
