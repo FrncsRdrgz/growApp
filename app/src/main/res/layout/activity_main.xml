@@ -4,12 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/cardview_light_background"
+    android:background="#FFFF"
     tools:context="govph.rsis.growapp.MainActivity">
 
     <ImageView
         android:id="@+id/imageView3"
-        android:layout_width="329dp"
+        android:layout_width="300dp"
         android:layout_height="327dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"

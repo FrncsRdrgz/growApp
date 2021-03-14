@@ -78,7 +78,7 @@ public class EditSeedProductionActivity extends AppCompatActivity implements Loc
     LocationListener locationListener;
     Toolbar toolbar;
     LinearLayout l10, l11;
-    TextView tvLatitude, tvLongitude, tvCancel,tvSave,tvAccredNo;
+    TextView tvLatitude, tvLongitude, tvCancel,tvSave,tvAccredNo,spTvWelcomeName;
     Button getLocationBtn,scanBtn;
     AutoCompleteTextView actVariety,actSeedClass, actSeedSource,actRiceProgram,actPreviousVariety;
     TextInputLayout tilVariety,tilSeedClass,tilSeedSource, tilRiceProgram,tilDatePlanted,tilAreaPlanted,tilSeedQuantity,tilSeedBedArea,tilSeedlingAge,tilSeedLotNo,tilLabNo,tilCooperative,tilBarangay;
@@ -125,10 +125,12 @@ public class EditSeedProductionActivity extends AppCompatActivity implements Loc
         getLocationBtn.setClickable(false);
         getLocationBtn.setBackgroundColor(Color.LTGRAY);
         //find view of text views
+        spTvWelcomeName = (TextView) findViewById(R.id.spTvWelcomeName);
+        spTvWelcomeName.setText("Welcome, "+ user.getFullname());
         tvCancel = (TextView) findViewById(R.id.tvCancel);
         tvSave = (TextView) findViewById(R.id.tvSave);
         tvAccredNo = (TextView) findViewById(R.id.tvAccreditationNo);
-        tvAccredNo.setText(user.getSerialNum());
+        tvAccredNo.setText("Serial: "+user.getSerialNum());
         tvLatitude = (TextView) findViewById(R.id.tvLatitude);
         tvLongitude = (TextView) findViewById(R.id.tvLongitude);
 

@@ -539,14 +539,15 @@ public class HomeActivity extends AppCompatActivity {
                 intent = new Intent(this, SeedProductionDetailActivity.class);
                 startActivity(intent);
                 return true;
-
-
             case R.id.sentItemBtn:
                 intent = new Intent(this, SentItemActivity.class);
                 startActivity(intent);
                 return true;
+            case R.id.aboutBtn:
+                intent = new Intent(this, AboutActivity.class);
+                startActivity(intent);
+                return true;
             case R.id.logoutBtn:
-
                 logout();
             default:
                 // If we got here, the user's action was not recognized.

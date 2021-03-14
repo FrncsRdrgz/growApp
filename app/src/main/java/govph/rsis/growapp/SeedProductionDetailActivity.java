@@ -631,12 +631,24 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
         String accredno = user.getSerialNum();
         String latitude = tvLatitude.getText().toString();
         String longitude = tvLongitude.getText().toString();
-        String seedVariety = actVariety.getText().toString();
-        String seedSource = actSeedSource.getText().toString();
+        String seedVariety = "";
+        String seedSource = "";
         String otherSeedSource = "";
-        String seedClass = actSeedClass.getText().toString();
-        String riceProgram = actRiceProgram.getText().toString();
-
+        String seedClass = "";
+        String riceProgram = "";
+        if(actVariety.getText().equals("Others")){
+            seedVariety = actOtherVariety.getText().toString();
+            seedSource = actSeedSource.getText().toString();
+            otherSeedSource = "";
+            seedClass = actSeedClass.getText().toString();
+            riceProgram = actRiceProgram.getText().toString();
+        }else{
+            seedVariety = actVariety.getText().toString();
+            seedSource = tetSeedSource.getText().toString();
+            otherSeedSource = "";
+            seedClass = tetSeedClass.getText().toString();
+            riceProgram = tetRiceProgram.getText().toString();
+        }
         String areaPlanted = tetAreaPlanted.getText().toString();
         String seedQuantity = tetSeedQuantity.getText().toString();
         String seedbedArea = tetSeedBedArea.getText().toString();

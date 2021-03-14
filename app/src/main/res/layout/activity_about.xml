@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AboutActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/linearAboutToolbar">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFFF"
+            android:paddingBottom="5dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="120dp"
+                android:layout_height="80dp"
+                app:srcCompat="@drawable/rsisnew"
+                >
+            </ImageView>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/tvWelcomeName"
+                    style="@style/TextAppearance.Widget.AppCompat.Toolbar.Subtitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="10dp"
+                    android:textSize="15sp"
+                    android:background="?attr/selectableItemBackground"
+                    android:drawablePadding="8dp"
+                    android:textColor="#000000"
+                    android:text="Welcome: John Doe"/>
+                <TextView
+                    android:id="@+id/tvWelcomeSerial"
+                    style="@style/TextAppearance.Widget.AppCompat.Toolbar.Subtitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="8dp"
+                    android:textSize="20sp"
+                    android:background="?attr/selectableItemBackground"
+                    android:drawablePadding="8dp"
+                    android:textColor="#000000"
+                    android:text="Serial: R-0000xxxx"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:contentInsetLeft="0dp"
+            app:contentInsetStart="0dp"
+            app:contentInsetStartWithNavigation="0dp"
+            android:background="#1B8040">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="?attr/actionBarSize"
+                android:dividerPadding="8dp"
+                android:orientation="horizontal"
+                android:showDividers="end">
+                <TextView
+                    android:id="@+id/tvYourForms"
+                    style="@style/TextAppearance.Widget.AppCompat.Toolbar.Subtitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="?attr/selectableItemBackground"
+                    android:drawablePadding="8dp"
+                    android:gravity="center_vertical"
+                    android:paddingRight="16dp"
+                    android:textColor="#FFFF"
+                    android:drawableStart="@drawable/ic_baseline_navigate_before_white_24"
+                    android:text="Form List"/>
+            </LinearLayout>
+        </Toolbar>
+    </LinearLayout>
+    <ScrollView
+        android:layout_below="@id/linearAboutToolbar"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/linearAbout"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/borderlines"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:text="ABOUT"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearAbout1"
+                android:layout_width="match_parent"
+                android:layout_below="@id/linearAbout"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:padding="10dp"
+                    android:textSize="18sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:justificationMode="inter_word"
+                    android:background="@drawable/borderlines"
+                    android:text="@string/about"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_below="@id/linearAbout1"
+                android:id="@+id/linearPartners"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/borderlines"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:text="PARTNERS"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_below="@id/linearPartners"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/linearDA"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:src="@drawable/da_logo"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:paddingTop="5dp"
+                        android:paddingLeft="5dp"
+                        android:textStyle="bold"
+                        android:textColor="#246e48"
+                        android:textSize="20sp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Department of Agriculture"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="7dp"
+                        android:justificationMode="inter_word"
+                        android:text="@string/da_text"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/linearDA"
+                android:id="@+id/linearDabar">
+                <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:src="@drawable/dabar"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:paddingTop="5dp"
+                        android:paddingLeft="5dp"
+                        android:textStyle="bold"
+                        android:textColor="#246e48"
+                        android:textSize="20sp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Bureau of Agiricultural Research"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="7dp"
+                        android:justificationMode="inter_word"
+                        android:text="@string/dabar_text"/>
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_below="@id/linearDabar"
+                android:id="@+id/linearBpi">
+
+                <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:src="@drawable/bpi"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:paddingTop="5dp"
+                        android:paddingLeft="5dp"
+                        android:textStyle="bold"
+                        android:textColor="#246e48"
+                        android:textSize="20sp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Bureau of Plant Industry"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="7dp"
+                        android:justificationMode="inter_word"
+                        android:text="@string/bpi_text"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_below="@id/linearBpi"
+                android:id="@+id/linearPhilrice">
+
+                <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:src="@drawable/philrice"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:paddingTop="5dp"
+                        android:paddingLeft="5dp"
+                        android:textStyle="bold"
+                        android:textColor="#246e48"
+                        android:textSize="20sp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="PhilRice"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="7dp"
+                        android:justificationMode="inter_word"
+                        android:text="@string/philrice_text"/>
+                </LinearLayout>
+            </LinearLayout>
+
+        </RelativeLayout>
+    </ScrollView>
+
+</RelativeLayout>

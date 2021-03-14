@@ -28,4 +28,27 @@
     <string name="previousCrop">Previous Crop Planted</string>
     <string name="previousVariety">Previous Variety Planted</string>
 
+    <string name="about">This RSIS project is a continuum of an assessment of a
+        completed rice seed information project of Region 3 as to its validity and essential aspects
+        needing improvements to address the current and future technological advances.
+        The common yet persisting problems in the rice seed system
+        such as delayed data consolidation, analysis, and transmission on rice seed production and distribution are hoped to be addressed.
+        Thru ICT and this RSIS, manual data gathering and processing posing higher risk of human errors, delay of information,
+        or worse data loss may be reduced and/or eliminated. </string>
+
+    <string name="da_text">RSIS is one of the programs of the Department of Agriculture,
+        which aims to provide interventions at both national and local levels to support rice production.</string>
+
+    <string name="dabar_text">Overseer of the implementation of the project; making sure that all resources are commendably being utilized. </string>
+
+    <string name="bpi_text">BPI shall create interface and subsystem that could incorporate and integrate their current business processes (application for seed certification;
+        preliminary and final inspection; seed analysis and tagging) in the system.
+        Also, the bureau shall capacitate its staff such as seed inspectors, data officers, seed analysts, among others in using the modules and the system.
+        The bureau with the help of SIs will also supervise the involvement of SPs in the system.</string>
+    <string name="philrice_text">
+        Generally, PhilRice shall design the system, and develop platforms that could gather field data (from seed production, monitoring to distribution).
+        These developed platforms will continuously be enhanced until such time that the system is ready for nationwide deployment.
+        The system shall be enhanced and redesigned (if necessary) based on the inputs and requirements of project partners and their sites during consultative meetings, FGDs, and pilot testing.
+        The institute together with other implementers are also responsible for the success of system deployment, operationalization and sustainability nationwide.
+    </string>
 </resources>
