@@ -8,9 +8,15 @@ import android.net.NetworkInfo;
 import android.net.NetworkRequest;
 import android.os.Build;
 import android.util.Log;
+import android.view.MenuItem;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.core.view.MenuItemCompat;
+
+import com.google.android.material.navigation.NavigationView;
 
 public class GlobalFunction {
     static Context mContext;
@@ -48,6 +54,19 @@ public class GlobalFunction {
 
     /*public boolean openDialog(AlertDialog.Builder builder){
 
+    }*/
+    /*public void updateNavView(NavigationView navView, int resId, String count){
+        MenuItem item = navView.getMenu().findItem(resId); //ex. R.id.nav_item_friends
+        //MenuItemCompat.setActionView(item, R.layout.badge);
+        RelativeLayout notifCount = (RelativeLayout) MenuItemCompat.getActionView(item);
+        TextView tv = (TextView) notifCount.findViewById(R.id.textMenuItemCount);
+
+        if (count != null) {
+            tv.setText(count);
+        }else{
+            tv.setText("");
+            item.setEnabled(false);
+        }
     }*/
 
 

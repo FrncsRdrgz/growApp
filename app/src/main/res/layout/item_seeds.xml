@@ -6,6 +6,7 @@
     android:layout_marginStart="8dp"
     android:layout_marginTop="8dp"
     android:background="@drawable/borderlines"
+
     android:id="@+id/cardView"
     >
 
@@ -14,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="8dp"
-
+        android:background="#E8E8E8"
         >
         <LinearLayout
             android:layout_width="wrap_content"
@@ -27,7 +28,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="25dp"
-                android:textColor="#000000"
+                android:textColor="#1B8040"
+                android:textStyle="bold"
                 android:text="Variety Name"
                 android:layout_alignParentStart="true" />
             <TextView
@@ -56,13 +58,24 @@
             android:layout_marginRight="1dp"
             android:orientation="vertical"
             >
+            <Button
+                android:id="@+id/finalizeBtn"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:backgroundTint="#146131"
+                android:text="@string/sendBtn"
+                android:minHeight="0dp"
+                android:textColor="#FFFFFF"
+                android:textAllCaps="false"
+                />
 
             <Button
                 android:id="@+id/editBtn"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:backgroundTint="@color/cardview_dark_background"
+                android:backgroundTint="#ECA20E"
                 android:text="@string/editBtn"
                 android:layout_marginTop="0dp"
 
@@ -72,16 +85,18 @@
                 android:textColor="#FFFFFF" />
 
             <Button
-                android:id="@+id/finalizeBtn"
+                android:id="@+id/removeBtn"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:backgroundTint="#338A2E"
-                android:text="@string/finalizeBtn"
-                android:minHeight="0dp"
-                android:textColor="#FFFFFF"
+                android:backgroundTint="#8E0505"
+                android:text="Remove"
+                android:layout_marginTop="0dp"
+
                 android:textAllCaps="false"
-                />
+                android:minHeight="0dp"
+                android:minWidth="0dp"
+                android:textColor="#FFFFFF" />
 
         </LinearLayout>
     </LinearLayout>

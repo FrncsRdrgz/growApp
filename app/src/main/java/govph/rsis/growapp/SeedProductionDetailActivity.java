@@ -1,11 +1,14 @@
 package govph.rsis.growapp;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -16,6 +19,7 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -28,8 +32,10 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
 import android.text.Editable;
+import android.text.Html;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -48,6 +54,7 @@ import com.budiyev.android.codescanner.CodeScannerView;
 import com.budiyev.android.codescanner.DecodeCallback;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
+import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.textfield.MaterialAutoCompleteTextView;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -71,8 +78,10 @@ import govph.rsis.growapp.SeedBought.SeedBoughtViewModel;
 import govph.rsis.growapp.User.User;
 import govph.rsis.growapp.User.UserViewModel;
 
+import static android.graphics.Color.*;
 
-public class SeedProductionDetailActivity extends AppCompatActivity implements LocationListener {
+
+public class SeedProductionDetailActivity extends AppCompatActivity implements LocationListener, NavigationView.OnNavigationItemSelectedListener {
     public static final String[] MONTHS = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sepr", "Oct", "Nov", "Dec"};
     private static final String TAG = "SeedProductionDetail";
     private int LOCATION_PERMISSION_CODE = 1;
@@ -85,17 +94,21 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
     private boolean mPermissionGranted;
     private List<Seeds> seedSample = new ArrayList<>();
     public static final int REQUEST_CODE_EXAMPLE = 0x9988;
+    private DrawerLayout drawerLayout;
+    private NavigationView navigationView;
+    int activityId,countCollected,countSent,countDeleted;
     Intent intent;
     LocationManager locationManager;
     Toolbar toolbar;
-    LinearLayout l10, l11, linearPreviousVariety;
-    TextView tvLatitude, tvLongitude, tvCancel,tvSave,tvAccredNo, spTvWelcomeName;
-    Button getLocationBtn;
+    LinearLayout l10, l11;
+    TextView tvLatitude, tvLongitude, tvCancel,tvSave,tvAccredNo, tvVersion,tvWelcomeName,tvWelcomeSerial,tvList,tvSent,tvDeleted;
+    Button getLocationBtn,btnSave,backBtn;
     AutoCompleteTextView actVariety,actOtherVariety,actSeedClass, actSeedSource,actRiceProgram,actPreviousVariety;
     TextInputLayout tilVariety,tilOtherVariety,tilSeedClass,tilSeedSource, tilRiceProgram,tilDatePlanted,tilSeedClass2,tillSeedSource2,tilRiceProgram2,tilAreaPlanted,tilSeedQuantity,tilSeedBedArea,tilSeedlingAge,tilSeedLotNo,tilLabNo,tilCooperative,tilBarangay;
     ArrayAdapter<String> arrayAdapterVariety,arrayAdapterSeedClass,arrayAdapterSeedSource,arrayAdapterRiceProgram,arrayAdapterPreviousVariety,arrayAdapterOtherVariety;
     TextInputEditText tetSeedClass,tetSeedSource,tetRiceProgram,tetDatePlanted,tetAreaPlanted,tetSeedQuantity,tetSeedBedArea,tetSeedlingAge,tetSeedLotNo,tetLabNo,tetCoop,
             tetBarangay,tetPreviousCrop;
+    MenuItem mList,mSent,mDeleted;
     ArrayList arrayListVarieties,arrayListSeedClass,arrayListSeedSource,arrayListRiceProgram;
 
     MaterialDatePicker.Builder materialBuilder;
@@ -109,36 +122,85 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
     User user;
     List<SeedBought> seedBought;
     SeedBought selectedSeed;
+    View headerView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_seed_production_detail);
 
         telephonyManager = (TelephonyManager) getSystemService(this.TELEPHONY_SERVICE);
+        activityId = getIntent().getIntExtra("activityId",0);
         scannerView = findViewById(R.id.scanner_view);
         userViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
         seedBoughtViewModel = ViewModelProviders.of(this).get(SeedBoughtViewModel.class);
+        seedGrowerViewModel = ViewModelProviders.of(this).get(SeedGrowerViewModel.class);
         user = userViewModel.getLoggedInUser();
-
+        countCollected = seedGrowerViewModel.getCountCollected(user.getSerialNum());
+        countSent = seedGrowerViewModel.getCountSent(user.getSerialNum());
+        countDeleted = seedGrowerViewModel.getCountDeleted(user.getSerialNum());
         //mCodeScanner = new CodeScanner(SeedProductionDetailActivity.this, scannerView);
         l10 = (LinearLayout) findViewById(R.id.l10);
         l11 = (LinearLayout) findViewById(R.id.l11);
 
-        tvCancel = (TextView) findViewById(R.id.tvCancel);
-        spTvWelcomeName = (TextView) findViewById(R.id.spTvWelcomeName);
+        //tvCancel = (TextView) findViewById(R.id.tvCancel);
+        //spTvWelcomeName = (TextView) findViewById(R.id.spTvWelcomeName);
         tvSave = (TextView) findViewById(R.id.tvSave);
         tvAccredNo = (TextView) findViewById(R.id.tvAccreditationNo);
-        tvAccredNo.setText(user.getSerialNum());
         tvLatitude = (TextView) findViewById(R.id.tvLatitude);
         tvLongitude = (TextView) findViewById(R.id.tvLongitude);
-        toolbar = findViewById(R.id.spToolbar);
+        toolbar = findViewById(R.id.add_toolbar);
 
-        spTvWelcomeName.setText("Welcome, "+ user.getFullname());
+        //spTvWelcomeName.setText("Welcome, "+ user.getFullname());
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
+        getSupportActionBar().setTitle("New Form");
+
+
+        drawerLayout = findViewById(R.id.add_drawer_layout);
+        navigationView = findViewById(R.id.nav_view);
+        headerView = navigationView.getHeaderView(0);
+        tvVersion = headerView.findViewById(R.id.headerVersion);
+        tvWelcomeName = (TextView) headerView.findViewById(R.id.headerName);
+        tvWelcomeSerial = (TextView) headerView.findViewById(R.id.headerSerial);
+        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(
+                this,
+                drawerLayout,
+                toolbar,
+                R.string.openNavDrawer,
+                R.string.closeNavDrawer
+        );
+        /*Populate the navigation drawer badge*/
+        mList = navigationView.getMenu().findItem(R.id.listBtn);
+        mSent = navigationView.getMenu().findItem(R.id.sentItemBtn);
+        mDeleted = navigationView.getMenu().findItem(R.id.deletedBtn);
+        tvList = (TextView) mList.getActionView();
+        tvList.setText(String.valueOf(countCollected));
+        tvSent = (TextView) mSent.getActionView();
+        tvSent.setText(String.valueOf(countSent));
+        tvDeleted = (TextView) mDeleted.getActionView();
+        tvDeleted.setText(String.valueOf(countDeleted));
+        /*end badge*/
+        drawerLayout.addDrawerListener(actionBarDrawerToggle);
+        actionBarDrawerToggle.syncState();
+        navigationView.setNavigationItemSelectedListener(this);
+        navigationView.setCheckedItem(R.id.addBtn);
+
+        try {
+            PackageInfo pInfo = this.getPackageManager().getPackageInfo(getPackageName(), 0);
+            tvVersion.setText("Version: "+ pInfo.versionName);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        tvWelcomeName.setText(user.getFullname());
+        tvWelcomeSerial.setText(user.getSerialNum());
 
         getLocationBtn = (Button) findViewById(R.id.getLocationBtn);
+        btnSave = findViewById(R.id.btnSave);
+        backBtn = findViewById(R.id.backBtn);
 
+        btnSave.setEnabled(false);
         tilVariety = (TextInputLayout) findViewById(R.id.tilVariety);
         tilOtherVariety = (TextInputLayout) findViewById(R.id.tilOtherVariety);
         tilSeedClass = (TextInputLayout) findViewById(R.id.tilSeedClass);
@@ -177,7 +239,8 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
         materialDatePicker = materialBuilder.build();
 
         database = SeedGrowerDatabase.getInstance(this);
-        tvAccredNo.setText("Serial: "+ user.getSerialNum());
+        //String serial = "<b>"+user.getSerialNum()+"</b>";
+        tvAccredNo.setText(user.getSerialNum());
         tvAccredNo.addTextChangedListener(saveTextWatcher);
         tvLatitude.addTextChangedListener(saveTextWatcher);
         tvLongitude.addTextChangedListener(saveTextWatcher);
@@ -293,14 +356,19 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
         });
 
         //button to cancel the activity
-        tvCancel.setOnClickListener(new View.OnClickListener(){
+        /*tvCancel.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 finish();
             }
-        });
+        });*/
         //set the Save text clickable
-
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
         tetDatePlanted.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
@@ -310,7 +378,7 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
                 int day = cal.get(Calendar.DAY_OF_MONTH);
 
                 DatePickerDialog dialog = new DatePickerDialog(SeedProductionDetailActivity.this, android.R.style.Theme_Holo_Dialog_MinWidth,mDateSetListener,year,month,day);
-                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(TRANSPARENT));
                 dialog.show();
             }
         });
@@ -412,7 +480,7 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
                 tetDatePlanted.setText(materialDatePicker.getHeaderText());
             }
         });*/
-        tvSave.setOnClickListener(new View.OnClickListener(){
+        btnSave.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 if(actVariety.getText().toString().equals("")){
@@ -551,8 +619,11 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
             String longitude = tvLongitude.getText().toString().trim();
 
             if(!accredNo.isEmpty() && !latitude.isEmpty() && !longitude.isEmpty()){
-                tvSave.setEnabled(true);
-                tvSave.setTextColor(Color.WHITE);
+
+                btnSave.setEnabled(true);
+                btnSave.setBackgroundColor(Color.parseColor("#EAB30C"));
+                //tvSave.setEnabled(true);
+                //tvSave.setTextColor(Color.WHITE);
             }
 
         }
@@ -572,9 +643,7 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
         @Override
         public void afterTextChanged(Editable editable) {
             String quantity = tetSeedQuantity.getText().toString().trim();
-
             int boughtQuantity = 0; //selectedSeed.getQuantity() - selectedSeed.getUsedQuantity();
-
             if(quantity.isEmpty() || quantity.equals("0") ){
                 tetAreaPlanted.setText("");
             }else{
@@ -636,13 +705,16 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
         String otherSeedSource = "";
         String seedClass = "";
         String riceProgram = "";
-        if(actVariety.getText().equals("Others")){
+
+        if(actVariety.getText().toString().equals("Others")){
+            Log.e(TAG, "if variety equal to other: " );
             seedVariety = actOtherVariety.getText().toString();
             seedSource = actSeedSource.getText().toString();
-            otherSeedSource = "";
+            otherSeedSource = actVariety.getText().toString();
             seedClass = actSeedClass.getText().toString();
             riceProgram = actRiceProgram.getText().toString();
         }else{
+            Log.e(TAG, "if variety is not equal to other: " );
             seedVariety = actVariety.getText().toString();
             seedSource = tetSeedSource.getText().toString();
             otherSeedSource = "";
@@ -662,14 +734,19 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
         String previousCrop = tetPreviousCrop.getText().toString();
         String previousVariety = actPreviousVariety.getText().toString();
 
+        Log.e(TAG, "variety: "+seedVariety );
         seedGrowerViewModel = ViewModelProviders.of(this).get(SeedGrowerViewModel.class);
         SeedGrower seedGrower = new SeedGrower(uniqueid,accredno,latitude,longitude,seedVariety,seedSource,otherSeedSource,seedClass,dateplanted,
                 areaPlanted,seedQuantity,seedbedArea,seedlingAge,seedLot,controlNo,barangay,datecollected,isSent,riceProgram,coop,previousCrop,previousVariety);
-        seedGrower.setBought_id(String.valueOf(selectedSeed.getId()));
+        if(selectedSeed != null){
+            seedGrower.setBought_id(String.valueOf(selectedSeed.getId()));
+            int usedQuantity = Integer.parseInt(seedQuantity) + selectedSeed.getUsedQuantity();
+            seedBoughtViewModel.getUpdateUsedQuantity(user.getSerialNum(),usedQuantity, selectedSeed.getId());
+        }
+
         seedGrowerViewModel.insert(seedGrower);
-        int usedQuantity = Integer.parseInt(seedQuantity) + selectedSeed.getUsedQuantity();
-        seedBoughtViewModel.getUpdateUsedQuantity(user.getSerialNum(),usedQuantity, selectedSeed.getId());
-            finish();
+
+        finish();
         /*Date date = null;
         String dateplanted;
         try {
@@ -992,5 +1069,56 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
     }
 
 
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        item.setCheckable(false);
+        switch (item.getItemId()) {
+            case R.id.homeBtn:
+                intent = new Intent(this, HomeActivity.class);
+                intent.putExtra("activityId",id);
+                startActivity(intent);
+                drawerLayout.closeDrawer(GravityCompat.START);
+                finish();
+                return true;
+            case R.id.listBtn:
+                intent = new Intent(this, ListActivity.class);
+                intent.putExtra("activityId",id);
+                startActivity(intent);
+                drawerLayout.closeDrawer(GravityCompat.START);
+                finish();
+                return true;
+            case R.id.addBtn:
+                intent = new Intent(this, SeedProductionDetailActivity.class);
+                intent.putExtra("activityId",id);
+                startActivity(intent);
+                drawerLayout.closeDrawer(GravityCompat.START);
+                return true;
+            case R.id.sentItemBtn:
+                intent = new Intent(this, SentItemActivity.class);
+                intent.putExtra("activityId",id);
+                startActivity(intent);
+                drawerLayout.closeDrawer(GravityCompat.START);
+                finish();
+                return true;
+            case R.id.aboutBtn:
+                intent = new Intent(this, AboutActivity.class);
+                intent.putExtra("activityId",id);
+                startActivity(intent);
+                drawerLayout.closeDrawer(GravityCompat.START);
+                finish();
+                return true;
 
+            default:
+                // If we got here, the user's action was not recognized.
+                // Invoke the superclass to handle it.
+                return super.onOptionsItemSelected(item);
+
+        }
+    }
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+
+    }
 }

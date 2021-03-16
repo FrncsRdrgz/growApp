@@ -11,6 +11,7 @@ public class SeedGrowerRepository {
     private SeedGrowerDao seedGrowerDao;
     private LiveData<List<SeedGrower>> allSeedGrowers;
     private LiveData<List<SeedGrower>> allSent;
+    int countCollected,countSent,countDeleted,softDelete;
 
     public SeedGrowerRepository(Application application) {
         SeedGrowerDatabase database = SeedGrowerDatabase.getInstance(application);
@@ -39,6 +40,22 @@ public class SeedGrowerRepository {
     }
     public LiveData<List<SeedGrower>> getAllSent(String accredno) {
         return allSent = seedGrowerDao.getSentForms(accredno);
+    }
+
+    public int getCountCollected(String accredno) {
+        return countCollected = seedGrowerDao.countCollected(accredno);
+    }
+
+    public int getCountSent(String accredno) {
+        return countSent = seedGrowerDao.countSent(accredno);
+    }
+
+    public int getCountDeleted(String accredno) {
+        return countDeleted = seedGrowerDao.countDeleted(accredno);
+    }
+
+    public int getSoftDelete(String accredno, int status, int id){
+        return softDelete = seedGrowerDao.softDelete(accredno,status,id);
     }
     private static class InsertSeedGrowerAsyncTask extends AsyncTask<SeedGrower, Void, Void> {
         private SeedGrowerDao seedGrowerDao;

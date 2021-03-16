@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#1C8040">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:orientation="horizontal"
+        android:id="@+id/linearLogo">
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="@drawable/roundimage"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingBottom="15dp"
+            app:srcCompat="@drawable/rsisnew" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="GrowApp"
+                android:textStyle="bold"
+                android:textColor="#FEFAF5"
+                android:textSize="17sp"
+                android:paddingTop="10dp"
+                android:paddingLeft="15dp"
+                />
+            <TextView
+                android:id="@+id/headerVersion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="version: 2"
+                android:textColor="#FEFAF5"
+                android:textSize="12sp"
+                android:paddingLeft="15dp"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="RSIS - All rights reserved. Copyright (c) 2021"
+                android:textColor="#FEFAF5"
+                android:textSize="12sp"
+                android:paddingLeft="15dp"
+                />
+            <TextView
+                android:id="@+id/rsisLink"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#FEFAF5"
+                android:textSize="15sp"
+                android:paddingLeft="15dp"
+                />
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/linearLogo"
+        android:orientation="vertical"
+        android:paddingBottom="15dp"
+        android:gravity="center">
+        <TextView
+            android:id="@+id/headerName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="20sp"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:background="#0A702E"
+            android:textStyle="bold"
+            android:textColor="#FEFAF5"
+            android:text="Juan Dela Cruz"/>
+        <TextView
+            android:id="@+id/headerSerial"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="15sp"
+            android:textColor="#FEFAF5"
+            android:text="R-000000111"/>
+    </LinearLayout>
+</RelativeLayout>

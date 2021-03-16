@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".LoginActivity"
-    android:background="@drawable/login_background">
+    android:background="#006B35">
 
     <ImageView
         android:id="@+id/imageView3"
@@ -14,9 +14,10 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="28dp"
-        app:srcCompat="@drawable/rsisnew" />
+        app:srcCompat="@drawable/rsis_light" />
 
     <LinearLayout
+        android:id="@+id/scanLinear"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/imageView3">
@@ -24,11 +25,62 @@
         <Button
             android:id="@+id/scanIdBtn"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
-            android:backgroundTint="#1B8040"
+            android:backgroundTint="#F8B21F"
+            android:textSize="30sp"
+            android:padding="15dp"
             android:text="Scan ID"
             />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_marginTop="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_below="@id/scanLinear">
+
+        <ImageView
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            app:srcCompat="@drawable/dalight"/>
+        <ImageView
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            app:srcCompat="@drawable/da_barwhite"/>
+        <ImageView
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            app:srcCompat="@drawable/bpiwhite"/>
+        <ImageView
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            app:srcCompat="@drawable/philricegray"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:id="@+id/homeCopyRight"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/loginTvVersion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="#C8CFD0"
+            android:textSize="10sp"
+            android:text="Version: 1"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="10sp"
+            android:textColor="#C8CFD0"
+            android:text="RSIS - all rights reserved"/>
     </LinearLayout>
 </RelativeLayout>

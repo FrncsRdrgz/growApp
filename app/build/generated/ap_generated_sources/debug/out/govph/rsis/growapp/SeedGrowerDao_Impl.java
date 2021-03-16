@@ -30,6 +30,8 @@ public final class SeedGrowerDao_Impl implements SeedGrowerDao {
 
   private final EntityDeletionOrUpdateAdapter<SeedGrower> __updateAdapterOfSeedGrower;
 
+  private final SharedSQLiteStatement __preparedStmtOfSoftDelete;
+
   private final SharedSQLiteStatement __preparedStmtOfDeleteAll;
 
   public SeedGrowerDao_Impl(RoomDatabase __db) {
@@ -302,6 +304,13 @@ public final class SeedGrowerDao_Impl implements SeedGrowerDao {
         stmt.bindLong(25, value.sgId);
       }
     };
+    this.__preparedStmtOfSoftDelete = new SharedSQLiteStatement(__db) {
+      @Override
+      public String createQuery() {
+        final String _query = "UPDATE seedgrower SET isSent =? WHERE accredno =? AND sgId =?";
+        return _query;
+      }
+    };
     this.__preparedStmtOfDeleteAll = new SharedSQLiteStatement(__db) {
       @Override
       public String createQuery() {
@@ -344,6 +353,31 @@ public final class SeedGrowerDao_Impl implements SeedGrowerDao {
       __db.setTransactionSuccessful();
     } finally {
       __db.endTransaction();
+    }
+  }
+
+  @Override
+  public int softDelete(final String accredno, final int status, final int id) {
+    __db.assertNotSuspendingTransaction();
+    final SupportSQLiteStatement _stmt = __preparedStmtOfSoftDelete.acquire();
+    int _argIndex = 1;
+    _stmt.bindLong(_argIndex, status);
+    _argIndex = 2;
+    if (accredno == null) {
+      _stmt.bindNull(_argIndex);
+    } else {
+      _stmt.bindString(_argIndex, accredno);
+    }
+    _argIndex = 3;
+    _stmt.bindLong(_argIndex, id);
+    __db.beginTransaction();
+    try {
+      final int _result = _stmt.executeUpdateDelete();
+      __db.setTransactionSuccessful();
+      return _result;
+    } finally {
+      __db.endTransaction();
+      __preparedStmtOfSoftDelete.release(_stmt);
     }
   }
 
@@ -469,6 +503,84 @@ public final class SeedGrowerDao_Impl implements SeedGrowerDao {
         _statement.release();
       }
     });
+  }
+
+  @Override
+  public int countCollected(final String accredno) {
+    final String _sql = "SELECT Count(*) from seedgrower WHERE isSent=0 AND accredno =? ORDER BY sgId DESC";
+    final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 1);
+    int _argIndex = 1;
+    if (accredno == null) {
+      _statement.bindNull(_argIndex);
+    } else {
+      _statement.bindString(_argIndex, accredno);
+    }
+    __db.assertNotSuspendingTransaction();
+    final Cursor _cursor = DBUtil.query(__db, _statement, false, null);
+    try {
+      final int _result;
+      if(_cursor.moveToFirst()) {
+        _result = _cursor.getInt(0);
+      } else {
+        _result = 0;
+      }
+      return _result;
+    } finally {
+      _cursor.close();
+      _statement.release();
+    }
+  }
+
+  @Override
+  public int countSent(final String accredno) {
+    final String _sql = "SELECT Count(*) from seedgrower WHERE isSent=1 AND accredno =? ORDER BY sgId DESC";
+    final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 1);
+    int _argIndex = 1;
+    if (accredno == null) {
+      _statement.bindNull(_argIndex);
+    } else {
+      _statement.bindString(_argIndex, accredno);
+    }
+    __db.assertNotSuspendingTransaction();
+    final Cursor _cursor = DBUtil.query(__db, _statement, false, null);
+    try {
+      final int _result;
+      if(_cursor.moveToFirst()) {
+        _result = _cursor.getInt(0);
+      } else {
+        _result = 0;
+      }
+      return _result;
+    } finally {
+      _cursor.close();
+      _statement.release();
+    }
+  }
+
+  @Override
+  public int countDeleted(final String accredno) {
+    final String _sql = "SELECT Count(*) from seedgrower WHERE isSent=2 AND accredno =? ORDER BY sgId DESC";
+    final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 1);
+    int _argIndex = 1;
+    if (accredno == null) {
+      _statement.bindNull(_argIndex);
+    } else {
+      _statement.bindString(_argIndex, accredno);
+    }
+    __db.assertNotSuspendingTransaction();
+    final Cursor _cursor = DBUtil.query(__db, _statement, false, null);
+    try {
+      final int _result;
+      if(_cursor.moveToFirst()) {
+        _result = _cursor.getInt(0);
+      } else {
+        _result = 0;
+      }
+      return _result;
+    } finally {
+      _cursor.close();
+      _statement.release();
+    }
   }
 
   @Override

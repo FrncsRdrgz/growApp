@@ -8,23 +8,4 @@
         android:title="Add New Form"
         app:showAsAction="always"
         />
-    <item
-        android:id="@+id/sentItemBtn"
-        android:icon="@drawable/ic_baseline_archive_24_white"
-        android:title="Sent Box"
-        app:showAsAction="always"
-        />
-
-    <item
-        android:id="@+id/switchAccountBtn"
-        android:title="Switch Account"
-        />
-    <item
-        android:id="@+id/aboutBtn"
-        android:title="About"
-        />
-    <item
-        android:id="@+id/logoutBtn"
-        android:icon="@drawable/ic_baseline_logout_24"
-        android:title="Logout"/>
 </menu>

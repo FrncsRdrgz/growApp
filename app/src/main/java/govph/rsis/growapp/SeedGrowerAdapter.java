@@ -24,7 +24,7 @@ public class SeedGrowerAdapter extends RecyclerView.Adapter<SeedGrowerAdapter.Vi
     private sendBtnClicked sendBtnClickedListener;
     private sgFormClicked sgFormClickedListener;
     private finalizedBtnClicked finalizedBtnClickedListener;
-
+    private removeBtnClicked removeBtnClickedListener;
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -75,7 +75,9 @@ public class SeedGrowerAdapter extends RecyclerView.Adapter<SeedGrowerAdapter.Vi
     public interface  finalizedBtnClicked{
         void finalizeBeforeSending(SeedGrower seedGrower);
     }
-
+    public interface removeBtnClicked{
+        void removeSeedGrower(SeedGrower seedGrower);
+    }
     public void setSgFormClickedListener(SeedGrowerAdapter.sgFormClicked sgFormClickedListener) {
         this.sgFormClickedListener = sgFormClickedListener;
     }
@@ -86,9 +88,12 @@ public class SeedGrowerAdapter extends RecyclerView.Adapter<SeedGrowerAdapter.Vi
     public void setFinalizedBtnClickedListener(SeedGrowerAdapter.finalizedBtnClicked finalizedBtnClickedListener){
         this.finalizedBtnClickedListener = finalizedBtnClickedListener;
     }
+    public void setRemoveBtnClickedListener(SeedGrowerAdapter.removeBtnClicked removeBtnClickedListener){
+        this.removeBtnClickedListener = removeBtnClickedListener;
+    }
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView tvVariety, tvDateplanted,tvSeedClass;
-        Button sendBtn,editBtn,finalizeBtn;
+        Button sendBtn,editBtn,finalizeBtn,removeBtn;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -98,6 +103,7 @@ public class SeedGrowerAdapter extends RecyclerView.Adapter<SeedGrowerAdapter.Vi
             //sendBtn = (Button) itemView.findViewById(R.id.sendBtn);
             editBtn = (Button) itemView.findViewById(R.id.editBtn);
             finalizeBtn = (Button) itemView.findViewById(R.id.finalizeBtn);
+            removeBtn = (Button) itemView.findViewById(R.id.removeBtn);
 
             editBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -119,7 +125,16 @@ public class SeedGrowerAdapter extends RecyclerView.Adapter<SeedGrowerAdapter.Vi
                     }
                 }
             });
+            removeBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int position = getAdapterPosition();
 
+                    if(removeBtnClickedListener != null && position != RecyclerView.NO_POSITION){
+                        removeBtnClickedListener.removeSeedGrower(seedGrowers.get(position));
+                    }
+                }
+            });
             /*sendBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

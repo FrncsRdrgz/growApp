@@ -1,4 +1,323 @@
 <?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="govph.rsis.growapp.HomeActivity"
+    android:id="@+id/about_drawer_layout">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="#E8E8E8"
+        android:layout_height="match_parent">
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appbar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <androidx.appcompat.widget.Toolbar
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:id="@+id/about_toolbar"
+                app:titleTextColor="#FEFAF5"
+                android:background="#1B8040">
+
+            </androidx.appcompat.widget.Toolbar>
+        </com.google.android.material.appbar.AppBarLayout>
+
+
+        <ScrollView
+            android:layout_below="@id/appbar_layout"
+            android:layout_above="@id/homeCopyRight"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:id="@+id/linearAbout"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/borderlines"
+                        android:gravity="center"
+                        android:textSize="20sp"
+                        android:text="ABOUT US"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linearAbout1"
+                    android:layout_width="match_parent"
+                    android:layout_below="@id/linearAbout"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:paddingTop="10dp"
+                        android:paddingRight="15dp"
+                        android:paddingLeft="15dp"
+                        android:paddingBottom="10dp"
+                        android:textSize="15sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:justificationMode="inter_word"
+                        android:background="@drawable/borderlines"
+                        android:text="@string/about"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_below="@id/linearAbout1"
+                    android:id="@+id/linearContactUs"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/borderlines"
+                        android:gravity="center"
+                        android:textSize="20sp"
+                        android:text="CONTACT US"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_below="@id/linearContactUs"
+                    android:id="@+id/linearContactUs1"
+                    android:layout_width="match_parent"
+                    android:orientation="vertical">
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_below="@id/linearContactUs1"
+                    android:id="@+id/linearPartners"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/borderlines"
+                        android:gravity="center"
+                        android:textSize="20sp"
+                        android:text="PARTNERS"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:padding="12dp"
+                    android:layout_below="@id/linearPartners"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/linearDA"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:src="@drawable/da_logo"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <TextView
+                            android:paddingTop="5dp"
+                            android:paddingLeft="5dp"
+                            android:textStyle="bold"
+                            android:textColor="#246e48"
+                            android:textSize="20sp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Department of Agriculture"/>
+                        <TextView
+                            android:paddingTop="5dp"
+                            android:paddingLeft="10dp"
+                            android:textSize="18sp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="www.da.gov.ph"
+                            android:autoLink="web"
+                            android:layout_centerInParent="true"
+                            android:linksClickable="true"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:padding="12dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/linearDA"
+                    android:id="@+id/linearDabar">
+                    <ImageView
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:src="@drawable/dabar"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <TextView
+                            android:paddingTop="5dp"
+                            android:paddingLeft="5dp"
+                            android:textStyle="bold"
+                            android:textColor="#246e48"
+                            android:textSize="20sp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Bureau of Agiricultural Research"/>
+                        <TextView
+                            android:paddingTop="5dp"
+                            android:paddingLeft="10dp"
+                            android:textSize="18sp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="www.bar.gov.ph"
+                            android:autoLink="web"
+                            android:layout_centerInParent="true"
+                            android:linksClickable="true"/>
+                    </LinearLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:padding="12dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_below="@id/linearDabar"
+                    android:id="@+id/linearBpi">
+
+                    <ImageView
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:src="@drawable/bpi"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <TextView
+                            android:paddingTop="5dp"
+                            android:paddingLeft="5dp"
+                            android:textStyle="bold"
+                            android:textColor="#246e48"
+                            android:textSize="20sp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Bureau of Plant Industry"/>
+                        <TextView
+                            android:paddingTop="5dp"
+                            android:paddingLeft="10dp"
+                            android:textSize="18sp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="bpi.da.gov.ph"
+                            android:autoLink="web"
+                            android:layout_centerInParent="true"
+                            android:linksClickable="true"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:padding="12dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_below="@id/linearBpi"
+                    android:id="@+id/linearPhilrice">
+
+                    <ImageView
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:src="@drawable/philrice"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <TextView
+                            android:paddingTop="5dp"
+                            android:paddingLeft="5dp"
+                            android:textStyle="bold"
+                            android:textColor="#246e48"
+                            android:textSize="20sp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Philippine Rice Research Institute"/>
+                        <TextView
+                            android:paddingTop="5dp"
+                            android:paddingLeft="10dp"
+                            android:textSize="18sp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="rsis.philrice.gov.ph"
+                            android:autoLink="web"
+                            android:layout_centerInParent="true"
+                            android:linksClickable="true"/>
+
+                    </LinearLayout>
+                </LinearLayout>
+
+            </RelativeLayout>
+        </ScrollView>
+
+        <LinearLayout
+            android:paddingTop="5dp"
+            android:paddingBottom="10dp"
+            android:id="@+id/homeCopyRight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/aboutTvVersion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textSize="10sp"
+                android:text="Version: 1"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textSize="10sp"
+                android:text="RSIS - all rights reserved. Copyright (c) 2021"/>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <com.google.android.material.navigation.NavigationView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:background="#E8E8E8"
+        app:menu="@menu/nav_menu"
+        app:itemTextColor="#7C7C7C"
+        android:id="@+id/nav_view"
+        android:layout_gravity="start"
+        app:headerLayout="@layout/nav_header_layout"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:gravity="center"
+            android:clickable="true"
+            android:orientation="vertical">
+        <TextView
+            android:paddingBottom="15dp"
+            android:textColor="#FFFF"
+            android:textSize="18sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="rsis.philrice.gov.ph"
+            android:autoLink="web"
+            android:id="@+id/infoTxtCredits"
+            android:layout_centerInParent="true"
+            android:linksClickable="true"/>
+        </LinearLayout>
+    </com.google.android.material.navigation.NavigationView>
+</androidx.drawerlayout.widget.DrawerLayout>
+<!--
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -272,4 +591,4 @@
         </RelativeLayout>
     </ScrollView>
 
-</RelativeLayout>
+</RelativeLayout>-->

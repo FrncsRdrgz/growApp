@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:title="HOME"
+        android:checkable="true"
+        android:id="@+id/homeBtn"
+        android:icon="@drawable/ic_baseline_home_24"
+        app:actionLayout="@layout/menu_counter"
+        />
+    <item android:title="COLLECTED LIST"
+        android:id="@+id/listBtn"
+        android:checkable="true"
+        android:icon="@drawable/file"
+        app:actionLayout="@layout/menu_counter"/>
+    <item android:title="ADD DATA"
+        android:checkable="true"
+        android:id="@+id/addBtn"
+        android:icon="@drawable/add"
+        app:actionLayout="@layout/menu_counter"/>
+    <item android:title="SENT DATA"
+        android:checkable="true"
+        android:icon="@drawable/sent_icon"
+        android:id="@+id/sentItemBtn"
+        app:actionLayout="@layout/menu_counter"/>
+    <item android:title="DELETED DATA"
+        android:checkable="true"
+        android:icon="@drawable/delete"
+        android:id="@+id/deletedBtn"
+        app:actionLayout="@layout/menu_counter"/>
+    <item android:title="ABOUT"
+        android:checkable="true"
+        android:icon="@drawable/rsis_light"
+        android:id="@+id/aboutBtn"
+        app:actionLayout="@layout/menu_counter"/>
+</menu>

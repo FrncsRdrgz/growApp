@@ -1,11 +1,14 @@
 package govph.rsis.growapp;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.Manifest;
@@ -13,6 +16,7 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -27,6 +31,7 @@ import android.telephony.TelephonyManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -46,6 +51,7 @@ import com.budiyev.android.codescanner.CodeScannerView;
 import com.budiyev.android.codescanner.DecodeCallback;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
+import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.zxing.Result;
@@ -59,12 +65,17 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
+import govph.rsis.growapp.SeedBought.SeedBought;
+import govph.rsis.growapp.SeedBought.SeedBoughtViewModel;
 import govph.rsis.growapp.User.User;
 import govph.rsis.growapp.User.UserViewModel;
 
-public class EditSeedProductionActivity extends AppCompatActivity implements LocationListener {
+import static android.graphics.Color.BLUE;
+
+public class EditSeedProductionActivity extends AppCompatActivity implements LocationListener, NavigationView.OnNavigationItemSelectedListener {
     public static final String[] MONTHS = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sepr", "Oct", "Nov", "Dec"};
     private static final String TAG = "EditSeedProduction";
     private int LOCATION_PERMISSION_CODE = 1;
@@ -74,16 +85,21 @@ public class EditSeedProductionActivity extends AppCompatActivity implements Loc
     private String uniqueId="";
     private SeedGrowerViewModel seedGrowerViewModel;
     private UserViewModel userViewModel;
+    private SeedBoughtViewModel seedBoughtViewModel;
+    private DrawerLayout drawerLayout;
+    private NavigationView navigationView;
+    int activityId,countCollected,countSent,countDeleted;
     LocationManager locationManager;
     LocationListener locationListener;
     Toolbar toolbar;
     LinearLayout l10, l11;
-    TextView tvLatitude, tvLongitude, tvCancel,tvSave,tvAccredNo,spTvWelcomeName;
-    Button getLocationBtn,scanBtn;
-    AutoCompleteTextView actVariety,actSeedClass, actSeedSource,actRiceProgram,actPreviousVariety;
-    TextInputLayout tilVariety,tilSeedClass,tilSeedSource, tilRiceProgram,tilDatePlanted,tilAreaPlanted,tilSeedQuantity,tilSeedBedArea,tilSeedlingAge,tilSeedLotNo,tilLabNo,tilCooperative,tilBarangay;
-    ArrayAdapter<String> arrayAdapterVariety,arrayAdapterSeedClass,arrayAdapterSeedSource,arrayAdapterRiceProgram,arrayAdapterPreviousVariety;
-    TextInputEditText tetDatePlanted,tetAreaPlanted,tetSeedQuantity,tetSeedBedArea,tetSeedlingAge,tetSeedLotNo,tetLabNo,tetCoop,tetBarangay,tetPreviousCrop;
+    TextView tvLatitude, tvLongitude, tvCancel,tvSave,tvAccredNo,tvVersion,tvWelcomeName,tvWelcomeSerial,tvList,tvSent,tvDeleted;
+    MenuItem mList,mSent,mDeleted;
+    Button getLocationBtn,btnSave,backBtn;
+    AutoCompleteTextView actVariety,actOtherVariety,actSeedClass, actSeedSource,actRiceProgram,actPreviousVariety;
+    TextInputLayout tilVariety,tilOtherVariety,tilSeedClass,tilSeedSource, tilRiceProgram,tilDatePlanted,tilSeedClass2,tillSeedSource2,tilRiceProgram2,tilAreaPlanted,tilSeedQuantity,tilSeedBedArea,tilSeedlingAge,tilSeedLotNo,tilLabNo,tilCooperative,tilBarangay;
+    ArrayAdapter<String> arrayAdapterVariety,arrayAdapterOtherVariety,arrayAdapterSeedClass,arrayAdapterSeedSource,arrayAdapterRiceProgram,arrayAdapterPreviousVariety;
+    TextInputEditText tetSeedClass,tetSeedSource,tetRiceProgram,tetDatePlanted,tetAreaPlanted,tetSeedQuantity,tetSeedBedArea,tetSeedlingAge,tetSeedLotNo,tetLabNo,tetCoop,tetBarangay,tetPreviousCrop;
     ArrayList arrayListVarieties,arrayListSeedClass,arrayListSeedSource,arrayListRiceProgram;
     FrameLayout frameLayout;
     ScrollView scrollView;
@@ -99,18 +115,27 @@ public class EditSeedProductionActivity extends AppCompatActivity implements Loc
     SeedGrower seedGrowers;
     User user;
     int id;
+    View headerView;
+    List<SeedBought> seedBought;
+    SeedBought selectedSeed;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_seed_production_detail);
-        toolbar = findViewById(R.id.spToolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        activityId = getIntent().getIntExtra("activityId",0);
+
+
         //scannerView = findViewById(R.id.scanner_view);
         //mCodeScanner = new CodeScanner(EditSeedProductionActivity.this, scannerView);
         database = SeedGrowerDatabase.getInstance(this);
         userViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
+        seedGrowerViewModel = ViewModelProviders.of(this).get(SeedGrowerViewModel.class);
+        seedBoughtViewModel = ViewModelProviders.of(this).get(SeedBoughtViewModel.class);
         user = userViewModel.getLoggedInUser();
+        countCollected = seedGrowerViewModel.getCountCollected(user.getSerialNum());
+        countSent = seedGrowerViewModel.getCountSent(user.getSerialNum());
+        countDeleted = seedGrowerViewModel.getCountDeleted(user.getSerialNum());
         intent = getIntent();
         String formId = intent.getStringExtra(HomeActivity.EXTRA_MESSAGE);
 
@@ -118,19 +143,70 @@ public class EditSeedProductionActivity extends AppCompatActivity implements Loc
         seedGrowers = database.seedGrowerDao().findFormById(formId);
         telephonyManager = (TelephonyManager) getSystemService(this.TELEPHONY_SERVICE);
 
+        toolbar = findViewById(R.id.add_toolbar);
+
+        //spTvWelcomeName.setText("Welcome, "+ user.getFullname());
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
+        getSupportActionBar().setTitle("Editing Form");
+
+        drawerLayout = findViewById(R.id.add_drawer_layout);
+        navigationView = findViewById(R.id.nav_view);
+        headerView = navigationView.getHeaderView(0);
+        tvVersion = headerView.findViewById(R.id.headerVersion);
+        tvWelcomeName = (TextView) headerView.findViewById(R.id.headerName);
+        tvWelcomeSerial = (TextView) headerView.findViewById(R.id.headerSerial);
+
+
+        /*Populate the navigation drawer badge*/
+        mList = navigationView.getMenu().findItem(R.id.listBtn);
+        mSent = navigationView.getMenu().findItem(R.id.sentItemBtn);
+        mDeleted = navigationView.getMenu().findItem(R.id.deletedBtn);
+        tvList = (TextView) mList.getActionView();
+        tvList.setText(String.valueOf(countCollected));
+        tvSent = (TextView) mSent.getActionView();
+        tvSent.setText(String.valueOf(countSent));
+        tvDeleted = (TextView) mDeleted.getActionView();
+        tvDeleted.setText(String.valueOf(countDeleted));
+        /*end badge*/
+        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(
+                this,
+                drawerLayout,
+                toolbar,
+                R.string.openNavDrawer,
+                R.string.closeNavDrawer
+        );
+
+        drawerLayout.addDrawerListener(actionBarDrawerToggle);
+        actionBarDrawerToggle.syncState();
+        navigationView.setNavigationItemSelectedListener(this);
+        navigationView.setCheckedItem(R.id.listBtn);
+
+        try {
+            PackageInfo pInfo = this.getPackageManager().getPackageInfo(getPackageName(), 0);
+            tvVersion.setText("Version: "+ pInfo.versionName);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        tvWelcomeName.setText(user.getFullname());
+        tvWelcomeSerial.setText(user.getSerialNum());
+
         //find the view of linear layout
         l10 = (LinearLayout) findViewById(R.id.l10);
         l11 = (LinearLayout) findViewById(R.id.l11);
         getLocationBtn = (Button) findViewById(R.id.getLocationBtn);
         getLocationBtn.setClickable(false);
+        getLocationBtn.setVisibility(View.GONE);
         getLocationBtn.setBackgroundColor(Color.LTGRAY);
         //find view of text views
-        spTvWelcomeName = (TextView) findViewById(R.id.spTvWelcomeName);
-        spTvWelcomeName.setText("Welcome, "+ user.getFullname());
-        tvCancel = (TextView) findViewById(R.id.tvCancel);
-        tvSave = (TextView) findViewById(R.id.tvSave);
+        //spTvWelcomeName = (TextView) findViewById(R.id.spTvWelcomeName);
+        //spTvWelcomeName.setText("Welcome, "+ user.getFullname());
+        //tvCancel = (TextView) findViewById(R.id.tvCancel);
+        btnSave = findViewById(R.id.btnSave);
+        backBtn = findViewById(R.id.backBtn);
         tvAccredNo = (TextView) findViewById(R.id.tvAccreditationNo);
-        tvAccredNo.setText("Serial: "+user.getSerialNum());
+        tvAccredNo.setText(user.getSerialNum());
         tvLatitude = (TextView) findViewById(R.id.tvLatitude);
         tvLongitude = (TextView) findViewById(R.id.tvLongitude);
 
@@ -139,12 +215,22 @@ public class EditSeedProductionActivity extends AppCompatActivity implements Loc
         tilSeedSource = (TextInputLayout) findViewById(R.id.tilSeedSource);
         tilRiceProgram = (TextInputLayout) findViewById(R.id.tilRiceProgram);
         tilDatePlanted = (TextInputLayout) findViewById(R.id.tilDatePlanted);
+        tilOtherVariety = (TextInputLayout) findViewById(R.id.tilOtherVariety);
+
+        tilSeedClass2 = (TextInputLayout) findViewById(R.id.tilSeedClass2);
+        tillSeedSource2 = (TextInputLayout) findViewById(R.id.tilSeedSource2);
+        tilRiceProgram2 = (TextInputLayout) findViewById(R.id.tilRiceProgram2);
 
         actSeedClass = (AutoCompleteTextView) findViewById(R.id.actSeedClass);
         actVariety = (AutoCompleteTextView) findViewById(R.id.actVariety);
         actSeedSource = (AutoCompleteTextView) findViewById(R.id.actSeedSource);
         actRiceProgram = (AutoCompleteTextView) findViewById(R.id.actRiceProgram);
         actPreviousVariety = (AutoCompleteTextView) findViewById(R.id.actPreviousVariety);
+        actOtherVariety = (AutoCompleteTextView) findViewById(R.id.actOtherVariety);
+
+        tetSeedSource = (TextInputEditText) findViewById(R.id.tetSeedSource);
+        tetRiceProgram = (TextInputEditText) findViewById(R.id.tetRiceProgram);
+        tetSeedClass = (TextInputEditText) findViewById(R.id.tetSeedClass);
 
         tetDatePlanted = (TextInputEditText) findViewById(R.id.tetDatePlanted);
         tetAreaPlanted = (TextInputEditText) findViewById(R.id.tetAreaPlanted);
@@ -177,19 +263,33 @@ public class EditSeedProductionActivity extends AppCompatActivity implements Loc
 
         }
 
+        seedBought = seedBoughtViewModel.getAllSeedBought(user.getSerialNum());
+        //int counter = seedBought.size() + 1;
+        //Log.e(TAG, "Counter: "+counter );
+        final String[] spinnerArraySeeds = new String[seedBought.size()+1];
+        final HashMap<Integer, SeedBought> spinnerMap = new HashMap<Integer, SeedBought>();
+        arrayListVarieties = new ArrayList<>();
+        for (int i = 0; i< seedBought.size(); i++){
+            spinnerMap.put(i,seedBought.get(i));
+            spinnerArraySeeds[i] = seedBought.get(i).getVariety();
+        }
+        spinnerArraySeeds[seedBought.size()] = "Others";
+        arrayAdapterVariety = new ArrayAdapter<>(getApplicationContext(),R.layout.spinner_seed_variety,spinnerArraySeeds);
+        actVariety.setAdapter(arrayAdapterVariety);
+        actVariety.setThreshold(1);
 
         //Searchable Spinners here
         //Populate the ArrayListVarieties;
         List<Seeds> seeds = database.seedsDao().getSeeds();
-        arrayListVarieties = new ArrayList<>();
+        ArrayList arrayListOtherVariety = new ArrayList<>();
         for(Seeds s : seeds){
-            arrayListVarieties.add(s.getVariety());
+            arrayListOtherVariety.add(s.getVariety());
         }
         //set layout of the variety
-        arrayAdapterVariety = new ArrayAdapter<>(getApplicationContext(),R.layout.spinner_seed_variety,arrayListVarieties);
-        arrayAdapterPreviousVariety = new ArrayAdapter<>(getApplicationContext(),R.layout.spinner_seed_variety,arrayListVarieties);
-        actVariety.setAdapter(arrayAdapterVariety);
-        actVariety.setThreshold(1);
+        arrayAdapterOtherVariety = new ArrayAdapter<>(getApplicationContext(),R.layout.spinner_seed_variety,arrayListOtherVariety);
+        arrayAdapterPreviousVariety = new ArrayAdapter<>(getApplicationContext(),R.layout.spinner_seed_variety,arrayListOtherVariety);
+        actOtherVariety.setAdapter(arrayAdapterOtherVariety);
+        actOtherVariety.setThreshold(1);
         actPreviousVariety.setAdapter(arrayAdapterPreviousVariety);
         actPreviousVariety.setThreshold(1);
 
@@ -236,14 +336,45 @@ public class EditSeedProductionActivity extends AppCompatActivity implements Loc
 
 
         //set the data to text fields generated from database
-        tvAccredNo.setText(seedGrowers.getAccredno());
+        if(seedGrowers.getOtherseedsource().equals("Others")){
+
+            tilSeedClass2.setVisibility(View.GONE);
+            tillSeedSource2.setVisibility(View.GONE);
+            tilRiceProgram2.setVisibility(View.GONE);
+
+            tilRiceProgram.setVisibility(View.VISIBLE);
+            tilSeedClass.setVisibility(View.VISIBLE);
+            tilSeedSource.setVisibility(View.VISIBLE);
+            tilOtherVariety.setVisibility(View.VISIBLE);
+
+            actVariety.setText(seedGrowers.getOtherseedsource());
+            actOtherVariety.setText(seedGrowers.getVariety());
+            actRiceProgram.setText(seedGrowers.getRiceProgram());
+            actSeedClass.setText(seedGrowers.getSeedclass());
+            actSeedSource.setText(seedGrowers.getSeedsource());
+        }
+        else{
+            Log.e(TAG, "hre: " );
+            tilSeedClass2.setVisibility(View.VISIBLE);
+            tillSeedSource2.setVisibility(View.VISIBLE);
+            tilRiceProgram2.setVisibility(View.VISIBLE);
+
+            tilRiceProgram.setVisibility(View.GONE);
+            tilSeedClass.setVisibility(View.GONE);
+            tilSeedSource.setVisibility(View.GONE);
+            tilOtherVariety.setVisibility(View.GONE);
+
+            actVariety.setText(seedGrowers.getVariety());
+            tetRiceProgram.setText(seedGrowers.getRiceProgram());
+            tetSeedClass.setText(seedGrowers.getSeedclass());
+            tetSeedSource.setText(seedGrowers.getSeedsource());
+        }
+
         tvLongitude.setText(seedGrowers.getLongitude());
         tvLatitude.setText(seedGrowers.getLatitude());
-        actVariety.setText(seedGrowers.getVariety());
+
         actPreviousVariety.setText(seedGrowers.getPreviousVariety());
-        actRiceProgram.setText(seedGrowers.getRiceProgram());
-        actSeedClass.setText(seedGrowers.getSeedclass());
-        actSeedSource.setText(seedGrowers.getSeedsource());
+
         tetAreaPlanted.setText(seedGrowers.getAreaplanted());
         tetBarangay.setText(seedGrowers.getBarangay());
         tetCoop.setText(seedGrowers.getCoop());
@@ -254,8 +385,8 @@ public class EditSeedProductionActivity extends AppCompatActivity implements Loc
         tetSeedQuantity.setText(seedGrowers.getQuantity());
         tetPreviousCrop.setText(seedGrowers.getPreviousCrop());
         if(!tvAccredNo.getText().toString().trim().isEmpty() && !tvLatitude.getText().toString().trim().isEmpty() && !tvLongitude.getText().toString().trim().isEmpty()){
-            tvSave.setEnabled(true);
-            tvSave.setTextColor(Color.BLACK);
+            btnSave.setEnabled(true);
+            btnSave.setBackgroundColor(Color.parseColor("#EAB30C"));
         }
 
         SimpleDateFormat sdf =new SimpleDateFormat("yyyy-MM-dd");//set format of date you receive from db
@@ -268,14 +399,19 @@ public class EditSeedProductionActivity extends AppCompatActivity implements Loc
         SimpleDateFormat newDate = new SimpleDateFormat("d MMM yyyy");
         tetDatePlanted.setText(newDate.format(date));
         //button to cancel the activity
-        tvCancel.setOnClickListener(new View.OnClickListener(){
+        /*tvCancel.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 finish();
             }
-        });
+        });*/
         //set the Save text clickable
-
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
         tetDatePlanted.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -311,7 +447,7 @@ public class EditSeedProductionActivity extends AppCompatActivity implements Loc
             }
         });*/
 
-        tvSave.setOnClickListener(new View.OnClickListener(){
+        btnSave.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 if(actVariety.getText().toString().equals("")){
@@ -319,6 +455,84 @@ public class EditSeedProductionActivity extends AppCompatActivity implements Loc
                 }else{
                     UpdateFunction();
                 }
+            }
+        });
+
+        actVariety.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                if(spinnerArraySeeds[position].equals("Others")){
+                    tilSeedClass2.setVisibility(View.GONE);
+                    tillSeedSource2.setVisibility(View.GONE);
+                    tilRiceProgram2.setVisibility(View.GONE);
+
+                    tilRiceProgram.setVisibility(View.VISIBLE);
+                    tilSeedClass.setVisibility(View.VISIBLE);
+                    tilSeedSource.setVisibility(View.VISIBLE);
+                    tilOtherVariety.setVisibility(View.VISIBLE);
+                    tetSeedQuantity.setText("");
+                    tetAreaPlanted.setText("");
+                    selectedSeed = null;
+                }else{
+                    tilSeedClass2.setVisibility(View.VISIBLE);
+                    tillSeedSource2.setVisibility(View.VISIBLE);
+                    tilRiceProgram2.setVisibility(View.VISIBLE);
+
+                    tilRiceProgram.setVisibility(View.GONE);
+                    tilSeedClass.setVisibility(View.GONE);
+                    tilSeedSource.setVisibility(View.GONE);
+                    tilOtherVariety.setVisibility(View.GONE);
+
+                    selectedSeed = spinnerMap.get(position);
+                    String source = spinnerMap.get(position).getTableName().toLowerCase();
+                    Log.e(TAG, "onItemClick: "+selectedSeed );
+                    //Toast.makeText(SeedProductionDetailActivity.this, "quantity" + spinnerMap.get(position).getQuantity(), Toast.LENGTH_SHORT).show();
+                    if(spinnerMap.get(position).getSeedClass().equals("RS")){
+                        tetSeedClass.setText("Registered");
+                    }else if(spinnerMap.get(position).getSeedClass().equals("FS")){
+                        tetSeedClass.setText("Foundation");
+                    }
+
+                    if(source.contains("ces")){
+                        tetSeedSource.setText("PhilRice - Science City of Muñoz");
+                    }
+                    else if(source.contains("bes")){
+                        tetSeedSource.setText("PhilRice - Batac");
+                    }
+                    else if(source.contains("mes")){
+                        tetSeedSource.setText("PhilRice - Midsayap");
+                    }
+                    else if(source.contains("lbs")){
+                        tetSeedSource.setText("PhilRice - Los Baños");
+                    }
+                    else if(source.contains("aes")){
+                        tetSeedSource.setText("PhilRice - Agusan");
+                    }
+                    else if(source.contains("cves")){
+                        tetSeedSource.setText("PhilRice - Isabela");
+                    }
+                    else if(source.contains("prn")){
+                        tetSeedSource.setText("PhilRice - Negros");
+                    }
+                    else if(source.contains("bies")){
+                        tetSeedSource.setText("PhilRice - Bicol");
+                    }
+                    else if(source.contains("cmu")){
+                        tetSeedSource.setText("PhilRice - CMU Satellite Station");
+                    }
+                    else if(source.contains("zss")){
+                        tetSeedSource.setText("PhilRice - Zamboanga Satellite Station");
+                    }
+                    //wip
+                    int quantity = spinnerMap.get(position).getQuantity() - spinnerMap.get(position).getUsedQuantity();
+                    tetRiceProgram.setText(spinnerMap.get(position).getRiceProgram());
+                    double area =(double) quantity/40;
+
+                    tetAreaPlanted.setText(String.valueOf(area));
+                    tetSeedQuantity.setText(String.valueOf(quantity));
+                }
+
             }
         });
         //find view of buttons
@@ -565,15 +779,30 @@ public class EditSeedProductionActivity extends AppCompatActivity implements Loc
         }
 
         String uniqueid = md5(uniqueId+"-"+ getMacAddr()+"-"+ timestamp);
-        String accredno = tvAccredNo.getText().toString();
+        String accredno = user.getSerialNum();
         String latitude = tvLatitude.getText().toString();
         String longitude = tvLongitude.getText().toString();
-        String seedVariety = actVariety.getText().toString();
-        String seedSource = actSeedSource.getText().toString();
+        String seedVariety = "";
+        String seedSource = "";
         String otherSeedSource = "";
-        String seedClass = actSeedClass.getText().toString();
-        String riceProgram = actRiceProgram.getText().toString();
+        String seedClass = "";
+        String riceProgram = "";
 
+        if(actVariety.getText().toString().equals("Others")){
+            Log.e(TAG, "if variety equal to other: " );
+            seedVariety = actOtherVariety.getText().toString();
+            seedSource = actSeedSource.getText().toString();
+            otherSeedSource = actVariety.getText().toString();
+            seedClass = actSeedClass.getText().toString();
+            riceProgram = actRiceProgram.getText().toString();
+        }else{
+            Log.e(TAG, "if variety is not equal to other: " );
+            seedVariety = actVariety.getText().toString();
+            seedSource = tetSeedSource.getText().toString();
+            otherSeedSource = "";
+            seedClass = tetSeedClass.getText().toString();
+            riceProgram = tetRiceProgram.getText().toString();
+        }
         String areaPlanted = tetAreaPlanted.getText().toString();
         String seedQuantity = tetSeedQuantity.getText().toString();
         String seedbedArea = tetSeedBedArea.getText().toString();
@@ -615,8 +844,8 @@ public class EditSeedProductionActivity extends AppCompatActivity implements Loc
             String longitude = tvLongitude.getText().toString().trim();
 
             if(!accredNo.isEmpty() && !latitude.isEmpty() && !longitude.isEmpty()){
-                tvSave.setEnabled(true);
-                tvSave.setTextColor(Color.BLACK);
+                //tvSave.setEnabled(true);
+                //tvSave.setTextColor(Color.BLACK);
             }
 
         }
@@ -845,5 +1074,55 @@ public class EditSeedProductionActivity extends AppCompatActivity implements Loc
             e.printStackTrace();
         }
         return "";
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        item.setCheckable(false);
+        switch (item.getItemId()) {
+            case R.id.homeBtn:
+                intent = new Intent(this, HomeActivity.class);
+                intent.putExtra("activityId",id);
+                startActivity(intent);
+                drawerLayout.closeDrawer(GravityCompat.START);
+                return true;
+            case R.id.listBtn:
+                intent = new Intent(this, ListActivity.class);
+                intent.putExtra("activityId",id);
+                startActivity(intent);
+                drawerLayout.closeDrawer(GravityCompat.START);
+                return true;
+            case R.id.addBtn:
+                intent = new Intent(this, SeedProductionDetailActivity.class);
+                intent.putExtra("activityId",id);
+                startActivity(intent);
+                drawerLayout.closeDrawer(GravityCompat.START);
+                return true;
+            case R.id.sentItemBtn:
+                intent = new Intent(this, SentItemActivity.class);
+                intent.putExtra("activityId",id);
+                startActivity(intent);
+                drawerLayout.closeDrawer(GravityCompat.START);
+                return true;
+            case R.id.aboutBtn:
+                intent = new Intent(this, AboutActivity.class);
+                intent.putExtra("activityId",id);
+                startActivity(intent);
+                drawerLayout.closeDrawer(GravityCompat.START);
+                return true;
+
+            default:
+                // If we got here, the user's action was not recognized.
+                // Invoke the superclass to handle it.
+                return super.onOptionsItemSelected(item);
+
+        }
+
+    }
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+
     }
 }

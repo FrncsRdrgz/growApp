@@ -108,8 +108,7 @@ public class SeedGrower {
 
 
     public int getSgId() {return sgId;}
-    public void setSgId(int sgId) {this.sgId = sgId;
-    }
+    public void setSgId(int sgId) {this.sgId = sgId; }
     public String getMacaddress() {return macaddress;}
     public void setMacaddress(String macaddress) {this.macaddress = macaddress;}
 

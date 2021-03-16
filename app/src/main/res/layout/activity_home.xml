@@ -1,120 +1,393 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="govph.rsis.growapp.HomeActivity">
+    tools:context="govph.rsis.growapp.HomeActivity"
 
-    <LinearLayout
-        android:id="@+id/linearToolbar"
+    android:id="@+id/drawer_layout">
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:background="#E8E8E8"
+        android:layout_height="match_parent">
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appbar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <androidx.appcompat.widget.Toolbar
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:id="@+id/main_toolbar"
+                app:titleTextColor="#FEFAF5"
+                android:background="#1B8040">
+
+            </androidx.appcompat.widget.Toolbar>
+        </com.google.android.material.appbar.AppBarLayout>
 
         <LinearLayout
+            android:id="@+id/homeActWelcomeLinear"
+            android:paddingTop="15dp"
+            android:paddingStart="70dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#FFFF"
-            android:paddingBottom="5dp"
-            android:orientation="horizontal">
+            android:layout_below="@id/appbar_layout"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingBottom="15dp">
 
             <ImageView
                 android:id="@+id/imageView3"
-                android:layout_width="120dp"
+                android:layout_width="80dp"
                 android:layout_height="80dp"
-                app:srcCompat="@drawable/rsisnew"
-                >
-            </ImageView>
+                android:background="@drawable/roundimage"
+                app:srcCompat="@drawable/user" />
             <LinearLayout
+                android:paddingStart="15dp"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingEnd="15dp"
                 android:orientation="vertical">
                 <TextView
-                    android:id="@+id/tvWelcomeName"
-                    style="@style/TextAppearance.Widget.AppCompat.Toolbar.Subtitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingTop="10dp"
-                    android:textSize="15sp"
-                    android:background="?attr/selectableItemBackground"
-                    android:drawablePadding="8dp"
-                    android:textColor="#000000"
-                    android:text="Welcome: John Doe"/>
+
+                    android:text="Welcome!"/>
                 <TextView
-                    android:id="@+id/tvWelcomeSerial"
-                    style="@style/TextAppearance.Widget.AppCompat.Toolbar.Subtitle"
+                    android:id="@+id/homeActUserName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingTop="8dp"
+                    android:textColor="#1A622E"
                     android:textSize="20sp"
-                    android:background="?attr/selectableItemBackground"
-                    android:drawablePadding="8dp"
-                    android:textColor="#000000"
-                    android:text="Serial: R-0000xxxx"/>
+                    android:textStyle="bold"
+                    android:text="Juan Dela Cruz"/>
+                <TextView
+                    android:id="@+id/homeActSerialNum"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="#1A622E"
+                    android:text="R-0000000111"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/homeActGraphLinear"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_below="@id/homeActWelcomeLinear"
+            android:orientation="horizontal"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"
+            >
+            <LinearLayout
+                android:id="@+id/homeActLegend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/homeActGraphLinear"
+                android:orientation="vertical"
+                >
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:layout_weight="1">
+                    <TextView
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:gravity="right"
+                        android:textSize="20sp"
+                        android:background="@drawable/shape_collected"
+                        android:text=" "/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Collected:"/>
+                    <TextView
+                        android:id="@+id/homeTvCollected"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="20sp"
+                        android:text="0"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:layout_weight="1">
+                    <TextView
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:gravity="right"
+                        android:textSize="20sp"
+                        android:background="@drawable/shape_sent"
+                        android:text=" "/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Sent:"/>
+                    <TextView
+                        android:id="@+id/homeTvSent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="20sp"
+                        android:text="0"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:layout_weight="1">
+                    <TextView
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:gravity="right"
+                        android:textSize="20sp"
+                        android:background="@drawable/shape_deleted"
+                        android:text=" "/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Deleted:"/>
+                    <TextView
+                        android:id="@+id/homeTvDeleted"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="20sp"
+                        android:text="0"/>
+                </LinearLayout>
+
+            </LinearLayout>
+            <com.github.mikephil.charting.charts.PieChart
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+                android:id="@+id/pieChart"/>
+
+        </LinearLayout>
+
+        <!--<LinearLayout
+            android:id="@+id/legendData"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@id/homeActLegend">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/homeTvCollected"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:text="0"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_weight="1">
+                <TextView
+                    android:id="@+id/homeTvSent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:text="0"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_weight="1">
+                <TextView
+                    android:id="@+id/homeTvDeleted"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:text="0"/>
+            </LinearLayout>
+        </LinearLayout>-->
+
+        <LinearLayout
+            android:id="@+id/btnFirstLinear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:orientation="horizontal"
+            android:layout_below="@id/homeActGraphLinear">
+
+            <LinearLayout
+                android:id="@+id/linearList"
+                android:layout_marginEnd="15dp"
+                android:layout_width="130dp"
+                android:layout_height="110dp"
+                android:background="@drawable/home_button"
+                android:orientation="vertical"
+                android:padding="5dp">
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:tint="@color/colorWhite"
+
+                    app:srcCompat="@drawable/file"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="17sp"
+                    android:textColor="#FFFF"
+                    android:gravity="center"
+                    android:text="COLLECTED LIST"/>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/linearAdd"
+                android:layout_marginStart="15dp"
+                android:layout_width="130dp"
+                android:layout_height="110dp"
+                android:background="@drawable/home_button"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="5dp">
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:tint="@color/colorWhite"
+
+                    app:srcCompat="@drawable/add"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="17sp"
+                    android:textColor="#FFFF"
+                    android:gravity="center"
+                    android:text="ADD DATA"/>
             </LinearLayout>
 
         </LinearLayout>
-
-        <include
-            android:id="@+id/toolbar"
-            layout="@layout/toolbar"
-            />
-
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:orientation="horizontal"
+            android:layout_below="@id/btnFirstLinear">
 
-            <TextView
-
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/borderlines"
+            <LinearLayout
+                android:id="@+id/linearSent"
+                android:layout_marginEnd="15dp"
+                android:layout_width="130dp"
+                android:layout_height="110dp"
+                android:background="@drawable/home_button"
                 android:gravity="center"
-                android:textSize="20sp"
-                android:text="FORM LIST"/>
+                android:orientation="vertical"
+                android:padding="5dp">
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:tint="@color/colorWhite"
+
+                    app:srcCompat="@drawable/sent_icon"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="17sp"
+                    android:textColor="#FFFF"
+                    android:gravity="center"
+                    android:text="SENT DATA"/>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/linearAbout"
+                android:layout_marginStart="15dp"
+                android:layout_width="130dp"
+                android:layout_height="110dp"
+                android:background="@drawable/home_button"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="5dp">
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:tint="@color/colorWhite"
+
+                    app:srcCompat="@drawable/rsis_light"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="17sp"
+                    android:textColor="#FFFF"
+                    android:gravity="center"
+                    android:text="ABOUT"/>
+            </LinearLayout>
+
         </LinearLayout>
-    </LinearLayout>
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView1"
-        android:layout_below="@id/linearToolbar"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@id/linearAppInfo"
-        tools:listitem="@layout/item_seeds"/>
-    <TextView
-        android:id="@+id/empty_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="Empty List."
-        android:visibility="gone"/>
-
-    <LinearLayout
-        android:layout_marginTop="5dp"
-        android:id="@+id/linearAppInfo"
-        android:layout_alignParentBottom="true"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingBottom="5dp">
-
-        <TextView
-            android:id="@+id/tvVersion"
+        <LinearLayout
+            android:paddingTop="5dp"
+            android:paddingBottom="10dp"
+            android:id="@+id/homeCopyRight"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textSize="10sp"
-            android:text="GrowApp Version: growApp v2"
-            />
-        <TextView
-            android:id="@+id/tvAppName"
+            android:layout_alignParentBottom="true"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/homeTvVersion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textSize="10sp"
+                android:text="Version: 1"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textSize="10sp"
+                android:text="RSIS - all rights reserved. Copyright (c) 2021"/>
+        </LinearLayout>
+    </RelativeLayout>
+    
+    <com.google.android.material.navigation.NavigationView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:background="#E8E8E8"
+        app:menu="@menu/nav_menu"
+        app:itemTextColor="#7C7C7C"
+        android:id="@+id/nav_view"
+        android:layout_gravity="start"
+        app:headerLayout="@layout/nav_header_layout"
+        >
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
             android:gravity="center"
-            android:textSize="10sp"
-            android:text="Rice Seed Information System (c) 2021"
-            />
-    </LinearLayout>
-</RelativeLayout>
+            android:clickable="true"
+            android:orientation="vertical">
+            <TextView
+                android:paddingBottom="15dp"
+                android:textColor="#FFFF"
+                android:textSize="18sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="rsis.philrice.gov.ph"
+                android:autoLink="web"
+                android:id="@+id/infoTxtCredits"
+                android:layout_centerInParent="true"
+                android:linksClickable="true"/>
+        </LinearLayout>
+    </com.google.android.material.navigation.NavigationView>
+</androidx.drawerlayout.widget.DrawerLayout>

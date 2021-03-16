@@ -1,554 +1,246 @@
 package govph.rsis.growapp;
 
+import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.ActivityCompat;
-import androidx.lifecycle.Observer;
+import androidx.core.view.GravityCompat;
+import androidx.core.view.MenuItemCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.ViewModelProviders;
 
-import androidx.recyclerview.widget.ItemTouchHelper;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.Manifest;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-import com.google.android.material.button.MaterialButton;
+import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.formatter.PercentFormatter;
+import com.github.mikephil.charting.utils.ColorTemplate;
+import com.google.android.material.navigation.NavigationView;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.ArrayList;
 
-import govph.rsis.growapp.SeedBought.SeedBought;
-import govph.rsis.growapp.SeedBought.SeedBoughtViewModel;
 import govph.rsis.growapp.User.User;
 import govph.rsis.growapp.User.UserViewModel;
 
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     public static final String EXTRA_MESSAGE = "com.example.releasingapp.MESSAGE";
-    public static final String EXTRA_ARRAY = "com.example.releasingapp.EXTRA_ARRAY";
     private static final String TAG = "HomeActivity";
+    private Toolbar toolbar;
 
+    private DrawerLayout drawerLayout;
+    private NavigationView navigationView;
     private SeedGrowerViewModel seedGrowerViewModel;
-    private SeedBoughtViewModel seedBoughtViewModel;
     private UserViewModel userViewModel;
-    private int CAMERA_PERMISSION_CODE = 1;
-    private boolean mPermissionGranted;
-    public static final int REQUEST_CODE = 0x9988;
-    TextView tvDeleteAll,tvEmptyView,tvVersion,tvAppName,tvFinalizeAccredNo,titleFinalize,tvFinalizeSeedSource,tvFinalizeVariety,tvFinalizeSeedClass,tvFinalizeDatePlanted,
-            tvFinalizeAreaPlanted, tvFinalizeQuantity,tvFinalizeSeedbedArea,tvFinalizeSeedlingAge,tvFinalizeSeedLot,tvFinalizeLabNo,tvFinalizeBarangay,tvFinalizeLatitude,tvFinalizeLongitude,
-            tvFinalizeCoop,tvFinalizeProgram,tvWelcomeName,tvWelcomeSerial;
-    Toolbar toolbar;
+    private View headerView;
+    TextView headerVersion,headerName,headerSerial,homeTvVersion,tvList,tvSent,tvDeleted,homeTvCollected,homeTvSent,homeTvDeleted,homeActUserName,homeActSerialNum;
+    MenuItem mList,mSent,mDeleted;
+    LinearLayout linearList,linearAdd,linearAbout,linearSent;
     Intent intent;
-    SeedGrowerDatabase database;
-    RecyclerView rvSeedGrowers;
-    GlobalFunction globalFunction;
-    RequestQueue queue;
     User user;
+    int activityId, countCollected,countSent,countDeleted;
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        globalFunction = new GlobalFunction(getApplicationContext());
-        globalFunction.isOnline();
-        requestCameraPermission();
-        seedGrowerViewModel = ViewModelProviders.of(this).get(SeedGrowerViewModel.class);
-        userViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
-        seedBoughtViewModel = ViewModelProviders.of(this).get(SeedBoughtViewModel.class);
-        user = userViewModel.getLoggedInUser();
-        database = SeedGrowerDatabase.getInstance(this);
-        toolbar = findViewById(R.id.toolbar);
+
+        toolbar = findViewById(R.id.main_toolbar);
         setSupportActionBar(toolbar);
 
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-        tvVersion = (TextView) findViewById(R.id.tvVersion);
-        tvAppName = (TextView) findViewById(R.id.tvAppName);
-        tvWelcomeName = (TextView) findViewById(R.id.tvWelcomeName);
-        tvWelcomeSerial = (TextView) findViewById(R.id.tvWelcomeSerial);
-        tvDeleteAll = (TextView) findViewById(R.id.tvDeleteAll);
-        rvSeedGrowers = (RecyclerView) findViewById(R.id.recyclerView1);
-        tvEmptyView = findViewById(R.id.empty_view);
-        rvSeedGrowers.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        rvSeedGrowers.setHasFixedSize(true);
+        userViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
+        seedGrowerViewModel = ViewModelProviders.of(this).get(SeedGrowerViewModel.class);
 
+        user = userViewModel.getLoggedInUser();
+        countCollected = seedGrowerViewModel.getCountCollected(user.getSerialNum());
+        countSent = seedGrowerViewModel.getCountSent(user.getSerialNum());
+        countDeleted = seedGrowerViewModel.getCountDeleted(user.getSerialNum());
+
+        //Log.e(TAG, "collected: "+countCollected );
+        drawerLayout = findViewById(R.id.drawer_layout);
+        navigationView = findViewById(R.id.nav_view);
+        headerView = navigationView.getHeaderView(0);
+        headerVersion = headerView.findViewById(R.id.headerVersion);
+        headerName = headerView.findViewById(R.id.headerName);
+        headerSerial = headerView.findViewById(R.id.headerSerial);
+        homeTvVersion = findViewById(R.id.homeTvVersion);
+        homeActUserName = findViewById(R.id.homeActUserName);
+        homeActSerialNum = findViewById(R.id.homeActSerialNum);
+        activityId = getIntent().getIntExtra("activityId",0);
+        homeTvCollected = findViewById(R.id.homeTvCollected);
+        homeTvSent = findViewById(R.id.homeTvSent);
+        homeTvDeleted = findViewById(R.id.homeTvDeleted);
+        linearAbout = findViewById(R.id.linearAbout);
+        linearList = findViewById(R.id.linearList);
+        linearAdd = findViewById(R.id.linearAdd);
+        linearSent = findViewById(R.id.linearSent);
+
+        mList = navigationView.getMenu().findItem(R.id.listBtn);
+        mSent = navigationView.getMenu().findItem(R.id.sentItemBtn);
+        mDeleted = navigationView.getMenu().findItem(R.id.deletedBtn);
+
+        tvList = (TextView) mList.getActionView();
+        tvList.setText(String.valueOf(countCollected));
+        tvSent = (TextView) mSent.getActionView();
+        tvSent.setText(String.valueOf(countSent));
+        tvDeleted = (TextView) mDeleted.getActionView();
+        tvDeleted.setText(String.valueOf(countDeleted));
         try {
             PackageInfo pInfo = this.getPackageManager().getPackageInfo(getPackageName(), 0);
-            tvVersion.setText("GrowApp Version: "+ pInfo.versionName);
+            headerVersion.setText("Version: "+ pInfo.versionName);
+            homeTvVersion.setText("Version: "+ pInfo.versionName);
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
+        headerName.setText(user.getFullname());
+        headerSerial.setText(user.getSerialNum());
+        homeActSerialNum.setText(user.getSerialNum());
+        homeActUserName.setText(user.getFullname());
+        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(
+                this,
+                drawerLayout,
+                toolbar,
+                R.string.openNavDrawer,
+                R.string.closeNavDrawer
+                );
+        drawerLayout.addDrawerListener(actionBarDrawerToggle);
+        actionBarDrawerToggle.syncState();
+        navigationView.setNavigationItemSelectedListener(this);
+        if(activityId == R.id.homeBtn){
+            navigationView.setCheckedItem(activityId);
+        }
+        else{
+            navigationView.setCheckedItem(R.id.homeBtn);
+        }
+
+        PieChart pieChart = findViewById(R.id.pieChart);
+
+        ArrayList<PieEntry> visitors = new ArrayList<>();
+        visitors.add(new PieEntry(countCollected,"Collected"));
+        visitors.add(new PieEntry(countSent, "Sent"));
+        visitors.add(new PieEntry(countDeleted, "Deleted"));
+
+        PieDataSet pieDataSet = new PieDataSet(visitors, null);
+        pieDataSet.setColors(Color.parseColor("#3266CC"),Color.parseColor("#FE9900"),Color.parseColor("#DE3813"));
+        pieDataSet.setValueTextColor(Color.WHITE);
+        pieDataSet.setValueTextSize(16f);
+        pieDataSet.setSliceSpace(3f);
+        PieData pieData = new PieData(pieDataSet);
 
 
-        //set the Welcome Name
-        tvWelcomeName.setText("Welcome, "+user.getFullname());
-        tvWelcomeSerial.setText("Serial: " + user.getSerialNum());
-        int checkUser = database.userDao().isEmpty();
+        pieChart.setData(pieData);
+        pieChart.getDescription().setEnabled(false);
+        pieChart.setDrawEntryLabels(false);
+        pieChart.setUsePercentValues(true);
+        pieChart.setDrawHoleEnabled(false);
+        pieChart.getLegend().setEnabled(false);
+        //Legend legend =pieChart.getLegend();
+        //legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
+        //legend.setTextSize(20f);
 
-        /*if(checkUser < 1){
-            LayoutInflater inflater = getLayoutInflater();
-            AlertDialog.Builder builder = new AlertDialog.Builder(HomeActivity.this);
-            View dialogView = inflater.inflate(R.layout.scan_dialog,null);
-            builder.setCancelable(false);
-            builder.setView(dialogView);
-            MaterialButton scanBtn = (MaterialButton) dialogView.findViewById(R.id.dialogBtnScan);
-            final AlertDialog progressDialog = builder.create();
-            progressDialog.show();
+        pieChart.animate();
+        homeTvCollected.setText(String.valueOf(countCollected));
+        homeTvSent.setText(String.valueOf(countSent));
+        homeTvDeleted.setText(String.valueOf(countDeleted));
 
-            scanBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    intent = new Intent(HomeActivity.this, ScannerActivity.class);
-                    startActivityForResult(intent,REQUEST_CODE);
-                }
-            });
-        }*/
-
-        final SeedGrowerAdapter adapter = new SeedGrowerAdapter();
-        rvSeedGrowers.setAdapter(adapter);
-        //adapter.setSgClickedListener(this);
-        //adapter.setSgEditClickedListener(this);
-
-        seedGrowerViewModel.getAllSeedGrowers(user.getSerialNum()).observe(this, new Observer<List<SeedGrower>>() {
+        linearAdd.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onChanged(List<SeedGrower> seedGrowers) {
-                //update recyclerview
-                if(seedGrowers.isEmpty()){
-                    tvEmptyView.setVisibility(View.VISIBLE);
-                    rvSeedGrowers.setVisibility(View.GONE);
-                    tvDeleteAll.setClickable(false);
-                    tvDeleteAll.setTextColor(Color.GRAY);
-                }else{
-                    rvSeedGrowers.setVisibility(View.VISIBLE);
-                    tvEmptyView.setVisibility(View.GONE);
-                    adapter.setSeedGrowers(seedGrowers);
-                    tvDeleteAll.setClickable(true);
-                    tvDeleteAll.setTextColor(Color.WHITE);
-                }
-
-
-            }
-        });
-
-        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
-                ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
-            @Override
-            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-                return false;
-            }
-
-            @Override
-            public void onSwiped(final @NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                new AlertDialog.Builder(HomeActivity. this )
-                        .setTitle("Delete Form?")
-                        .setMessage( "Are you sure you want to delete this?" )
-                        .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                SeedGrower seedGrower;
-                                SeedBought seedBought;
-                                seedGrower = adapter.getSeedGrowerAt(viewHolder.getAdapterPosition());
-                                int bought_id =Integer.parseInt(seedGrower.getBought_id());
-                                seedBought = seedBoughtViewModel.seedBought(bought_id);
-                                int quantity =seedBought.getUsedQuantity() - Integer.parseInt(seedGrower.getQuantity());
-
-                                int updatedQuantity =seedBoughtViewModel.getReturnQuantity(seedGrower.getAccredno(),bought_id,quantity);
-
-                                if(updatedQuantity > 0){
-                                    seedGrowerViewModel.delete(adapter.getSeedGrowerAt(viewHolder.getAdapterPosition()));
-                                    Toast.makeText(HomeActivity.this, "Form deleted.", Toast.LENGTH_SHORT).show();
-                                }else{
-                                    Toast.makeText(HomeActivity.this, "Error deleting form.", Toast.LENGTH_SHORT).show();
-                                }
-
-
-                            }
-                        })
-                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                adapter.notifyDataSetChanged();
-                            }
-                        }).show();
-
-            }
-        }).attachToRecyclerView(rvSeedGrowers);
-
-        //This will delete all the forms from the phone database
-        tvDeleteAll.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new AlertDialog.Builder(HomeActivity.this)
-                        .setTitle("Are you sure you want to delete all forms?")
-                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                seedGrowerViewModel.deleteAllSeedGrower();
-                                Toast.makeText(HomeActivity.this, "Deleted All Forms.", Toast.LENGTH_SHORT).show();
-                            }
-                        }).setNegativeButton("No",null).show();
-
-            }
-        });
-
-        adapter.setSgFormClickedListener(new SeedGrowerAdapter.sgFormClicked() {
-            @Override
-            public void editSGDetails(SeedGrower seedGrower) {
-                intent = new Intent(HomeActivity.this,EditSeedProductionActivity.class);
-
-                intent.putExtra(EXTRA_MESSAGE, Integer.toString(seedGrower.getSgId()));
+            public void onClick(View view) {
+                intent = new Intent(HomeActivity.this, SeedProductionDetailActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
-
-        //display all the fields before sending to server
-        adapter.setFinalizedBtnClickedListener(new SeedGrowerAdapter.finalizedBtnClicked() {
+        linearSent.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void finalizeBeforeSending(final SeedGrower seedGrower) {
-                LayoutInflater inflater = getLayoutInflater();
-                AlertDialog.Builder builder = new AlertDialog.Builder(HomeActivity.this);
-                View dialogView = inflater.inflate(R.layout.finalize_layout,null);
-                builder.setCancelable(true);
-                builder.setView(dialogView);
-
-                titleFinalize = (TextView) dialogView.findViewById(R.id.titleFinalize);
-                tvFinalizeAccredNo = (TextView) dialogView.findViewById(R.id.tvFinalizeAccredNo);
-                tvFinalizeSeedSource = (TextView) dialogView.findViewById(R.id.tvFinalizeSeedSource);
-                tvFinalizeVariety = (TextView) dialogView.findViewById(R.id.tvFinalizeVariety);
-                tvFinalizeSeedClass = (TextView) dialogView.findViewById(R.id.tvFinalizeSeedClass);
-                tvFinalizeDatePlanted = (TextView) dialogView.findViewById(R.id.tvFinalizeDatePlanted);
-                tvFinalizeAreaPlanted = (TextView) dialogView.findViewById(R.id.tvFinalizeAreaPlanted);
-                tvFinalizeQuantity = (TextView) dialogView.findViewById(R.id.tvFinalizeQuantity);
-                tvFinalizeSeedbedArea = (TextView) dialogView.findViewById(R.id.tvFinalizeSeedbedArea);
-                tvFinalizeSeedlingAge = (TextView) dialogView.findViewById(R.id.tvFinalizeSeedlingAge);
-                tvFinalizeSeedLot = (TextView) dialogView.findViewById(R.id.tvFinalizeSeedLot);
-                tvFinalizeLabNo = (TextView) dialogView.findViewById(R.id.tvFinalizeLabNo);
-                tvFinalizeBarangay = (TextView) dialogView.findViewById(R.id.tvFinalizeBarangay);
-                tvFinalizeLatitude = (TextView) dialogView.findViewById(R.id.tvFinalizeLatitude);
-                tvFinalizeLongitude = (TextView) dialogView.findViewById(R.id.tvFinalizeLongitude);
-                tvFinalizeCoop = (TextView) dialogView.findViewById(R.id.tvFinalizeCoop);
-                tvFinalizeProgram =  (TextView) dialogView.findViewById(R.id.tvFinalizeProgram);
-
-                titleFinalize.setText(seedGrower.getVariety());
-                tvFinalizeAccredNo.setText(seedGrower.getAccredno());
-                tvFinalizeSeedSource.setText(seedGrower.getSeedsource());
-                tvFinalizeVariety.setText(seedGrower.getVariety());
-                tvFinalizeSeedClass.setText(seedGrower.getSeedclass());
-                tvFinalizeDatePlanted.setText(seedGrower.getDateplanted());
-                tvFinalizeAreaPlanted.setText(seedGrower.getAreaplanted());
-                tvFinalizeQuantity.setText(seedGrower.getQuantity());
-                tvFinalizeSeedbedArea.setText(seedGrower.getSeedbedarea());
-                tvFinalizeSeedlingAge.setText(seedGrower.getSeedlingage());
-                tvFinalizeSeedLot.setText(seedGrower.getSeedlot());
-                tvFinalizeLabNo.setText(seedGrower.getControlno());
-                tvFinalizeBarangay.setText(seedGrower.getBarangay());
-                tvFinalizeLatitude.setText(seedGrower.getLatitude());
-                tvFinalizeLongitude.setText(seedGrower.getLongitude());
-                tvFinalizeCoop.setText(seedGrower.getCoop());
-                tvFinalizeProgram.setText(seedGrower.getRiceProgram());
-
-                builder.setNegativeButton("Back", null);
-                builder.setPositiveButton("Send", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                });
-                final AlertDialog dialog = builder.create();
-                dialog.show();
-
-                dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Boolean wantToCloseDialog = false;
-                        new AlertDialog.Builder(HomeActivity. this )
-                                .setTitle("Finish finalizing the form?")
-                                .setMessage( "Please check the data before sending." )
-                                .setPositiveButton( "Send" , new
-                                        DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick (DialogInterface paramDialogInterface , int paramInt) {
-                                                LayoutInflater inflater = getLayoutInflater();
-                                                AlertDialog.Builder builder = new AlertDialog.Builder(HomeActivity.this);
-                                                View dialogView = inflater.inflate(R.layout.loading_template,null);
-                                                builder.setCancelable(false);
-                                                builder.setView(dialogView);
-
-                                                final AlertDialog progressDialog = builder.create();
-                                                progressDialog.show();
-
-                                                if(DecVar.isNetworkConnected){
-
-                                                    if(seedGrower.getVariety().matches("Select Variety") || seedGrower.getSeedsource().matches("Select Seed Source")
-                                                            || seedGrower.getSeedclass().matches("Select Seed Class") || seedGrower.getDateplanted().matches("0002-11-30")
-                                                            || seedGrower.getDateplanted().matches("-0001-11-30") || seedGrower.getDateplanted().matches("0000-00-00")
-                                                            || seedGrower.getAreaplanted().matches("") || seedGrower.getQuantity().matches("")
-                                                            || seedGrower.getSeedbedarea().matches("") || seedGrower.getSeedlingage().matches("")
-                                                            || seedGrower.getSeedlot().matches("") || seedGrower.getControlno().matches("")
-                                                            || seedGrower.getBarangay().matches("") || seedGrower.getRiceProgram().matches("Select Rice Program") || seedGrower.getCoop().matches("")){
-                                                        progressDialog.hide();
-                                                        new AlertDialog.Builder(HomeActivity.this)
-                                                                .setMessage("Please fill out all the fields first before sending data.")
-                                                                .setNegativeButton("Try Again",null).show();
-                                                    }else{
-                                                        queue = Volley.newRequestQueue(HomeActivity.this);
-                                                        String url = DecVar.receiver()+"/postData.php";
-
-                                                        StringRequest sr = new StringRequest(Request.Method.POST, url,
-                                                                new Response.Listener<String>() {
-                                                                    @Override
-                                                                    public void onResponse(String response) {
-                                                                        if(!response.equals("Success")){
-                                                                            progressDialog.hide();
-                                                                            new AlertDialog.Builder(HomeActivity.this)
-                                                                                    .setMessage("Error while sending data to server.")
-                                                                                    .setNegativeButton("Try Again",null).show();
-                                                                        }
-                                                                        else{
-                                                                            progressDialog.hide();
-                                                                            seedGrower.setIsSent(true);
-                                                                            seedGrowerViewModel.update(seedGrower);
-                                                                            new AlertDialog.Builder(HomeActivity.this)
-                                                                                    .setMessage("Successfully sent form data")
-                                                                                    .setNegativeButton("Ok",null).show();
-                                                                            dialog.dismiss();
-                                                                        }
-                                                                    }
-                                                                },
-                                                                new Response.ErrorListener() {
-                                                                    @Override
-                                                                    public void onErrorResponse(VolleyError error) {
-                                                                        progressDialog.hide();
-                                                                        new AlertDialog.Builder(HomeActivity.this)
-                                                                                .setMessage("Error while sending data to server.")
-                                                                                .setNegativeButton("Try Again",null).show();
-                                                                        Log.e("HttpClient", "error: " + error.toString());
-                                                                    }
-                                                                })
-                                                        {
-                                                            @Override
-                                                            protected Map<String,String> getParams(){
-                                                                Map<String,String> params = new HashMap<>();
-                                                                params.put("formId","0");
-                                                                params.put("accredNo","");
-                                                                params.put("serial_number",seedGrower.getAccredno());
-                                                                params.put("seedSource",seedGrower.getSeedsource());
-                                                                params.put("otherSource",seedGrower.getOtherseedsource());
-                                                                params.put("variety",seedGrower.getVariety());
-                                                                params.put("seedClass",seedGrower.getSeedclass());
-                                                                params.put("datePlanted",seedGrower.getDateplanted());
-                                                                params.put("areaPlanted",seedGrower.getAreaplanted());
-                                                                params.put("quantity",seedGrower.getQuantity());
-                                                                params.put("seedbedArea",seedGrower.getSeedbedarea());
-                                                                params.put("seedlingAge",seedGrower.getSeedlingage());
-                                                                params.put("seedlot",seedGrower.getSeedlot());
-                                                                params.put("controlNo",seedGrower.getControlno());
-                                                                params.put("barangay",seedGrower.getBarangay());
-                                                                params.put("latitude",seedGrower.getLatitude());
-                                                                params.put("longitude",seedGrower.getLongitude());
-                                                                params.put("dateCollected",seedGrower.getDatecollected());
-                                                                params.put("androidid",seedGrower.getMacaddress());
-                                                                params.put("program",seedGrower.getRiceProgram());
-                                                                params.put("coop",seedGrower.getCoop());
-                                                                params.put("previouscrop",seedGrower.getPreviousCrop());
-                                                                params.put("previousvariety",seedGrower.getPreviousVariety());
-                                                                return params;
-                                                            }
-                                                        };
-                                                        queue.add(sr);
-                                                    }
-
-                                                }
-                                                else{
-                                                    progressDialog.hide();
-                                                    new AlertDialog.Builder(HomeActivity.this)
-                                                            .setTitle("No Internet Connection")
-                                                            .setMessage("Internet connection is required to send form data.")
-                                                            .setNegativeButton("Ok", null)
-                                                            .show();
-                                                }
-
-                                            }
-                                        })
-                                .setNegativeButton( "Cancel" , null )
-                                .show() ;
-
-                        if(wantToCloseDialog)
-                            dialog.dismiss();
-                    }
-                });
+            public void onClick(View view) {
+                intent = new Intent(HomeActivity.this, SentItemActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
-
-        /*adapter.setSendBtnClickedListener(new SeedGrowerAdapter.sendBtnClicked() {
+        linearAbout.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void sendToServer(final SeedGrower seedGrower) {
-                 new AlertDialog.Builder(HomeActivity. this )
-                        .setTitle("Send Form?")
-                        .setMessage( "Data willbe sent to server." )
-                        .setPositiveButton( "Send" , new
-                                DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick (DialogInterface paramDialogInterface , int paramInt) {
-                                            LayoutInflater inflater = getLayoutInflater();
-                                            AlertDialog.Builder builder = new AlertDialog.Builder(HomeActivity.this);
-                                            View dialogView = inflater.inflate(R.layout.loading_template,null);
-                                            builder.setCancelable(false);
-                                            builder.setView(dialogView);
-
-                                            final AlertDialog progressDialog = builder.create();
-                                            progressDialog.show();
-
-                                        if(isOnline()){
-
-                                            if(seedGrower.getVariety().matches("Select Variety") || seedGrower.getSeedsource().matches("Select Seed Source")
-                                                    || seedGrower.getSeedclass().matches("Select Seed Class") || seedGrower.getDateplanted().matches("0002-11-30")
-                                                    || seedGrower.getDateplanted().matches("-0001-11-30") || seedGrower.getDateplanted().matches("0000-00-00")
-                                                    || seedGrower.getAreaplanted().matches("") || seedGrower.getQuantity().matches("")
-                                                    || seedGrower.getSeedbedarea().matches("") || seedGrower.getSeedlingage().matches("")
-                                                    || seedGrower.getSeedlot().matches("") || seedGrower.getControlno().matches("")
-                                                    || seedGrower.getBarangay().matches("") || seedGrower.getRiceProgram().matches("Select Rice Program") || seedGrower.getCoop().matches("")){
-                                                progressDialog.hide();
-                                                new AlertDialog.Builder(HomeActivity.this)
-                                                    .setMessage("Please fill out all the fields first before sending data.")
-                                                    .setNegativeButton("Try Again",null).show();
-                                            }else{
-                                                queue = Volley.newRequestQueue(HomeActivity.this);
-                                                String url = DecVar.receiver()+"/postData.php";
-
-                                                StringRequest sr = new StringRequest(Request.Method.POST, url,
-                                                        new Response.Listener<String>() {
-                                                            @Override
-                                                            public void onResponse(String response) {
-                                                                if(!response.equals("Success")){
-                                                                    progressDialog.hide();
-                                                                    new AlertDialog.Builder(HomeActivity.this)
-                                                                            .setMessage("Error while sending data to server.")
-                                                                            .setNegativeButton("Try Again",null).show();
-                                                                }
-                                                                else{
-                                                                    progressDialog.hide();
-                                                                    seedGrower.setIsSent(true);
-                                                                    seedGrowerViewModel.update(seedGrower);
-                                                                    new AlertDialog.Builder(HomeActivity.this)
-                                                                            .setMessage("Successfully sent form data")
-                                                                            .setNegativeButton("Ok",null).show();
-                                                                }
-                                                            }
-                                                        },
-                                                        new Response.ErrorListener() {
-                                                            @Override
-                                                            public void onErrorResponse(VolleyError error) {
-                                                                progressDialog.hide();
-                                                                new AlertDialog.Builder(HomeActivity.this)
-                                                                        .setMessage("Error while sending data to server.")
-                                                                        .setNegativeButton("Try Again",null).show();
-                                                                Log.e("HttpClient", "error: " + error.toString());
-                                                            }
-                                                        })
-                                                {
-                                                    @Override
-                                                    protected Map<String,String> getParams(){
-                                                        Map<String,String> params = new HashMap<>();
-                                                        params.put("formId","0");
-                                                        params.put("accredNo","");
-                                                        params.put("serial_number",seedGrower.getAccredno());
-                                                        params.put("seedSource",seedGrower.getSeedsource());
-                                                        params.put("otherSource",seedGrower.getOtherseedsource());
-                                                        params.put("variety",seedGrower.getVariety());
-                                                        params.put("seedClass",seedGrower.getSeedclass());
-                                                        params.put("datePlanted",seedGrower.getDateplanted());
-                                                        params.put("areaPlanted",seedGrower.getAreaplanted());
-                                                        params.put("quantity",seedGrower.getQuantity());
-                                                        params.put("seedbedArea",seedGrower.getSeedbedarea());
-                                                        params.put("seedlingAge",seedGrower.getSeedlingage());
-                                                        params.put("seedlot",seedGrower.getSeedlot());
-                                                        params.put("controlNo",seedGrower.getControlno());
-                                                        params.put("barangay",seedGrower.getBarangay());
-                                                        params.put("latitude",seedGrower.getLatitude());
-                                                        params.put("longitude",seedGrower.getLongitude());
-                                                        params.put("dateCollected",seedGrower.getDatecollected());
-                                                        params.put("androidid",seedGrower.getMacaddress());
-                                                        params.put("program",seedGrower.getRiceProgram());
-                                                        params.put("coop",seedGrower.getCoop());
-                                                        params.put("previouscrop",seedGrower.getPreviousCrop());
-                                                        params.put("previousvariety",seedGrower.getPreviousVariety());
-                                                        return params;
-                                                    }
-                                                };
-                                                queue.add(sr);
-                                            }
-
-                                        }
-                                        else{
-                                            progressDialog.hide();
-                                            new AlertDialog.Builder(HomeActivity.this)
-                                                    .setTitle("No Internet Connection")
-                                                    .setMessage("Internet connection is required to send form data.")
-                                                    .setNegativeButton("Ok", null)
-                                                    .show();
-                                        }
-
-                                    }
-                                })
-                        .setNegativeButton( "Cancel" , null )
-                        .show() ;
+            public void onClick(View view) {
+                intent = new Intent(HomeActivity.this, AboutActivity.class);
+                startActivity(intent);
+                finish();
             }
-        });*/
+        });
+        linearList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                intent = new Intent(HomeActivity.this, ListActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.menu_items, menu);
 
-        return super.onCreateOptionsMenu(menu);
-    }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        item.setCheckable(false);
+        switch (id) {
+            case R.id.homeBtn:
+                intent = new Intent(this, HomeActivity.class);
+                drawerLayout.closeDrawer(GravityCompat.START);
+                intent.putExtra("activityId",id);
+                startActivity(intent);
+                drawerLayout.closeDrawer(GravityCompat.START);
+                finish();
+                return true;
+            case R.id.listBtn:
+                intent = new Intent(this, ListActivity.class);
+                drawerLayout.closeDrawer(GravityCompat.START);
+                intent.putExtra("activityId",id);
+                startActivity(intent);
+                drawerLayout.closeDrawer(GravityCompat.START);
+                finish();
+                return true;
             case R.id.addBtn:
                 intent = new Intent(this, SeedProductionDetailActivity.class);
+                drawerLayout.closeDrawer(GravityCompat.START);
+                intent.putExtra("activityId",id);
                 startActivity(intent);
+                drawerLayout.closeDrawer(GravityCompat.START);
                 return true;
             case R.id.sentItemBtn:
                 intent = new Intent(this, SentItemActivity.class);
+                drawerLayout.closeDrawer(GravityCompat.START);
+                intent.putExtra("activityId",id);
                 startActivity(intent);
+                drawerLayout.closeDrawer(GravityCompat.START);
+                finish();
                 return true;
             case R.id.aboutBtn:
                 intent = new Intent(this, AboutActivity.class);
+                drawerLayout.closeDrawer(GravityCompat.START);
+                intent.putExtra("activityId",id);
                 startActivity(intent);
+                drawerLayout.closeDrawer(GravityCompat.START);
+                finish();
                 return true;
-            case R.id.logoutBtn:
-                logout();
+
             default:
                 // If we got here, the user's action was not recognized.
                 // Invoke the superclass to handle it.
@@ -557,47 +249,13 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
-    public void logout(){
-        Toast.makeText(this, "Logout", Toast.LENGTH_SHORT).show();
-        user.setLoggedIn("LoggedOut");
-        userViewModel.update(user);
-
-        if(userViewModel.getCheckLoggedIn() > 0){
-            intent = new Intent(HomeActivity.this,LoginActivity.class);
-            startActivity(intent);
-            finish();
-        }
-    }
-    public void editSGDetails(String sgId){
-        Log.e(TAG, "editSGDetails: "+sgId );
-        intent = new Intent(this, EditSeedProductionActivity.class);
-        intent.putExtra(EXTRA_MESSAGE, sgId);
-        startActivity(intent);
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
 
     }
 
-    private void requestCameraPermission() {
-        if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA)){
-            new AlertDialog.Builder(this)
-                    .setTitle("Permission needed")
-                    .setMessage("Allow this app to access camera to scan your QR CODE.")
-                    .setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            ActivityCompat.requestPermissions(HomeActivity.this, new String[]{Manifest.permission.CAMERA}, CAMERA_PERMISSION_CODE);
-                            mPermissionGranted = true;
-
-                        }
-                    }).setNegativeButton("cancel", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            }).create().show();
-        } else {
-            ActivityCompat.requestPermissions(HomeActivity.this, new String[]{Manifest.permission.CAMERA}, CAMERA_PERMISSION_CODE);
-            mPermissionGranted = false;
-        }
+    private void setMenuCounter(@IdRes int itemId, int count) {
+        TextView view = (TextView) navigationView.getMenu().findItem(itemId).getActionView();
+        view.setText(count > 0 ? String.valueOf(count) : null);
     }
-
 }

@@ -13,12 +13,12 @@
             android:id="@+id/titleFinalize"
             android:layout_width="match_parent"
             android:layout_height="64dp"
-            android:text="Variety Name"
             android:autoSizeTextType="uniform"
-            android:background="#0349D6"
+            android:background="#146131"
             android:gravity="center"
-            android:textColor="#FFFFFF"
-            android:scaleType="center" />
+            android:scaleType="center"
+            android:text="Variety Name"
+            android:textColor="#FFFFFF" />
     </LinearLayout>
 
     <LinearLayout

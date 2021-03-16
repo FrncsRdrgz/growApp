@@ -1,583 +1,665 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="govph.rsis.growapp.SeedProductionDetailActivity"
-    >
-    <LinearLayout
-        android:id="@+id/linearSpToolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+    tools:context="govph.rsis.growapp.HomeActivity"
+    android:id="@+id/add_drawer_layout">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="#E8E8E8"
+        android:layout_height="match_parent">
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/add_appbar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <androidx.appcompat.widget.Toolbar
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:id="@+id/add_toolbar"
+                app:titleTextColor="#FEFAF5"
+                android:background="#1B8040">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:dividerPadding="8dp"
+                    android:paddingEnd="15dp"
+                    android:orientation="horizontal"
+                    android:showDividers="end">
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="New Form"
+                            android:gravity="center"
+
+                            android:textColor="#FEFAF5"
+                            android:textSize="20sp"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"
+                        android:gravity="end">
+                        <Button
+
+                            android:id="@+id/btnSave"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:backgroundTint="#5A5A59"
+                            android:drawableStart="@drawable/ic_location_on_white_24dp"
+                            android:gravity="center"
+                            android:text="Save"
+                            android:textAllCaps="false" />
+                    </LinearLayout>
+
+                </LinearLayout>
+            </androidx.appcompat.widget.Toolbar>
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <ScrollView
+            android:layout_below="@id/add_appbar_layout"
+            android:id="@+id/scrollView1"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <LinearLayout
+                    android:id="@+id/linearBack"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="10dp"
+                    android:paddingTop="10dp"
+                    android:paddingEnd="10dp"
+                    android:orientation="vertical"
+                    >
+                    <Button
+                        android:id="@+id/backBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:backgroundTint="#94A310"
+                        android:textSize="15sp"
+                        android:text="Back"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/linearSerial"
+                    android:layout_below="@id/linearBack"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="7dp"
+                    android:paddingRight="15dp"
+                    android:paddingLeft="15dp">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:text="@string/serialNum"
+                        android:textSize="15sp"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tvAccreditationNo"
+                        android:textStyle="bold"
+                        android:layout_weight="1"
+                        android:textSize="15sp"
+                        android:text="Serial Nmber:"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/l3"
+                    android:layout_below="@id/linearSerial"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="7dp"
+                    android:paddingRight="15dp"
+                    android:orientation="vertical"
+                    android:paddingLeft="15dp">
+
+                    <Button
+                        android:id="@+id/getLocationBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/getLocationBtn"
+                        android:textColor="#FFFFFF"
+                        android:textAllCaps="false"
+                        android:drawableStart="@drawable/ic_location_on_white_24dp"
+                        />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linearLatitude"
+                    android:layout_below="@id/l3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="7dp"
+                    android:paddingRight="15dp"
+                    android:paddingLeft="15dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:text="@string/latitude"
+                        android:textSize="15sp"/>
+                    <TextView
+                        android:id="@+id/tvLatitude"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:layout_weight="1"
+                        android:textSize="15sp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linearLongitude"
+                    android:layout_below="@id/linearLatitude"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="7dp"
+                    android:paddingRight="15dp"
+                    android:paddingLeft="15dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:text="@string/longitude"
+                        android:textSize="15sp"/>
+                    <TextView
+                        android:id="@+id/tvLongitude"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:layout_weight="1"
+                        android:textSize="15sp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="7dp"
+                    android:paddingRight="15dp"
+                    android:paddingLeft="15dp"
+                    android:id="@+id/linearSeedVariety"
+                    android:layout_below="@id/linearLongitude">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilVariety"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/varietyPlanted"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+
+                        <AutoCompleteTextView
+                            android:id="@+id/actVariety"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            />
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="7dp"
+                    android:paddingRight="15dp"
+                    android:paddingLeft="15dp"
+                    android:id="@+id/linearOtherVariety"
+                    android:layout_below="@id/linearSeedVariety">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:visibility="gone"
+                        android:id="@+id/tilOtherVariety"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Variety"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+
+                        <AutoCompleteTextView
+                            android:id="@+id/actOtherVariety"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            />
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="7dp"
+                    android:paddingRight="15dp"
+                    android:paddingLeft="15dp"
+                    android:id="@+id/linearSeedClass"
+                    android:layout_below="@id/linearOtherVariety">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilSeedClass2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/seedClass"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/tetSeedClass"
+                            android:layout_width="match_parent"
+                            android:inputType="numberDecimal"
+                            android:clickable="false"
+                            android:focusable="false"
+                            android:focusableInTouchMode="false"
+                            android:layout_height="wrap_content"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:visibility="gone"
+                        android:id="@+id/tilSeedClass"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/seedClass"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+
+                        <AutoCompleteTextView
+                            android:id="@+id/actSeedClass"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="7dp"
+                    android:paddingRight="15dp"
+                    android:paddingLeft="15dp"
+                    android:id="@+id/linearRiceProgram"
+                    android:layout_below="@id/linearSeedClass">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilRiceProgram2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/riceProgram"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/tetRiceProgram"
+                            android:layout_width="match_parent"
+                            android:inputType="numberDecimal"
+                            android:clickable="false"
+                            android:focusable="false"
+                            android:focusableInTouchMode="false"
+                            android:layout_height="wrap_content"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:visibility="gone"
+                        android:id="@+id/tilRiceProgram"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/riceProgram"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+
+                        <AutoCompleteTextView
+                            android:id="@+id/actRiceProgram"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="7dp"
+                    android:paddingRight="15dp"
+                    android:paddingLeft="15dp"
+                    android:id="@+id/linearSeedSource"
+                    android:layout_below="@id/linearRiceProgram">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilSeedSource2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/seedSource"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/tetSeedSource"
+                            android:layout_width="match_parent"
+                            android:inputType="numberDecimal"
+                            android:clickable="false"
+                            android:focusable="false"
+                            android:focusableInTouchMode="false"
+                            android:layout_height="wrap_content"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:visibility="gone"
+                        android:id="@+id/tilSeedSource"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/seedSource"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+
+                        <AutoCompleteTextView
+                            android:id="@+id/actSeedSource"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="7dp"
+                    android:paddingRight="15dp"
+                    android:paddingLeft="15dp"
+                    android:id="@+id/linearSeedQuantity"
+                    android:layout_below="@id/linearSeedSource">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilSeedQuantity"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/seedQuantity"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/tetSeedQuantity"
+                            android:layout_width="match_parent"
+                            android:inputType="numberDecimal"
+                            android:layout_height="wrap_content"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="7dp"
+                    android:paddingRight="15dp"
+                    android:paddingLeft="15dp"
+                    android:id="@+id/linearAreaPlanted"
+                    android:layout_below="@id/linearSeedQuantity">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilAreaPlanted"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/areaPlanted"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/tetAreaPlanted"
+                            android:layout_width="match_parent"
+                            android:inputType="numberDecimal"
+                            android:layout_height="wrap_content"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="7dp"
+                    android:paddingRight="15dp"
+                    android:paddingLeft="15dp"
+                    android:id="@+id/linearDatePlanted"
+                    android:layout_below="@id/linearAreaPlanted">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilDatePlanted"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/datePlanted"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/tetDatePlanted"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:focusable="false"
+                            android:focusableInTouchMode="false"
+                            android:longClickable="false"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="7dp"
+                    android:paddingRight="15dp"
+                    android:paddingLeft="15dp"
+                    android:id="@+id/linearSeedBedArea"
+                    android:layout_below="@id/linearDatePlanted">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilSeedBedArea"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/seedbedArea"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/tetSeedBedArea"
+                            android:layout_width="match_parent"
+                            android:inputType="numberDecimal"
+                            android:layout_height="wrap_content"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="7dp"
+                    android:paddingRight="15dp"
+                    android:paddingLeft="15dp"
+                    android:id="@+id/linearSeedlingAge"
+                    android:layout_below="@id/linearSeedBedArea">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilSeedlingAge"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/seedlingAge"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/tetSeedlingAge"
+                            android:layout_width="match_parent"
+                            android:inputType="numberDecimal"
+                            android:layout_height="wrap_content"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="7dp"
+                    android:paddingRight="15dp"
+                    android:paddingLeft="15dp"
+                    android:id="@+id/linearSeedLotNo"
+                    android:layout_below="@id/linearSeedlingAge">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilSeedLotNo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/seedLot"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/tetSeedLotNo"
+                            android:layout_width="match_parent"
+                            android:inputType="text"
+                            android:layout_height="wrap_content"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="7dp"
+                    android:paddingRight="15dp"
+                    android:paddingLeft="15dp"
+                    android:id="@+id/linearLabNo"
+                    android:layout_below="@id/linearSeedLotNo">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilLabNo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/labNo"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/tetLabNo"
+                            android:layout_width="match_parent"
+                            android:inputType="text"
+                            android:layout_height="wrap_content"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="7dp"
+                    android:paddingRight="15dp"
+                    android:paddingLeft="15dp"
+                    android:id="@+id/linearCooperative"
+                    android:layout_below="@id/linearLabNo">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilCooperative"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/coop"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/tetCoop"
+                            android:layout_width="match_parent"
+                            android:inputType="text"
+                            android:layout_height="wrap_content"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="7dp"
+                    android:paddingRight="15dp"
+                    android:paddingLeft="15dp"
+                    android:id="@+id/linearBarangay"
+                    android:layout_below="@id/linearCooperative"
+                    >
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilBarangay"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/barangay"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/tetBarangay"
+                            android:layout_width="match_parent"
+                            android:inputType="text"
+                            android:layout_height="wrap_content"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="7dp"
+                    android:paddingRight="15dp"
+                    android:paddingLeft="15dp"
+                    android:id="@+id/linearPreviousCrop"
+                    android:layout_below="@id/linearBarangay"
+                    >
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilPreviousCrop"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/previousCrop"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/tetPreviousCrop"
+                            android:layout_width="match_parent"
+                            android:inputType="text"
+                            android:layout_height="wrap_content"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="7dp"
+                    android:paddingRight="15dp"
+                    android:paddingLeft="15dp"
+                    android:id="@+id/linearPreviousVariety"
+                    android:layout_below="@id/linearPreviousCrop"
+                    android:layout_marginBottom="20dp">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilPreviousVariety"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/previousVariety"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+
+                        <AutoCompleteTextView
+                            android:id="@+id/actPreviousVariety"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            />
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+            </RelativeLayout>
+
+        </ScrollView>
+    </RelativeLayout>
+
+    <com.google.android.material.navigation.NavigationView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:background="#E8E8E8"
+        app:menu="@menu/nav_menu"
+        app:itemTextColor="#7C7C7C"
+        android:id="@+id/nav_view"
+        android:layout_gravity="start"
+        app:headerLayout="@layout/nav_header_layout"
+        >
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#FFFF"
-            android:paddingBottom="5dp"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:id="@+id/imageView3"
-                android:layout_width="120dp"
-                android:layout_height="80dp"
-                app:srcCompat="@drawable/rsisnew"
-                >
-            </ImageView>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-                <TextView
-                    android:id="@+id/spTvWelcomeName"
-                    style="@style/TextAppearance.Widget.AppCompat.Toolbar.Subtitle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="10dp"
-                    android:textSize="15sp"
-                    android:background="?attr/selectableItemBackground"
-                    android:drawablePadding="8dp"
-                    android:textColor="#000000"
-                    android:text="Welcome: John Doe"/>
-                <TextView
-                    android:id="@+id/tvAccreditationNo"
-                    style="@style/TextAppearance.Widget.AppCompat.Toolbar.Subtitle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="8dp"
-                    android:textSize="20sp"
-                    android:background="?attr/selectableItemBackground"
-                    android:drawablePadding="8dp"
-                    android:textColor="#000000"
-                    android:text="Serial: R-0000xxxx"/>
-            </LinearLayout>
-
+            android:layout_gravity="bottom"
+            android:gravity="center"
+            android:clickable="true"
+            android:orientation="vertical">
+            <TextView
+                android:paddingBottom="15dp"
+                android:textColor="#FFFF"
+                android:textSize="15sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="rsis.philrice.gov.ph"
+                android:autoLink="web"
+                android:id="@+id/infoTxtCredits"
+                android:layout_centerInParent="true"
+                android:linksClickable="true"/>
         </LinearLayout>
+    </com.google.android.material.navigation.NavigationView>
+</androidx.drawerlayout.widget.DrawerLayout>
 
-        <include layout="@layout/seed_production_toolbar"
-            android:id="@+id/spToolbar"
-            />
-    </LinearLayout>
-
-    <ScrollView
-        android:layout_below="@id/linearSpToolbar"
-        android:id="@+id/scrollView1"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent" >
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
-
-
-            <LinearLayout
-                android:id="@+id/l3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="7dp"
-                android:paddingRight="15dp"
-                android:paddingLeft="15dp">
-
-                <Button
-                    android:id="@+id/getLocationBtn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/getLocationBtn"
-                    android:textColor="#FFFFFF"
-                    android:textAllCaps="false"
-                    android:drawableStart="@drawable/ic_location_on_white_24dp"
-                    />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/linearLatitude"
-                android:layout_below="@id/l3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="7dp"
-                android:paddingRight="15dp"
-                android:paddingLeft="15dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:text="@string/latitude"
-                    android:textSize="18sp"/>
-                <TextView
-                    android:id="@+id/tvLatitude"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:textSize="18sp"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/linearLongitude"
-                android:layout_below="@id/linearLatitude"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="7dp"
-                android:paddingRight="15dp"
-                android:paddingLeft="15dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:text="@string/longitude"
-                    android:textSize="18sp"/>
-                <TextView
-                    android:id="@+id/tvLongitude"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:textSize="18sp"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="7dp"
-                android:paddingRight="15dp"
-                android:paddingLeft="15dp"
-                android:id="@+id/linearSeedVariety"
-                android:layout_below="@id/linearLongitude">
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/tilVariety"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/varietyPlanted"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
-
-                    <AutoCompleteTextView
-                        android:id="@+id/actVariety"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        />
-                </com.google.android.material.textfield.TextInputLayout>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="7dp"
-                android:paddingRight="15dp"
-                android:paddingLeft="15dp"
-                android:id="@+id/linearOtherVariety"
-                android:layout_below="@id/linearSeedVariety">
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:visibility="gone"
-                    android:id="@+id/tilOtherVariety"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/varietyPlanted"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
-
-                    <AutoCompleteTextView
-                        android:id="@+id/actOtherVariety"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        />
-                </com.google.android.material.textfield.TextInputLayout>
-            </LinearLayout>
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="7dp"
-                android:paddingRight="15dp"
-                android:paddingLeft="15dp"
-                android:id="@+id/linearSeedClass"
-                android:layout_below="@id/linearOtherVariety">
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/tilSeedClass2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/seedClass"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/tetSeedClass"
-                        android:layout_width="match_parent"
-                        android:inputType="numberDecimal"
-                        android:clickable="false"
-                        android:focusable="false"
-                        android:focusableInTouchMode="false"
-                        android:layout_height="wrap_content"/>
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:visibility="gone"
-                    android:id="@+id/tilSeedClass"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/seedClass"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
-
-                    <AutoCompleteTextView
-                        android:id="@+id/actSeedClass"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-                </com.google.android.material.textfield.TextInputLayout>
-            </LinearLayout>
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="7dp"
-                android:paddingRight="15dp"
-                android:paddingLeft="15dp"
-                android:id="@+id/linearRiceProgram"
-                android:layout_below="@id/linearSeedClass">
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/tilRiceProgram2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/riceProgram"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/tetRiceProgram"
-                        android:layout_width="match_parent"
-                        android:inputType="numberDecimal"
-                        android:clickable="false"
-                        android:focusable="false"
-                        android:focusableInTouchMode="false"
-                        android:layout_height="wrap_content"/>
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:visibility="gone"
-                    android:id="@+id/tilRiceProgram"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/riceProgram"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
-
-                    <AutoCompleteTextView
-                        android:id="@+id/actRiceProgram"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-                </com.google.android.material.textfield.TextInputLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="7dp"
-                android:paddingRight="15dp"
-                android:paddingLeft="15dp"
-                android:id="@+id/linearSeedSource"
-                android:layout_below="@id/linearRiceProgram">
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/tilSeedSource2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/seedSource"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/tetSeedSource"
-                        android:layout_width="match_parent"
-                        android:inputType="numberDecimal"
-                        android:clickable="false"
-                        android:focusable="false"
-                        android:focusableInTouchMode="false"
-                        android:layout_height="wrap_content"/>
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:visibility="gone"
-                    android:id="@+id/tilSeedSource"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/seedSource"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
-
-                    <AutoCompleteTextView
-                        android:id="@+id/actSeedSource"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-                </com.google.android.material.textfield.TextInputLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="7dp"
-                android:paddingRight="15dp"
-                android:paddingLeft="15dp"
-                android:id="@+id/linearSeedQuantity"
-                android:layout_below="@id/linearSeedSource">
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/tilSeedQuantity"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/seedQuantity"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/tetSeedQuantity"
-                        android:layout_width="match_parent"
-                        android:inputType="numberDecimal"
-                        android:layout_height="wrap_content"/>
-                </com.google.android.material.textfield.TextInputLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="7dp"
-                android:paddingRight="15dp"
-                android:paddingLeft="15dp"
-                android:id="@+id/linearAreaPlanted"
-                android:layout_below="@id/linearSeedQuantity">
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/tilAreaPlanted"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/areaPlanted"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/tetAreaPlanted"
-                        android:layout_width="match_parent"
-                        android:inputType="numberDecimal"
-                        android:layout_height="wrap_content"/>
-                </com.google.android.material.textfield.TextInputLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="7dp"
-                android:paddingRight="15dp"
-                android:paddingLeft="15dp"
-                android:id="@+id/linearDatePlanted"
-                android:layout_below="@id/linearAreaPlanted">
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/tilDatePlanted"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/datePlanted"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/tetDatePlanted"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:focusable="false"
-                        android:focusableInTouchMode="false"
-                        android:longClickable="false"/>
-                </com.google.android.material.textfield.TextInputLayout>
-            </LinearLayout>
-
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="7dp"
-                android:paddingRight="15dp"
-                android:paddingLeft="15dp"
-                android:id="@+id/linearSeedBedArea"
-                android:layout_below="@id/linearDatePlanted">
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/tilSeedBedArea"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/seedbedArea"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/tetSeedBedArea"
-                        android:layout_width="match_parent"
-                        android:inputType="numberDecimal"
-                        android:layout_height="wrap_content"/>
-                </com.google.android.material.textfield.TextInputLayout>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="7dp"
-                android:paddingRight="15dp"
-                android:paddingLeft="15dp"
-                android:id="@+id/linearSeedlingAge"
-                android:layout_below="@id/linearSeedBedArea">
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/tilSeedlingAge"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/seedlingAge"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/tetSeedlingAge"
-                        android:layout_width="match_parent"
-                        android:inputType="numberDecimal"
-                        android:layout_height="wrap_content"/>
-                </com.google.android.material.textfield.TextInputLayout>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="7dp"
-                android:paddingRight="15dp"
-                android:paddingLeft="15dp"
-                android:id="@+id/linearSeedLotNo"
-                android:layout_below="@id/linearSeedlingAge">
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/tilSeedLotNo"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/seedLot"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/tetSeedLotNo"
-                        android:layout_width="match_parent"
-                        android:inputType="text"
-                        android:layout_height="wrap_content"/>
-                </com.google.android.material.textfield.TextInputLayout>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="7dp"
-                android:paddingRight="15dp"
-                android:paddingLeft="15dp"
-                android:id="@+id/linearLabNo"
-                android:layout_below="@id/linearSeedLotNo">
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/tilLabNo"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/labNo"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/tetLabNo"
-                        android:layout_width="match_parent"
-                        android:inputType="text"
-                        android:layout_height="wrap_content"/>
-                </com.google.android.material.textfield.TextInputLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="7dp"
-                android:paddingRight="15dp"
-                android:paddingLeft="15dp"
-                android:id="@+id/linearCooperative"
-                android:layout_below="@id/linearLabNo">
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/tilCooperative"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/coop"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/tetCoop"
-                        android:layout_width="match_parent"
-                        android:inputType="text"
-                        android:layout_height="wrap_content"/>
-                </com.google.android.material.textfield.TextInputLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="7dp"
-                android:paddingRight="15dp"
-                android:paddingLeft="15dp"
-                android:id="@+id/linearBarangay"
-                android:layout_below="@id/linearCooperative"
-                >
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/tilBarangay"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/barangay"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/tetBarangay"
-                        android:layout_width="match_parent"
-                        android:inputType="text"
-                        android:layout_height="wrap_content"/>
-                </com.google.android.material.textfield.TextInputLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="7dp"
-                android:paddingRight="15dp"
-                android:paddingLeft="15dp"
-                android:id="@+id/linearPreviousCrop"
-                android:layout_below="@id/linearBarangay"
-                >
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/tilPreviousCrop"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/previousCrop"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/tetPreviousCrop"
-                        android:layout_width="match_parent"
-                        android:inputType="text"
-                        android:layout_height="wrap_content"/>
-                </com.google.android.material.textfield.TextInputLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="7dp"
-                android:paddingRight="15dp"
-                android:paddingLeft="15dp"
-                android:id="@+id/linearPreviousVariety"
-                android:layout_below="@id/linearPreviousCrop"
-                android:layout_marginBottom="20dp">
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/tilPreviousVariety"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/previousVariety"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
-
-                    <AutoCompleteTextView
-                        android:id="@+id/actPreviousVariety"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        />
-                </com.google.android.material.textfield.TextInputLayout>
-            </LinearLayout>
-        </RelativeLayout>
-
-    </ScrollView>
-</RelativeLayout>

@@ -12,12 +12,15 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -44,6 +47,7 @@ public class LoginActivity extends AppCompatActivity {
     public static final int REQUEST_CODE = 1;
     private UserViewModel userViewModel;
     private SeedBoughtViewModel seedBoughtViewModel;
+    TextView loginTvVersion;
     LayoutInflater inflater;
     Button scanBtn;
     Intent intent;
@@ -65,6 +69,13 @@ public class LoginActivity extends AppCompatActivity {
         seedBoughtViewModel = ViewModelProviders.of(LoginActivity.this).get(SeedBoughtViewModel.class);
         builder = new AlertDialog.Builder(this);
         scanBtn = findViewById(R.id.scanIdBtn);
+        loginTvVersion = findViewById(R.id.loginTvVersion);
+        try {
+            PackageInfo pInfo = this.getPackageManager().getPackageInfo(getPackageName(), 0);
+            loginTvVersion.setText("Version: "+ pInfo.versionName);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
         scanBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -1,56 +1,118 @@
 package govph.rsis.growapp;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+
+import com.google.android.material.navigation.NavigationView;
 
 import java.util.List;
 
 import govph.rsis.growapp.User.User;
 import govph.rsis.growapp.User.UserViewModel;
 
-public class SentItemActivity extends AppCompatActivity {
+public class SentItemActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     public static final String TAG = "SentItemAcitivity";
+    private DrawerLayout drawerLayout;
+    private NavigationView navigationView;
     private SeedGrowerViewModel seedGrowerViewModel;
     private UserViewModel userViewModel;
     private User user;
     TextView tvYourForms, textaccredno1,textseedsource1,textvariety1,textclass1,textplanted1,
             textareaplanted1,textquantity1, textseedbedarea1, textseedlingage1, textlot1, textcontrol1,
-            textbarangay1, textlatitude1, textlongitude1, titlevariety, textCoop, textProgram, sentTvWelcomeName, sentTvSerial;
+            textbarangay1, textlatitude1, textlongitude1, titlevariety, textCoop, textProgram,  sentTvVersion,
+            headerVersion,headerName,headerSerial,homeTvVersion,tvEmptyView,tvList,tvSent,tvDeleted,sentActTvSent;
+    MenuItem mList,mSent,mDeleted;
     Toolbar toolbar;
+    Intent intent;
     RecyclerView recyclerView;
+    int activityId,countCollected,countSent,countDeleted;
+    View headerView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         seedGrowerViewModel = ViewModelProviders.of(this).get(SeedGrowerViewModel.class);
         userViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
         user = userViewModel.getLoggedInUser();
+        countCollected = seedGrowerViewModel.getCountCollected(user.getSerialNum());
+        countSent = seedGrowerViewModel.getCountSent(user.getSerialNum());
+        countDeleted = seedGrowerViewModel.getCountDeleted(user.getSerialNum());
 
+        activityId = getIntent().getIntExtra("activityId",0);
         setContentView(R.layout.activity_sent_item);
         toolbar = findViewById(R.id.sent_toolbar);
-        tvYourForms = findViewById(R.id.tvYourForms);
-        sentTvWelcomeName = (TextView) findViewById(R.id.sentTvWelcomeName);
-        sentTvSerial = (TextView) findViewById(R.id.sentTvSerial);
+        drawerLayout = findViewById(R.id.sent_drawer_layout);
+        navigationView = findViewById(R.id.nav_view);
+        headerView = navigationView.getHeaderView(0);
+        headerVersion = headerView.findViewById(R.id.headerVersion);
+        headerName = headerView.findViewById(R.id.headerName);
+        headerSerial = headerView.findViewById(R.id.headerSerial);
+        sentTvVersion = findViewById(R.id.sentTvVersion);
+        //sentActTvSent = findViewById(R.id.sentActTvSent);
+        tvEmptyView = findViewById(R.id.empty_view);
 
-        sentTvSerial.setText("Serial: "+user.getSerialNum());
-        sentTvWelcomeName.setText("Welcome, "+user.getFullname());
+        /*Populate the navigation drawer badge*/
+        mList = navigationView.getMenu().findItem(R.id.listBtn);
+        mSent = navigationView.getMenu().findItem(R.id.sentItemBtn);
+        mDeleted = navigationView.getMenu().findItem(R.id.deletedBtn);
+        tvList = (TextView) mList.getActionView();
+        tvList.setText(String.valueOf(countCollected));
+        tvSent = (TextView) mSent.getActionView();
+        tvSent.setText(String.valueOf(countSent));
+        tvDeleted = (TextView) mDeleted.getActionView();
+        tvDeleted.setText(String.valueOf(countDeleted));
+        /*end badge*/
+
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
+        getSupportActionBar().setTitle("Sent List: " +String.valueOf(countSent));
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerViewSent);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         recyclerView.setHasFixedSize(true);
         final SentAdapter adapter = new SentAdapter();
         recyclerView.setAdapter(adapter);
+
+        headerName.setText(user.getFullname());
+        headerSerial.setText(user.getSerialNum());
+        //sentActTvSent.setText("Sent: " + String.valueOf(countSent));
+        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(
+                this,
+                drawerLayout,
+                toolbar,
+                R.string.openNavDrawer,
+                R.string.closeNavDrawer
+        );
+        try {
+            PackageInfo pInfo = this.getPackageManager().getPackageInfo(getPackageName(), 0);
+            headerVersion.setText("Version: "+ pInfo.versionName);
+            sentTvVersion.setText("Version: "+pInfo.versionName);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        Log.e(TAG, "onCreate: "+activityId );
+        drawerLayout.addDrawerListener(actionBarDrawerToggle);
+        actionBarDrawerToggle.syncState();
+        navigationView.setNavigationItemSelectedListener(this);
+        navigationView.setCheckedItem(R.id.sentItemBtn);
 
 
 
@@ -59,15 +121,21 @@ public class SentItemActivity extends AppCompatActivity {
             public void onChanged(List<SeedGrower> seedGrowers) {
                 //update recyclerview
                 adapter.setSeedGrowers(seedGrowers);
+                if(seedGrowers.isEmpty()){
+                    tvEmptyView.setVisibility(View.VISIBLE);
+                    recyclerView.setVisibility(View.GONE);
+                    //tvDeleteAll.setClickable(false);
+                    //tvDeleteAll.setTextColor(Color.GRAY);
+                }else{
+                    recyclerView.setVisibility(View.VISIBLE);
+                    tvEmptyView.setVisibility(View.GONE);
+                    adapter.setSeedGrowers(seedGrowers);
+                    //tvDeleteAll.setClickable(true);
+                    //tvDeleteAll.setTextColor(Color.WHITE);
+                }
             }
         });
 
-        tvYourForms.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
 
         adapter.setViewBtnClickedListener(new SentAdapter.viewBtn() {
             @Override
@@ -126,5 +194,63 @@ public class SentItemActivity extends AppCompatActivity {
             }
 
         });
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        item.setCheckable(false);
+        switch (id) {
+            case R.id.homeBtn:
+                intent = new Intent(this, HomeActivity.class);
+                drawerLayout.closeDrawer(GravityCompat.START);
+                intent.putExtra("activityId",id);
+                startActivity(intent);
+                drawerLayout.closeDrawer(GravityCompat.START);
+                finish();
+                return true;
+            case R.id.listBtn:
+                intent = new Intent(this, ListActivity.class);
+                drawerLayout.closeDrawer(GravityCompat.START);
+                intent.putExtra("activityId",id);
+                startActivity(intent);
+                drawerLayout.closeDrawer(GravityCompat.START);
+                finish();
+                return true;
+            case R.id.addBtn:
+                intent = new Intent(this, SeedProductionDetailActivity.class);
+                drawerLayout.closeDrawer(GravityCompat.START);
+                intent.putExtra("activityId",id);
+                startActivity(intent);
+                drawerLayout.closeDrawer(GravityCompat.START);
+                return true;
+            case R.id.sentItemBtn:
+                intent = new Intent(this, SentItemActivity.class);
+                drawerLayout.closeDrawer(GravityCompat.START);
+                intent.putExtra("activityId",id);
+                startActivity(intent);
+                drawerLayout.closeDrawer(GravityCompat.START);
+                finish();
+                return true;
+            case R.id.aboutBtn:
+                intent = new Intent(this, AboutActivity.class);
+                drawerLayout.closeDrawer(GravityCompat.START);
+                intent.putExtra("activityId",id);
+                startActivity(intent);
+                drawerLayout.closeDrawer(GravityCompat.START);
+                finish();
+                return true;
+
+            default:
+                // If we got here, the user's action was not recognized.
+                // Invoke the superclass to handle it.
+                return super.onOptionsItemSelected(item);
+
+        }
+    }
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+
     }
 }
