@@ -63,10 +63,10 @@ public class ListActivity extends AppCompatActivity implements NavigationView.On
     private NavigationView navigationView;
     private boolean mPermissionGranted;
     public static final int REQUEST_CODE = 0x9988;
-    Button listBtnAdd;
+     ;
     TextView tvDeleteAll,tvEmptyView,tvVersion,tvFinalizeAccredNo,titleFinalize,tvFinalizeSeedSource,tvFinalizeVariety,tvFinalizeSeedClass,tvFinalizeDatePlanted,
             tvFinalizeAreaPlanted, tvFinalizeQuantity,tvFinalizeSeedbedArea,tvFinalizeSeedlingAge,tvFinalizeSeedLot,tvFinalizeLabNo,tvFinalizeBarangay,tvFinalizeLatitude,tvFinalizeLongitude,
-            tvFinalizeCoop,tvFinalizeProgram,tvWelcomeName,tvWelcomeSerial,tvCollected,listTvVersion,tvList,tvSent,tvDeleted,listTvCollected;
+            tvFinalizeCoop,tvFinalizeProgram,tvWelcomeName,tvWelcomeSerial,tvCollected,listTvVersion,tvList,tvSent,tvDeleted,listTvCollected,listBtnAdd;
     MenuItem mList,mSent,mDeleted;
     Toolbar toolbar;
     Intent intent;
@@ -125,7 +125,7 @@ public class ListActivity extends AppCompatActivity implements NavigationView.On
         listTvCollected = findViewById(R.id.listTvCollected);
         listTvCollected.setText("Collected List: " +String.valueOf(countCollected));
         //tvDeleteAll = (TextView) findViewById(R.id.tvDeleteAll);
-        listBtnAdd = (Button) findViewById(R.id.listBtnAdd);
+        listBtnAdd = (TextView) findViewById(R.id.listBtnAdd);
         rvSeedGrowers = (RecyclerView) findViewById(R.id.recyclerView1);
         tvEmptyView = findViewById(R.id.empty_view);
         rvSeedGrowers.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
@@ -706,6 +706,19 @@ public class ListActivity extends AppCompatActivity implements NavigationView.On
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        updateCounter();
+        Log.e(TAG, "onResume: " );
+    }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        Log.e(TAG, "onResume: " );
+    }
+
+    @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         item.setCheckable(false);
@@ -767,7 +780,7 @@ public class ListActivity extends AppCompatActivity implements NavigationView.On
         countCollected = seedGrowerViewModel.getCountCollected(user.getSerialNum());
         countSent = seedGrowerViewModel.getCountSent(user.getSerialNum());
         countDeleted = seedGrowerViewModel.getCountDeleted(user.getSerialNum());
-        getSupportActionBar().setTitle("Collected List: " +String.valueOf(countCollected));
+        listTvCollected.setText("Collected List: "+String.valueOf(countCollected));
         tvList.setText(String.valueOf(countCollected));
         tvSent.setText(String.valueOf(countSent));
         tvDeleted.setText(String.valueOf(countDeleted));

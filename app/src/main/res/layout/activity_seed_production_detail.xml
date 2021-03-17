@@ -30,16 +30,18 @@
                     android:paddingEnd="15dp"
                     android:orientation="horizontal"
                     android:showDividers="end">
+
+
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_weight="1"
                         android:layout_height="match_parent">
                         <TextView
+                            android:id="@+id/titleForm"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:text="New Form"
                             android:gravity="center"
-
                             android:textColor="#FEFAF5"
                             android:textSize="20sp"/>
                     </LinearLayout>
@@ -48,15 +50,29 @@
                         android:layout_weight="1"
                         android:layout_height="match_parent"
                         android:gravity="end">
+                        <TextView
+                            android:layout_marginEnd="7dp"
+                            android:id="@+id/backBtn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/border_radius"
+                            android:backgroundTint="#F31F1F"
+                            android:textColor="#FFFF"
+                            android:gravity="center"
+                            android:textStyle="bold"
+                            android:text="CLOSE"
+                            android:padding="13dp"
+                            android:textAllCaps="false" />
                         <Button
 
                             android:id="@+id/btnSave"
+                            android:backgroundTint="#656262"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:backgroundTint="#5A5A59"
                             android:drawableStart="@drawable/ic_location_on_white_24dp"
                             android:gravity="center"
-                            android:text="Save"
+                            android:textStyle="bold"
+                            android:text="SAVE"
                             android:textAllCaps="false" />
                     </LinearLayout>
 
@@ -75,26 +91,7 @@
                 android:layout_height="wrap_content" >
 
                 <LinearLayout
-                    android:id="@+id/linearBack"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingStart="10dp"
-                    android:paddingTop="10dp"
-                    android:paddingEnd="10dp"
-                    android:orientation="vertical"
-                    >
-                    <Button
-                        android:id="@+id/backBtn"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:backgroundTint="#94A310"
-                        android:textSize="15sp"
-                        android:text="Back"/>
-                </LinearLayout>
-                <LinearLayout
                     android:id="@+id/linearSerial"
-                    android:layout_below="@id/linearBack"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingTop="7dp"
@@ -132,7 +129,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/getLocationBtn"
-                        android:textColor="#FFFFFF"
+                        android:backgroundTint="@color/colorPrimary"
                         android:textAllCaps="false"
                         android:drawableStart="@drawable/ic_location_on_white_24dp"
                         />

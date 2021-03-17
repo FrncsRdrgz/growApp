@@ -149,6 +149,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         pieChart.setData(pieData);
         pieChart.getDescription().setEnabled(false);
         pieChart.setDrawEntryLabels(false);
+        pieData.setValueFormatter(new PercentFormatter(pieChart));
         pieChart.setUsePercentValues(true);
         pieChart.setDrawHoleEnabled(false);
         pieChart.getLegend().setEnabled(false);

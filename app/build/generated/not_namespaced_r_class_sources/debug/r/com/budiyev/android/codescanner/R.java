@@ -28,10 +28,10 @@ public final class R {
     public static final class drawable {
         private drawable() {}
 
-        public static final int ic_code_scanner_auto_focus_off = 0x7f070084;
-        public static final int ic_code_scanner_auto_focus_on = 0x7f070085;
-        public static final int ic_code_scanner_flash_off = 0x7f070086;
-        public static final int ic_code_scanner_flash_on = 0x7f070087;
+        public static final int ic_code_scanner_auto_focus_off = 0x7f070085;
+        public static final int ic_code_scanner_auto_focus_on = 0x7f070086;
+        public static final int ic_code_scanner_flash_off = 0x7f070087;
+        public static final int ic_code_scanner_flash_on = 0x7f070088;
     }
     public static final class styleable {
         private styleable() {}

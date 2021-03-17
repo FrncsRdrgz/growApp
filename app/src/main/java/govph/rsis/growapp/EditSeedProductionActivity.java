@@ -93,9 +93,9 @@ public class EditSeedProductionActivity extends AppCompatActivity implements Loc
     LocationListener locationListener;
     Toolbar toolbar;
     LinearLayout l10, l11;
-    TextView tvLatitude, tvLongitude, tvCancel,tvSave,tvAccredNo,tvVersion,tvWelcomeName,tvWelcomeSerial,tvList,tvSent,tvDeleted;
+    TextView tvLatitude, tvLongitude, tvCancel,tvSave,tvAccredNo,tvVersion,tvWelcomeName,tvWelcomeSerial,tvList,tvSent,tvDeleted,titleForm,backBtn;
     MenuItem mList,mSent,mDeleted;
-    Button getLocationBtn,btnSave,backBtn;
+    Button getLocationBtn,btnSave;
     AutoCompleteTextView actVariety,actOtherVariety,actSeedClass, actSeedSource,actRiceProgram,actPreviousVariety;
     TextInputLayout tilVariety,tilOtherVariety,tilSeedClass,tilSeedSource, tilRiceProgram,tilDatePlanted,tilSeedClass2,tillSeedSource2,tilRiceProgram2,tilAreaPlanted,tilSeedQuantity,tilSeedBedArea,tilSeedlingAge,tilSeedLotNo,tilLabNo,tilCooperative,tilBarangay;
     ArrayAdapter<String> arrayAdapterVariety,arrayAdapterOtherVariety,arrayAdapterSeedClass,arrayAdapterSeedSource,arrayAdapterRiceProgram,arrayAdapterPreviousVariety;
@@ -156,8 +156,8 @@ public class EditSeedProductionActivity extends AppCompatActivity implements Loc
         tvVersion = headerView.findViewById(R.id.headerVersion);
         tvWelcomeName = (TextView) headerView.findViewById(R.id.headerName);
         tvWelcomeSerial = (TextView) headerView.findViewById(R.id.headerSerial);
-
-
+        titleForm = findViewById(R.id.titleForm);
+        titleForm.setText("Edit Form");
         /*Populate the navigation drawer badge*/
         mList = navigationView.getMenu().findItem(R.id.listBtn);
         mSent = navigationView.getMenu().findItem(R.id.sentItemBtn);
@@ -386,7 +386,7 @@ public class EditSeedProductionActivity extends AppCompatActivity implements Loc
         tetPreviousCrop.setText(seedGrowers.getPreviousCrop());
         if(!tvAccredNo.getText().toString().trim().isEmpty() && !tvLatitude.getText().toString().trim().isEmpty() && !tvLongitude.getText().toString().trim().isEmpty()){
             btnSave.setEnabled(true);
-            btnSave.setBackgroundColor(Color.parseColor("#EAB30C"));
+            btnSave.setBackgroundColor(Color.parseColor("#0070e8"));
         }
 
         SimpleDateFormat sdf =new SimpleDateFormat("yyyy-MM-dd");//set format of date you receive from db

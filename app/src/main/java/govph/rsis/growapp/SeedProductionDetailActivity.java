@@ -101,8 +101,8 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
     LocationManager locationManager;
     Toolbar toolbar;
     LinearLayout l10, l11;
-    TextView tvLatitude, tvLongitude, tvCancel,tvSave,tvAccredNo, tvVersion,tvWelcomeName,tvWelcomeSerial,tvList,tvSent,tvDeleted;
-    Button getLocationBtn,btnSave,backBtn;
+    TextView tvLatitude, tvLongitude, tvCancel,tvSave,tvAccredNo, tvVersion,tvWelcomeName,tvWelcomeSerial,tvList,tvSent,tvDeleted,titleForm,backBtn;
+    Button getLocationBtn,btnSave;
     AutoCompleteTextView actVariety,actOtherVariety,actSeedClass, actSeedSource,actRiceProgram,actPreviousVariety;
     TextInputLayout tilVariety,tilOtherVariety,tilSeedClass,tilSeedSource, tilRiceProgram,tilDatePlanted,tilSeedClass2,tillSeedSource2,tilRiceProgram2,tilAreaPlanted,tilSeedQuantity,tilSeedBedArea,tilSeedlingAge,tilSeedLotNo,tilLabNo,tilCooperative,tilBarangay;
     ArrayAdapter<String> arrayAdapterVariety,arrayAdapterSeedClass,arrayAdapterSeedSource,arrayAdapterRiceProgram,arrayAdapterPreviousVariety,arrayAdapterOtherVariety;
@@ -149,12 +149,13 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
         tvAccredNo = (TextView) findViewById(R.id.tvAccreditationNo);
         tvLatitude = (TextView) findViewById(R.id.tvLatitude);
         tvLongitude = (TextView) findViewById(R.id.tvLongitude);
+        titleForm = findViewById(R.id.titleForm);
         toolbar = findViewById(R.id.add_toolbar);
 
         //spTvWelcomeName.setText("Welcome, "+ user.getFullname());
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
-        getSupportActionBar().setTitle("New Form");
+        //getSupportActionBar().setTitle("New Form");
 
 
         drawerLayout = findViewById(R.id.add_drawer_layout);
@@ -363,12 +364,13 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
             }
         });*/
         //set the Save text clickable
-        backBtn.setOnClickListener(new View.OnClickListener() {
+        backBtn.setVisibility(View.GONE);
+        /*backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
             }
-        });
+        });*/
         tetDatePlanted.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
@@ -621,7 +623,7 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
             if(!accredNo.isEmpty() && !latitude.isEmpty() && !longitude.isEmpty()){
 
                 btnSave.setEnabled(true);
-                btnSave.setBackgroundColor(Color.parseColor("#EAB30C"));
+                btnSave.setBackgroundColor(Color.parseColor("#0070e8"));
                 //tvSave.setEnabled(true);
                 //tvSave.setTextColor(Color.WHITE);
             }

@@ -1415,6 +1415,7 @@ drawable agency
 drawable agency2
 drawable avd_hide_password
 drawable avd_show_password
+drawable border_radius
 drawable borderlines
 drawable bpi
 drawable bpiwhite
@@ -1770,7 +1771,6 @@ id linearAbout
 id linearAbout1
 id linearAdd
 id linearAreaPlanted
-id linearBack
 id linearBarangay
 id linearBpi
 id linearContactUs
@@ -1866,6 +1866,7 @@ id password_toggle
 id peekHeight
 id percent
 id pieChart
+id pieTitle
 id pin
 id progressBar
 id progress_circular
@@ -2023,6 +2024,7 @@ id time
 id title
 id titleDividerNoCustom
 id titleFinalize
+id titleForm
 id title_template
 id titlevariety
 id top
