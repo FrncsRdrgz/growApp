@@ -208,16 +208,122 @@
                     </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>
                 <LinearLayout
+                    android:visibility="gone"
+                    android:id="@+id/preFilledForm"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/linearSeedVariety"
+                    android:paddingStart="17dp"
+                    android:paddingTop="7dp"
+                    android:paddingEnd="17dp"
+                    >
+
+                    <LinearLayout
+                        android:padding="10dp"
+                        android:background="@drawable/pre_data_card"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:orientation="vertical">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight=".6"
+                                android:textSize="15sp"
+                                android:text="Seed Class: "/>
+                            <TextView
+                                android:id="@+id/preDataClass"
+                                android:layout_width="match_parent"
+                                android:layout_weight=".4"
+                                android:layout_height="wrap_content"
+                                android:text="Seed Class: "/>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight=".6"
+                                android:textSize="15sp"
+                                android:text="Rice Program: "/>
+                            <TextView
+                                android:id="@+id/preDataProgram"
+                                android:layout_width="match_parent"
+                                android:layout_weight=".4"
+                                android:layout_height="wrap_content"
+                                android:text="test test"/>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight=".6"
+                                android:textSize="15sp"
+                                android:text="Seed Source: "/>
+                            <TextView
+                                android:id="@+id/preDataSource"
+                                android:layout_width="match_parent"
+                                android:layout_weight=".4"
+                                android:layout_height="wrap_content"
+                                android:text="Seed Class: "/>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight=".6"
+                                android:textSize="15sp"
+                                android:text="Seed Quantity: "/>
+                            <TextView
+                                android:id="@+id/preDataQuantity"
+                                android:layout_width="match_parent"
+                                android:layout_weight=".4"
+                                android:layout_height="wrap_content"
+                                android:text="0: "/>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight=".6"
+                                android:textSize="15sp"
+                                android:text="Area Planted: "/>
+                            <TextView
+                                android:id="@+id/preDataAreaPlanted"
+                                android:layout_width="match_parent"
+                                android:layout_weight=".4"
+                                android:layout_height="wrap_content"
+                                android:text="Seed Class: "/>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingTop="7dp"
                     android:paddingRight="15dp"
                     android:paddingLeft="15dp"
                     android:id="@+id/linearOtherVariety"
-                    android:layout_below="@id/linearSeedVariety">
+                    android:layout_below="@id/preFilledForm">
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:visibility="gone"
                         android:id="@+id/tilOtherVariety"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -232,129 +338,83 @@
                     </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>
                 <LinearLayout
-                    android:orientation="vertical"
+                    android:id="@+id/hideLinear"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingTop="7dp"
-                    android:paddingRight="15dp"
-                    android:paddingLeft="15dp"
-                    android:id="@+id/linearSeedClass"
-                    android:layout_below="@id/linearOtherVariety">
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/tilSeedClass2"
+                    android:layout_below="@id/linearOtherVariety"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:orientation="vertical"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/seedClass"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                        android:paddingTop="7dp"
+                        android:paddingRight="15dp"
+                        android:paddingLeft="15dp"
+                        android:id="@+id/linearSeedClass"
+                        android:layout_below="@id/linearOtherVariety">
 
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/tetSeedClass"
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/tilSeedClass"
                             android:layout_width="match_parent"
-                            android:inputType="numberDecimal"
-                            android:clickable="false"
-                            android:focusable="false"
-                            android:focusableInTouchMode="false"
-                            android:layout_height="wrap_content"/>
-                    </com.google.android.material.textfield.TextInputLayout>
+                            android:layout_height="wrap_content"
+                            android:hint="@string/seedClass"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:visibility="gone"
-                        android:id="@+id/tilSeedClass"
+                            <AutoCompleteTextView
+                                android:id="@+id/actSeedClass"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"/>
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:orientation="vertical"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/seedClass"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+                        android:paddingTop="7dp"
+                        android:paddingRight="15dp"
+                        android:paddingLeft="15dp"
+                        android:id="@+id/linearRiceProgram"
+                        android:layout_below="@id/linearSeedClass">
 
-                        <AutoCompleteTextView
-                            android:id="@+id/actSeedClass"
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/tilRiceProgram"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"/>
-                    </com.google.android.material.textfield.TextInputLayout>
-                </LinearLayout>
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="7dp"
-                    android:paddingRight="15dp"
-                    android:paddingLeft="15dp"
-                    android:id="@+id/linearRiceProgram"
-                    android:layout_below="@id/linearSeedClass">
+                            android:layout_height="wrap_content"
+                            android:hint="@string/riceProgram"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/tilRiceProgram2"
+                            <AutoCompleteTextView
+                                android:id="@+id/actRiceProgram"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"/>
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="vertical"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/riceProgram"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                        android:paddingTop="7dp"
+                        android:paddingRight="15dp"
+                        android:paddingLeft="15dp"
+                        android:id="@+id/linearSeedSource"
+                        android:layout_below="@id/linearRiceProgram">
 
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/tetRiceProgram"
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/tilSeedSource"
                             android:layout_width="match_parent"
-                            android:inputType="numberDecimal"
-                            android:clickable="false"
-                            android:focusable="false"
-                            android:focusableInTouchMode="false"
-                            android:layout_height="wrap_content"/>
-                    </com.google.android.material.textfield.TextInputLayout>
+                            android:layout_height="wrap_content"
+                            android:hint="@string/seedSource"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:visibility="gone"
-                        android:id="@+id/tilRiceProgram"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/riceProgram"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
-
-                        <AutoCompleteTextView
-                            android:id="@+id/actRiceProgram"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"/>
-                    </com.google.android.material.textfield.TextInputLayout>
+                            <AutoCompleteTextView
+                                android:id="@+id/actSeedSource"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"/>
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </LinearLayout>
                 </LinearLayout>
 
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="7dp"
-                    android:paddingRight="15dp"
-                    android:paddingLeft="15dp"
-                    android:id="@+id/linearSeedSource"
-                    android:layout_below="@id/linearRiceProgram">
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/tilSeedSource2"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/seedSource"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/tetSeedSource"
-                            android:layout_width="match_parent"
-                            android:inputType="numberDecimal"
-                            android:clickable="false"
-                            android:focusable="false"
-                            android:focusableInTouchMode="false"
-                            android:layout_height="wrap_content"/>
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:visibility="gone"
-                        android:id="@+id/tilSeedSource"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/seedSource"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
-
-                        <AutoCompleteTextView
-                            android:id="@+id/actSeedSource"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"/>
-                    </com.google.android.material.textfield.TextInputLayout>
-                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -363,13 +423,13 @@
                     android:paddingRight="15dp"
                     android:paddingLeft="15dp"
                     android:id="@+id/linearSeedQuantity"
-                    android:layout_below="@id/linearSeedSource">
+                    android:layout_below="@id/hideLinear">
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/tilSeedQuantity"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/seedQuantity"
+                        android:hint="Actual Seed Used (kg)"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                         <com.google.android.material.textfield.TextInputEditText
@@ -393,7 +453,7 @@
                         android:id="@+id/tilAreaPlanted"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/areaPlanted"
+                        android:hint="Actual Area Planted"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                         <com.google.android.material.textfield.TextInputEditText

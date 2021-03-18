@@ -12,13 +12,13 @@ import java.util.List;
 @Dao
 public interface UserDao {
 
-    @Query("SELECT * FROM user")
+    @Query("SELECT * FROM user where isLoggedIn = 'LoggedOut'")
     LiveData<List<User>> getUsers();
 
     @Query("SELECT count(*) FROM user")
     int isEmpty();
 
-    @Query("SELECT * FROM user where isLoggedIn = 'LoggedIn' ")
+    @Query("SELECT COUNT(*) FROM user where isLoggedIn = 'LoggedIn' ")
     int checkLoggedIn();
 
     @Query("SELECT * FROM user where isLoggedIn = 'LoggedIn' ")

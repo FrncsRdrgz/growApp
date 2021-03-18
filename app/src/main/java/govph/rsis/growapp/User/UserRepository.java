@@ -12,8 +12,7 @@ public class UserRepository {
     private UserDao userDao;
     private LiveData<List<User>> allUsers;
     private int checkLoggedIn;
-    private int isExisting;
-    private int updateUserStatus;
+    private int isExisting,isEmpty,updateUserStatus;
     private User loggedInUser;
 
     public UserRepository(Application application){
@@ -22,6 +21,7 @@ public class UserRepository {
         allUsers = userDao.getUsers();
         checkLoggedIn = userDao.checkLoggedIn();
         loggedInUser = userDao.getLoggedInUser();
+        isEmpty = userDao.isEmpty();
     }
 
     public void insert(User user) {
@@ -36,8 +36,10 @@ public class UserRepository {
     public LiveData<List<User>> getAllUsers() {
         return allUsers;
     }
+    public int getIsEmpty(){return isEmpty;}
     public int getCheckLoggedIn(){return checkLoggedIn;}
     public int isExisting(String serialNum){ return isExisting = userDao.isExisting(serialNum);}
+
     public int getUpdateUserStatus(String isLoggedIn, String serialNum){ return updateUserStatus = userDao.updateUserStatus(isLoggedIn,serialNum);}
     public User getLoggedInUser(){return loggedInUser;}
 

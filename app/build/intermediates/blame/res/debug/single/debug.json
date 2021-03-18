@@ -1,27 +1,27 @@
 [
     {
-        "merged": "D:\\android-projects\\growApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable-v24_ic_launcher_foreground.xml.flat",
-        "source": "D:\\android-projects\\growApp\\app\\src\\main\\res\\drawable-v24\\ic_launcher_foreground.xml"
-    },
-    {
         "merged": "D:\\android-projects\\growApp\\app\\build\\intermediates\\res\\merged\\debug\\raw_result.csv.flat",
         "source": "D:\\android-projects\\growApp\\app\\src\\main\\res\\raw\\result.csv"
+    },
+    {
+        "merged": "D:\\android-projects\\growApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable-v24_ic_launcher_foreground.xml.flat",
+        "source": "D:\\android-projects\\growApp\\app\\src\\main\\res\\drawable-v24\\ic_launcher_foreground.xml"
     },
     {
         "merged": "D:\\android-projects\\growApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi-v4_abc_textfield_default_mtrl_alpha.9.png.flat",
         "source": "C:\\Users\\franc\\.gradle\\caches\\transforms-2\\files-2.1\\6119d746697059b7e1b74aab4d181f56\\appcompat-1.1.0\\res\\drawable-xxhdpi-v4\\abc_textfield_default_mtrl_alpha.9.png"
     },
     {
-        "merged": "D:\\android-projects\\growApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4_abc_popup_background_mtrl_mult.9.png.flat",
-        "source": "C:\\Users\\franc\\.gradle\\caches\\transforms-2\\files-2.1\\6119d746697059b7e1b74aab4d181f56\\appcompat-1.1.0\\res\\drawable-xhdpi-v4\\abc_popup_background_mtrl_mult.9.png"
+        "merged": "D:\\android-projects\\growApp\\app\\build\\intermediates\\res\\merged\\debug\\anim-v21_design_bottom_sheet_slide_out.xml.flat",
+        "source": "C:\\Users\\franc\\.gradle\\caches\\transforms-2\\files-2.1\\5e3effe35f7803107da8da2ed1de9f2e\\material-1.2.1\\res\\anim-v21\\design_bottom_sheet_slide_out.xml"
     },
     {
         "merged": "D:\\android-projects\\growApp\\app\\build\\intermediates\\res\\merged\\debug\\color_material_on_primary_disabled.xml.flat",
         "source": "C:\\Users\\franc\\.gradle\\caches\\transforms-2\\files-2.1\\5e3effe35f7803107da8da2ed1de9f2e\\material-1.2.1\\res\\color\\material_on_primary_disabled.xml"
     },
     {
-        "merged": "D:\\android-projects\\growApp\\app\\build\\intermediates\\res\\merged\\debug\\anim-v21_design_bottom_sheet_slide_out.xml.flat",
-        "source": "C:\\Users\\franc\\.gradle\\caches\\transforms-2\\files-2.1\\5e3effe35f7803107da8da2ed1de9f2e\\material-1.2.1\\res\\anim-v21\\design_bottom_sheet_slide_out.xml"
+        "merged": "D:\\android-projects\\growApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4_abc_popup_background_mtrl_mult.9.png.flat",
+        "source": "C:\\Users\\franc\\.gradle\\caches\\transforms-2\\files-2.1\\6119d746697059b7e1b74aab4d181f56\\appcompat-1.1.0\\res\\drawable-xhdpi-v4\\abc_popup_background_mtrl_mult.9.png"
     },
     {
         "merged": "D:\\android-projects\\growApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxxhdpi-v4_abc_text_select_handle_left_mtrl_dark.png.flat",
@@ -210,6 +210,10 @@
     {
         "merged": "D:\\android-projects\\growApp\\app\\build\\intermediates\\res\\merged\\debug\\color_abc_tint_edittext.xml.flat",
         "source": "C:\\Users\\franc\\.gradle\\caches\\transforms-2\\files-2.1\\6119d746697059b7e1b74aab4d181f56\\appcompat-1.1.0\\res\\color\\abc_tint_edittext.xml"
+    },
+    {
+        "merged": "D:\\android-projects\\growApp\\app\\build\\intermediates\\res\\merged\\debug\\color_header_name_select.xml.flat",
+        "source": "D:\\android-projects\\growApp\\app\\src\\main\\res\\color\\header_name_select.xml"
     },
     {
         "merged": "D:\\android-projects\\growApp\\app\\build\\intermediates\\res\\merged\\debug\\color_mtrl_error.xml.flat",

@@ -53,11 +53,19 @@ public class MainActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                if(userViewModel.getCheckLoggedIn() > 0){
-                    intent = new Intent(MainActivity.this,HomeActivity.class);
-                }else{
-                    intent = new Intent(MainActivity.this,LoginActivity.class);
-                }
+
+                    if(userViewModel.getCheckLoggedIn() > 0){
+                        intent = new Intent(MainActivity.this,HomeActivity.class);
+                    }else{
+                        if(userViewModel.isEmpty() >0){
+                            intent = new Intent(MainActivity.this,SwitchAccountActivity.class);
+                            startActivity(intent);
+                            finish();
+                        }else {
+                            intent = new Intent(MainActivity.this, LoginActivity.class);
+                        }
+                    }
+
                 startActivity(intent);
                 finish();
 

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LoginActivity"
+    android:background="#006B35">
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="28dp"
+        app:srcCompat="@drawable/rsis_light" />
+
+    <LinearLayout
+        android:id="@+id/rvLinear"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/borderlines"
+        android:layout_below="@id/imageView3"
+        android:layout_above="@id/linearLoginNew">
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/rvUsers"/>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/linearLoginNew"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_above="@id/linearPartners">
+        <TextView
+            android:id="@+id/tvLogin"
+            android:clickable="true"
+            android:paddingStart="20dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:drawableTint="#C8CFD0"
+            android:drawableLeft="@drawable/ic_baseline_add_24_white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/borderlines"
+            android:textSize="20sp"
+            android:textColor="#C8CFD0"
+            android:text="Log Into Another Account"/>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/linearPartners"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/homeCopyRight"
+        android:gravity="center"
+        android:layout_marginBottom="20dp"
+        >
+
+        <ImageView
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            app:srcCompat="@drawable/dalight"/>
+        <ImageView
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            app:srcCompat="@drawable/da_barwhite"/>
+        <ImageView
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            app:srcCompat="@drawable/bpiwhite"/>
+        <ImageView
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            app:srcCompat="@drawable/philricegray"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:id="@+id/homeCopyRight"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/loginTvVersion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="#C8CFD0"
+            android:textSize="10sp"
+            android:text="Version: 1"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="10sp"
+            android:textColor="#C8CFD0"
+            android:text="RSIS - all rights reserved"/>
+    </LinearLayout>
+</RelativeLayout>

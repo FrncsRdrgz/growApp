@@ -278,6 +278,7 @@ public class ListActivity extends AppCompatActivity implements NavigationView.On
             }
         });*/
 
+
         adapter.setSgFormClickedListener(new SeedGrowerAdapter.sgFormClicked() {
             @Override
             public void editSGDetails(SeedGrower seedGrower) {
@@ -662,17 +663,7 @@ public class ListActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-    public void logout(){
-        Toast.makeText(this, "Logout", Toast.LENGTH_SHORT).show();
-        user.setLoggedIn("LoggedOut");
-        userViewModel.update(user);
 
-        if(userViewModel.getCheckLoggedIn() > 0){
-            intent = new Intent(ListActivity.this,LoginActivity.class);
-            startActivity(intent);
-            finish();
-        }
-    }
     public void editSGDetails(String sgId){
         Log.e(TAG, "editSGDetails: "+sgId );
         intent = new Intent(this, EditSeedProductionActivity.class);
@@ -763,6 +754,10 @@ public class ListActivity extends AppCompatActivity implements NavigationView.On
                 finish();
                 return true;
 
+            case R.id.logoutBtn:
+                logout();
+                return true;
+
             default:
                 // If we got here, the user's action was not recognized.
                 // Invoke the superclass to handle it.
@@ -774,6 +769,18 @@ public class ListActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
 
+    }
+
+    public void logout(){
+        Toast.makeText(this, "Logout", Toast.LENGTH_SHORT).show();
+        user.setLoggedIn("LoggedOut");
+        userViewModel.update(user);
+
+        if(userViewModel.getCheckLoggedIn() > 0){
+            intent = new Intent(ListActivity.this,SwitchAccountActivity.class);
+            startActivity(intent);
+            finish();
+        }
     }
 
     public void updateCounter(){

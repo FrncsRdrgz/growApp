@@ -12,8 +12,7 @@ public class UserViewModel extends AndroidViewModel {
     private UserRepository userRepository;
     private LiveData<List<User>> allUsers;
     private int checkLoggedIn;
-    private int isExisting;
-    private int updateUserStatus;
+    private int isExisting,isEmpty,updateUserStatus;
     private User loggedInUser;
     public UserViewModel(@NonNull Application application){
         super(application);
@@ -22,6 +21,7 @@ public class UserViewModel extends AndroidViewModel {
         allUsers = userRepository.getAllUsers();
         checkLoggedIn = userRepository.getCheckLoggedIn();
         loggedInUser = userRepository.getLoggedInUser();
+        isEmpty = userRepository.getIsEmpty();
     }
 
     public void insert(User user){userRepository.insert(user);}
@@ -32,6 +32,7 @@ public class UserViewModel extends AndroidViewModel {
         return allUsers;
     }
     public int getCheckLoggedIn(){return checkLoggedIn;}
+    public int isEmpty(){return isEmpty;}
     public int isExisting(String serialNum){return isExisting = userRepository.isExisting(serialNum);}
     public int getUpdateUserStatus(String isLoggedIn, String serialNum){return updateUserStatus = userRepository.getUpdateUserStatus(isLoggedIn,serialNum);}
     public User getLoggedInUser() {return loggedInUser;}

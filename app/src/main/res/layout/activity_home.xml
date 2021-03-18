@@ -23,7 +23,48 @@
                 android:id="@+id/main_toolbar"
                 app:titleTextColor="#FEFAF5"
                 android:background="#1B8040">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:dividerPadding="8dp"
+                    android:paddingEnd="15dp"
+                    android:orientation="horizontal"
+                    android:showDividers="end">
 
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent">
+                        <TextView
+                            android:id="@+id/titleForm"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="GrowApp"
+                            android:gravity="center"
+                            android:textColor="#FEFAF5"
+                            android:textSize="20sp"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"
+                        android:gravity="end">
+                        <TextView
+                            android:id="@+id/toolBarLogout"
+                            android:backgroundTint="#656262"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:paddingStart="10dp"
+                            android:paddingEnd="10dp"
+                            android:drawableTint="@color/colorWhite"
+                            android:drawableLeft="@drawable/ic_baseline_power_settings_new_48"
+                            android:gravity="center"
+                            android:textStyle="bold"
+                            android:textAllCaps="false" />
+                    </LinearLayout>
+
+                </LinearLayout>
             </androidx.appcompat.widget.Toolbar>
         </com.google.android.material.appbar.AppBarLayout>
 

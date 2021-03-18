@@ -866,6 +866,7 @@ color error_color_material_dark
 color error_color_material_light
 color foreground_material_dark
 color foreground_material_light
+color header_name_select
 color highlighted_text_material_dark
 color highlighted_text_material_light
 color material_blue_grey_800
@@ -1811,6 +1812,7 @@ id listTvVersion
 id list_drawer_layout
 id list_item
 id loginTvVersion
+id logoutBtn
 id main_toolbar
 id masked
 id media_actions

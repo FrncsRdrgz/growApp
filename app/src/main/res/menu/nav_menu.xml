@@ -32,4 +32,9 @@
         android:icon="@drawable/rsis_light"
         android:id="@+id/aboutBtn"
         app:actionLayout="@layout/menu_counter"/>
+    <item android:title="Log Out"
+        android:checkable="true"
+        android:icon="@drawable/ic_baseline_logout_24"
+        android:id="@+id/logoutBtn"
+        app:actionLayout="@layout/menu_counter"/>
 </menu>

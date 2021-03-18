@@ -21,6 +21,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 
@@ -189,8 +190,6 @@ public class SentItemActivity extends AppCompatActivity implements NavigationVie
                 builder.setNegativeButton("OK", null);
                 AlertDialog dialog = builder.create();
                 dialog.show();
-
-
             }
 
         });
@@ -206,7 +205,6 @@ public class SentItemActivity extends AppCompatActivity implements NavigationVie
                 drawerLayout.closeDrawer(GravityCompat.START);
                 intent.putExtra("activityId",id);
                 startActivity(intent);
-                drawerLayout.closeDrawer(GravityCompat.START);
                 finish();
                 return true;
             case R.id.listBtn:
@@ -214,7 +212,6 @@ public class SentItemActivity extends AppCompatActivity implements NavigationVie
                 drawerLayout.closeDrawer(GravityCompat.START);
                 intent.putExtra("activityId",id);
                 startActivity(intent);
-                drawerLayout.closeDrawer(GravityCompat.START);
                 finish();
                 return true;
             case R.id.addBtn:
@@ -222,14 +219,12 @@ public class SentItemActivity extends AppCompatActivity implements NavigationVie
                 drawerLayout.closeDrawer(GravityCompat.START);
                 intent.putExtra("activityId",id);
                 startActivity(intent);
-                drawerLayout.closeDrawer(GravityCompat.START);
                 return true;
             case R.id.sentItemBtn:
                 intent = new Intent(this, SentItemActivity.class);
                 drawerLayout.closeDrawer(GravityCompat.START);
                 intent.putExtra("activityId",id);
                 startActivity(intent);
-                drawerLayout.closeDrawer(GravityCompat.START);
                 finish();
                 return true;
             case R.id.aboutBtn:
@@ -237,10 +232,12 @@ public class SentItemActivity extends AppCompatActivity implements NavigationVie
                 drawerLayout.closeDrawer(GravityCompat.START);
                 intent.putExtra("activityId",id);
                 startActivity(intent);
-                drawerLayout.closeDrawer(GravityCompat.START);
                 finish();
                 return true;
 
+            case R.id.logoutBtn:
+                logout();
+                return true;
             default:
                 // If we got here, the user's action was not recognized.
                 // Invoke the superclass to handle it.
@@ -252,5 +249,17 @@ public class SentItemActivity extends AppCompatActivity implements NavigationVie
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
 
+    }
+
+    public void logout(){
+        Toast.makeText(this, "Logout", Toast.LENGTH_SHORT).show();
+        user.setLoggedIn("LoggedOut");
+        userViewModel.update(user);
+
+        if(userViewModel.getCheckLoggedIn() > 0){
+            intent = new Intent(SentItemActivity.this,SwitchAccountActivity.class);
+            startActivity(intent);
+            finish();
+        }
     }
 }

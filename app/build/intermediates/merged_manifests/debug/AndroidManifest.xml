@@ -26,6 +26,7 @@
         android:testOnly="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true" >
+        <activity android:name="govph.rsis.growapp.SwitchAccountActivity" />
         <activity android:name="govph.rsis.growapp.ListActivity" />
         <activity android:name="govph.rsis.growapp.AboutActivity" />
         <activity android:name="govph.rsis.growapp.LoginActivity" />

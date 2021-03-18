@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 
@@ -91,6 +92,7 @@ public class AboutActivity extends AppCompatActivity implements NavigationView.O
         actionBarDrawerToggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setCheckedItem(R.id.aboutBtn);
+
     }
 
     @Override
@@ -133,6 +135,9 @@ public class AboutActivity extends AppCompatActivity implements NavigationView.O
                 startActivity(intent);
                 finish();
                 return true;
+            case R.id.logoutBtn:
+                logout();
+                return true;
             default:
                 // If we got here, the user's action was not recognized.
                 // Invoke the superclass to handle it.
@@ -144,5 +149,17 @@ public class AboutActivity extends AppCompatActivity implements NavigationView.O
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
 
+    }
+
+    public void logout(){
+        Toast.makeText(this, "Logout", Toast.LENGTH_SHORT).show();
+        user.setLoggedIn("LoggedOut");
+        userViewModel.update(user);
+
+        if(userViewModel.getCheckLoggedIn() > 0){
+            intent = new Intent(AboutActivity.this,SwitchAccountActivity.class);
+            startActivity(intent);
+            finish();
+        }
     }
 }

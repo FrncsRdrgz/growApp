@@ -22,6 +22,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.PieChart;
@@ -51,7 +52,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private SeedGrowerViewModel seedGrowerViewModel;
     private UserViewModel userViewModel;
     private View headerView;
-    TextView headerVersion,headerName,headerSerial,homeTvVersion,tvList,tvSent,tvDeleted,homeTvCollected,homeTvSent,homeTvDeleted,homeActUserName,homeActSerialNum;
+    TextView headerVersion,headerName,headerSerial,homeTvVersion,tvList,tvSent,tvDeleted,homeTvCollected,homeTvSent,homeTvDeleted,homeActUserName,homeActSerialNum,toolBarLogout;
     MenuItem mList,mSent,mDeleted;
     LinearLayout linearList,linearAdd,linearAbout,linearSent;
     Intent intent;
@@ -81,6 +82,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         headerVersion = headerView.findViewById(R.id.headerVersion);
         headerName = headerView.findViewById(R.id.headerName);
         headerSerial = headerView.findViewById(R.id.headerSerial);
+
+        toolBarLogout = findViewById(R.id.toolBarLogout);
         homeTvVersion = findViewById(R.id.homeTvVersion);
         homeActUserName = findViewById(R.id.homeActUserName);
         homeActSerialNum = findViewById(R.id.homeActSerialNum);
@@ -194,6 +197,13 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 finish();
             }
         });
+
+        toolBarLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                logout();
+            }
+        });
     }
 
 
@@ -241,7 +251,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 drawerLayout.closeDrawer(GravityCompat.START);
                 finish();
                 return true;
-
+            case R.id.logoutBtn:
+                logout();
+                return true;
             default:
                 // If we got here, the user's action was not recognized.
                 // Invoke the superclass to handle it.
@@ -255,6 +267,17 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
+    public void logout(){
+        Toast.makeText(this, "Logout", Toast.LENGTH_SHORT).show();
+        user.setLoggedIn("LoggedOut");
+        userViewModel.update(user);
+
+        if(userViewModel.getCheckLoggedIn() > 0){
+            intent = new Intent(HomeActivity.this,SwitchAccountActivity.class);
+            startActivity(intent);
+            finish();
+        }
+    }
     private void setMenuCounter(@IdRes int itemId, int count) {
         TextView view = (TextView) navigationView.getMenu().findItem(itemId).getActionView();
         view.setText(count > 0 ? String.valueOf(count) : null);
