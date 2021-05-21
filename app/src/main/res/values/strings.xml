@@ -6,7 +6,7 @@
     <string name="editBtn">Edit</string>
     <string name="viewBtn">View</string>
     <string name="app_name">GrowApp</string>
-    <string name="copyright">Copyright 2020 - RSIS</string>
+    <string name="copyright">RSIS - all rights reserved. Copyright (c) 2021</string>
     <string name="serialNum">Serial Number:</string>
     <string name="latitude">Latitude:</string>
     <string name="longitude">Longitude:</string>

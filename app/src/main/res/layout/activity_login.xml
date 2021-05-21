@@ -9,27 +9,48 @@
 
     <ImageView
         android:id="@+id/imageView3"
-        android:layout_width="329dp"
-        android:layout_height="327dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="120dp"
         app:srcCompat="@drawable/rsis_light" />
 
     <LinearLayout
         android:id="@+id/scanLinear"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingStart="50dp"
+        android:paddingEnd="50dp"
+        android:orientation="vertical"
         android:layout_below="@id/imageView3">
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#CCCECD"
+            android:text="GrowApp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="12sp"
+            android:textColor="#CCCECD"
+            android:text="A data collecting tool for seed producers"/>
         <Button
+            android:layout_marginTop="20dp"
             android:id="@+id/scanIdBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
             android:backgroundTint="#F8B21F"
-            android:textSize="30sp"
+            android:textColor="#092907"
+            android:textSize="20sp"
+
             android:padding="15dp"
             android:text="Scan ID"
             />
@@ -83,6 +104,6 @@
             android:gravity="center"
             android:textSize="10sp"
             android:textColor="#C8CFD0"
-            android:text="RSIS - all rights reserved"/>
+            android:text="RSIS - all rights reserved. Copyright (c) 2021"/>
     </LinearLayout>
 </RelativeLayout>

@@ -1,8 +1,8 @@
 1<?xml version="1.0" encoding="utf-8"?>
 2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
 3    package="govph.rsis.growapp"
-4    android:versionCode="12"
-5    android:versionName="2" >
+4    android:versionCode="16"
+5    android:versionName="2.16" >
 6
 7    <uses-sdk
 8        android:minSdkVersion="21"
@@ -40,8 +40,8 @@
 22-->D:\android-projects\growApp\app\src\main\AndroidManifest.xml:14:9-45
 23        android:label="@string/app_name"
 23-->D:\android-projects\growApp\app\src\main\AndroidManifest.xml:15:9-41
-24        android:roundIcon="@mipmap/ic_launcher_round"
-24-->D:\android-projects\growApp\app\src\main\AndroidManifest.xml:16:9-54
+24        android:roundIcon="@mipmap/rsis_launcher_round"
+24-->D:\android-projects\growApp\app\src\main\AndroidManifest.xml:16:9-56
 25        android:supportsRtl="true"
 25-->D:\android-projects\growApp\app\src\main\AndroidManifest.xml:17:9-35
 26        android:testOnly="true"

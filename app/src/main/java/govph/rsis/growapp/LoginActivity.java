@@ -132,6 +132,7 @@ public class LoginActivity extends AppCompatActivity {
                 SeedGrowerDatabase database = SeedGrowerDatabase.getInstance(LoginActivity.this);
                 if(response.equals("204")){
                     Toast.makeText(LoginActivity.this, "Make sure that your Serial Number is correct.", Toast.LENGTH_SHORT).show();
+                    dialog.dismiss();
                 }else{
                     try {
                         JSONObject json = new JSONObject(response);
