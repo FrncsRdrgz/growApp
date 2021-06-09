@@ -170,7 +170,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             public void onClick(View view) {
                 intent = new Intent(HomeActivity.this, SeedProductionDetailActivity.class);
                 startActivity(intent);
-                finish();
+                //finish();
             }
         });
         linearSent.setOnClickListener(new View.OnClickListener() {
@@ -178,7 +178,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             public void onClick(View view) {
                 intent = new Intent(HomeActivity.this, SentItemActivity.class);
                 startActivity(intent);
-                finish();
+                //finish();
             }
         });
         linearAbout.setOnClickListener(new View.OnClickListener() {
@@ -186,7 +186,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             public void onClick(View view) {
                 intent = new Intent(HomeActivity.this, AboutActivity.class);
                 startActivity(intent);
-                finish();
+                //finish();
             }
         });
         linearList.setOnClickListener(new View.OnClickListener() {
@@ -194,7 +194,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             public void onClick(View view) {
                 intent = new Intent(HomeActivity.this, ListActivity.class);
                 startActivity(intent);
-                finish();
+                //finish();
             }
         });
 
