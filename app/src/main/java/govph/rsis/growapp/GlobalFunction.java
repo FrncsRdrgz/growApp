@@ -26,26 +26,34 @@ public class GlobalFunction {
         this.mContext = context;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
+
     public void isOnline() {
 
         try {
             ConnectivityManager connMngr = (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkRequest.Builder builder = new NetworkRequest.Builder();
 
-            connMngr.registerDefaultNetworkCallback(new ConnectivityManager.NetworkCallback() {
-                @Override
-                public void onAvailable(@NonNull Network network) {
-                    super.onAvailable(network);
-                    DecVar.isNetworkConnected = true;
-                }
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                connMngr.registerDefaultNetworkCallback(new ConnectivityManager.NetworkCallback() {
+                    @Override
+                    public void onAvailable(@NonNull Network network) {
+                        super.onAvailable(network);
+                        DecVar.isNetworkConnected = true;
+                    }
 
-                @Override
-                public void onLost(@NonNull Network network) {
-                    super.onLost(network);
-                    DecVar.isNetworkConnected = false;
+                    @Override
+                    public void onLost(@NonNull Network network) {
+                        super.onLost(network);
+                        DecVar.isNetworkConnected = false;
+                    }
+                });
+            }else{
+                Network[] networks = connMngr.getAllNetworks();
+                for (Network network : networks){
+                    NetworkInfo networkInfo = connMngr.getNetworkInfo(network);
+                    if(networkInfo != null && networkInfo.isConnected()) DecVar.isNetworkConnected = true;
                 }
-            });
+            }
 
         }catch (Exception e){
             DecVar.isNetworkConnected = false;

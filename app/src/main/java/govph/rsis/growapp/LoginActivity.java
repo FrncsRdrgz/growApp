@@ -4,6 +4,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -42,6 +43,7 @@ import govph.rsis.growapp.User.UserViewModel;
 public class LoginActivity extends AppCompatActivity {
     GlobalFunction globalFunction;
     private static final String TAG = "Login";
+    private int LOCATION_PERMISSION_CODE = 1;
     private int CAMERA_PERMISSION_CODE = 1;
     private boolean mPermissionGranted;
     public static final int REQUEST_CODE = 1;
@@ -119,7 +121,14 @@ public class LoginActivity extends AppCompatActivity {
             }
         }
     }
+    @Override
+    protected void onStart() {
+        super.onStart();
 
+        if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+            requestLocationPermission();
+        }
+    }
     private void getUserLoginDetails(String scannedValue){
         queue = Volley.newRequestQueue(LoginActivity.this);
         String url = DecVar.userCredentialApiUrl()+'/'+scannedValue;
@@ -251,6 +260,40 @@ public class LoginActivity extends AppCompatActivity {
         } else {
             ActivityCompat.requestPermissions(LoginActivity.this, new String[]{Manifest.permission.CAMERA}, CAMERA_PERMISSION_CODE);
             mPermissionGranted = false;
+        }
+    }
+
+    private void requestLocationPermission(){
+        if(ContextCompat.checkSelfPermission(this,Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+            new androidx.appcompat.app.AlertDialog.Builder(this)
+                    .setTitle("Location Permission")
+                    .setMessage("Allow the GrowApp to access your location during the data collection, this is to verify the field location when sent to the server")
+                    .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            ActivityCompat.requestPermissions(LoginActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION}, LOCATION_PERMISSION_CODE);
+                        }
+                    }).setCancelable(false)
+                    .create().show();
+            /*if(ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)){
+                new AlertDialog.Builder(this)
+                        .setTitle("Permission needed")
+                        .setMessage("Allow this app to access location.")
+                        .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                ActivityCompat.requestPermissions(LoginActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION}, LOCATION_PERMISSION_CODE);
+                            }
+                        }).setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                }).create().show();
+            }
+            else{
+                ActivityCompat.requestPermissions(LoginActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION}, LOCATION_PERMISSION_CODE);
+            }*/
         }
     }
 }
