@@ -104,13 +104,13 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
     TextView tvLatitude, tvLongitude, tvCancel,tvSave,tvAccredNo, tvVersion,tvWelcomeName,tvWelcomeSerial,tvList,tvSent,tvDeleted,titleForm,backBtn,
             preDataClass,preDataProgram,preDataQuantity,preDataAreaPlanted,preDataSource;
     Button getLocationBtn,btnSave;
-    AutoCompleteTextView actVariety,actOtherVariety,actSeedClass, actSeedSource,actRiceProgram,actPreviousVariety;
+    AutoCompleteTextView actVariety,actOtherVariety,actSeedClass, actSeedSource,actRiceProgram,actPreviousVariety,actTransplantingMethod;
     TextInputLayout tilVariety,tilOtherVariety,tilSeedClass,tilSeedSource, tilRiceProgram,tilDatePlanted;
-    ArrayAdapter<String> arrayAdapterVariety,arrayAdapterSeedClass,arrayAdapterSeedSource,arrayAdapterRiceProgram,arrayAdapterPreviousVariety,arrayAdapterOtherVariety;
+    ArrayAdapter<String> arrayAdapterVariety,arrayAdapterSeedClass,arrayAdapterSeedSource,arrayAdapterRiceProgram,arrayAdapterPreviousVariety,arrayAdapterOtherVariety,arrayAdapterTransplantingMethod;
     TextInputEditText tetDatePlanted,tetAreaPlanted,tetSeedQuantity,tetSeedBedArea,tetSeedlingAge,tetSeedLotNo,tetLabNo,tetCoop,
             tetBarangay,tetPreviousCrop;
     MenuItem mList,mSent,mDeleted;
-    ArrayList arrayListVarieties,arrayListSeedClass,arrayListSeedSource,arrayListRiceProgram;
+    ArrayList arrayListVarieties,arrayListSeedClass,arrayListSeedSource,arrayListRiceProgram,arrayListTransplantingMethod;
 
     MaterialDatePicker.Builder materialBuilder;
     MaterialDatePicker materialDatePicker;
@@ -144,7 +144,7 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
         l10 = (LinearLayout) findViewById(R.id.l10);
         l11 = (LinearLayout) findViewById(R.id.l11);
         preFilledForm = (LinearLayout) findViewById(R.id.preFilledForm);
-        hideLinear = (LinearLayout) findViewById(R.id.hideLinear);
+        //hideLinear = (LinearLayout) findViewById(R.id.hideLinear);
         linearOtherVariety = (LinearLayout) findViewById(R.id.linearOtherVariety);
         //tvCancel = (TextView) findViewById(R.id.tvCancel);
         //spTvWelcomeName = (TextView) findViewById(R.id.spTvWelcomeName);
@@ -223,6 +223,7 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
         actSeedSource = (AutoCompleteTextView) findViewById(R.id.actSeedSource);
         actRiceProgram = (AutoCompleteTextView) findViewById(R.id.actRiceProgram);
         actPreviousVariety = (AutoCompleteTextView) findViewById(R.id.actPreviousVariety);
+        actTransplantingMethod = findViewById(R.id.actTransplantingMethod);
 
         tetDatePlanted = (TextInputEditText) findViewById(R.id.tetDatePlanted);
         tetAreaPlanted = (TextInputEditText) findViewById(R.id.tetAreaPlanted);
@@ -308,7 +309,6 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
 
         //populate the Arraylist of seed class
         arrayListSeedClass = new ArrayList<>();
-        arrayListSeedClass.add("Breeder");
         arrayListSeedClass.add("Foundation");
         arrayListSeedClass.add("Registered");
 
@@ -347,6 +347,13 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
         arrayAdapterRiceProgram = new ArrayAdapter<>(getApplicationContext(),R.layout.spinner_rice_program,arrayListRiceProgram);
         actRiceProgram.setAdapter(arrayAdapterRiceProgram);
         actRiceProgram.setThreshold(1);
+
+        arrayListTransplantingMethod = new ArrayList<>();
+        arrayListTransplantingMethod.add("Manual Transplanting");
+        arrayListTransplantingMethod.add("Mechanical Transplanting");
+
+        arrayAdapterTransplantingMethod = new ArrayAdapter<>(getApplicationContext(),R.layout.spinner_rice_program,arrayListTransplantingMethod);
+        actTransplantingMethod.setAdapter(arrayAdapterTransplantingMethod);
 
         //get the location
         getLocationBtn.setOnClickListener(new View.OnClickListener(){
@@ -398,13 +405,13 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 if(spinnerArraySeeds[position].equals("Others")){
-                    preFilledForm.setVisibility(View.GONE);
-                    hideLinear.setVisibility(View.VISIBLE);
+                    //preFilledForm.setVisibility(View.GONE);
+                    //hideLinear.setVisibility(View.VISIBLE);
                     linearOtherVariety.setVisibility(View.VISIBLE);
                     selectedSeed = null;
                 }else{
-                    preFilledForm.setVisibility(View.VISIBLE);
-                    hideLinear.setVisibility(View.GONE);
+                    //preFilledForm.setVisibility(View.VISIBLE);
+                    //hideLinear.setVisibility(View.GONE);
                     linearOtherVariety.setVisibility(View.GONE);
                     selectedSeed = spinnerMap.get(position);
                     String source = spinnerMap.get(position).getTableName().toLowerCase();

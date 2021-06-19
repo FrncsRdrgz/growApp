@@ -97,11 +97,11 @@ public class EditSeedProductionActivity extends AppCompatActivity implements Loc
             preDataClass,preDataProgram,preDataQuantity,preDataAreaPlanted,preDataSource;
     MenuItem mList,mSent,mDeleted;
     Button getLocationBtn,btnSave;
-    AutoCompleteTextView actVariety,actOtherVariety,actSeedClass, actSeedSource,actRiceProgram,actPreviousVariety;
+    AutoCompleteTextView actVariety,actOtherVariety,actSeedClass, actSeedSource,actRiceProgram,actPreviousVariety,actTransplantingMethod;
     TextInputLayout tilVariety,tilOtherVariety,tilSeedClass,tilSeedSource, tilRiceProgram,tilDatePlanted,tilSeedClass2,tillSeedSource2,tilRiceProgram2,tilAreaPlanted,tilSeedQuantity,tilSeedBedArea,tilSeedlingAge,tilSeedLotNo,tilLabNo,tilCooperative,tilBarangay;
-    ArrayAdapter<String> arrayAdapterVariety,arrayAdapterOtherVariety,arrayAdapterSeedClass,arrayAdapterSeedSource,arrayAdapterRiceProgram,arrayAdapterPreviousVariety;
+    ArrayAdapter<String> arrayAdapterVariety,arrayAdapterOtherVariety,arrayAdapterSeedClass,arrayAdapterSeedSource,arrayAdapterRiceProgram,arrayAdapterPreviousVariety,arrayAdapterTransplantingMethod;
     TextInputEditText tetSeedClass,tetSeedSource,tetRiceProgram,tetDatePlanted,tetAreaPlanted,tetSeedQuantity,tetSeedBedArea,tetSeedlingAge,tetSeedLotNo,tetLabNo,tetCoop,tetBarangay,tetPreviousCrop;
-    ArrayList arrayListVarieties,arrayListSeedClass,arrayListSeedSource,arrayListRiceProgram;
+    ArrayList arrayListVarieties,arrayListSeedClass,arrayListSeedSource,arrayListRiceProgram,arrayListTransplantingMethod;
     FrameLayout frameLayout;
     ScrollView scrollView;
 
@@ -196,8 +196,8 @@ public class EditSeedProductionActivity extends AppCompatActivity implements Loc
         //find the view of linear layout
         l10 = (LinearLayout) findViewById(R.id.l10);
         l11 = (LinearLayout) findViewById(R.id.l11);
-        preFilledForm = (LinearLayout) findViewById(R.id.preFilledForm);
-        hideLinear = (LinearLayout) findViewById(R.id.hideLinear);
+        //preFilledForm = (LinearLayout) findViewById(R.id.preFilledForm);
+        //hideLinear = (LinearLayout) findViewById(R.id.hideLinear);
         linearOtherVariety = (LinearLayout) findViewById(R.id.linearOtherVariety);
 
         getLocationBtn = (Button) findViewById(R.id.getLocationBtn);
@@ -228,6 +228,7 @@ public class EditSeedProductionActivity extends AppCompatActivity implements Loc
         actRiceProgram = (AutoCompleteTextView) findViewById(R.id.actRiceProgram);
         actPreviousVariety = (AutoCompleteTextView) findViewById(R.id.actPreviousVariety);
         actOtherVariety = (AutoCompleteTextView) findViewById(R.id.actOtherVariety);
+        actTransplantingMethod = findViewById(R.id.actTransplantingMethod);
 
         preDataAreaPlanted = findViewById(R.id.preDataAreaPlanted);
         preDataClass = findViewById(R.id.preDataClass);
@@ -332,6 +333,13 @@ public class EditSeedProductionActivity extends AppCompatActivity implements Loc
         arrayListRiceProgram.add("RCEF");
         arrayListRiceProgram.add("NONE");
 
+        arrayListTransplantingMethod = new ArrayList<>();
+        arrayListTransplantingMethod.add("Manual Transplanting");
+        arrayListTransplantingMethod.add("Mechanical Transplanting");
+
+        arrayAdapterTransplantingMethod = new ArrayAdapter<>(getApplicationContext(),R.layout.spinner_rice_program,arrayListTransplantingMethod);
+        actTransplantingMethod.setAdapter(arrayAdapterTransplantingMethod);
+
         //set layout of the riceProgram
         arrayAdapterRiceProgram = new ArrayAdapter<>(getApplicationContext(),R.layout.spinner_rice_program,arrayListRiceProgram);
         actRiceProgram.setAdapter(arrayAdapterRiceProgram);
@@ -341,8 +349,8 @@ public class EditSeedProductionActivity extends AppCompatActivity implements Loc
         //set the data to text fields generated from database
         if(seedGrowers.getOtherseedsource().equals("Others")){
 
-            preFilledForm.setVisibility(View.GONE);
-            hideLinear.setVisibility(View.VISIBLE);
+            //preFilledForm.setVisibility(View.GONE);
+            //hideLinear.setVisibility(View.VISIBLE);
             linearOtherVariety.setVisibility(View.VISIBLE);
 
             actVariety.setText(seedGrowers.getOtherseedsource());
@@ -352,8 +360,8 @@ public class EditSeedProductionActivity extends AppCompatActivity implements Loc
             actSeedSource.setText(seedGrowers.getSeedsource());
         }
         else{
-            preFilledForm.setVisibility(View.VISIBLE);
-            hideLinear.setVisibility(View.GONE);
+            //preFilledForm.setVisibility(View.VISIBLE);
+            //hideLinear.setVisibility(View.GONE);
             linearOtherVariety.setVisibility(View.GONE);
 
             actVariety.setText(seedGrowers.getVariety());
@@ -454,13 +462,13 @@ public class EditSeedProductionActivity extends AppCompatActivity implements Loc
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 if(spinnerArraySeeds[position].equals("Others")){
-                    preFilledForm.setVisibility(View.GONE);
-                    hideLinear.setVisibility(View.VISIBLE);
-                    linearOtherVariety.setVisibility(View.VISIBLE);
+                    //preFilledForm.setVisibility(View.GONE);
+                    //hideLinear.setVisibility(View.VISIBLE);
+                    //linearOtherVariety.setVisibility(View.VISIBLE);
                     selectedSeed = null;
                 }else{
-                    preFilledForm.setVisibility(View.VISIBLE);
-                    hideLinear.setVisibility(View.GONE);
+                    //preFilledForm.setVisibility(View.VISIBLE);
+                    //hideLinear.setVisibility(View.GONE);
                     linearOtherVariety.setVisibility(View.GONE);
 
                     selectedSeed = spinnerMap.get(position);
