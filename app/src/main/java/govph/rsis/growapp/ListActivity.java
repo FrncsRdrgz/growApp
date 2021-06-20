@@ -429,14 +429,15 @@ public class ListActivity extends AppCompatActivity implements NavigationView.On
                                                                 new Response.Listener<String>() {
                                                                     @Override
                                                                     public void onResponse(String response) {
+                                                                        Log.e(TAG, "onResponse: "+response );
                                                                         if(!response.equals("Success")){
-                                                                            progressDialog.hide();
+                                                                            progressDialog.dismiss();
                                                                             new AlertDialog.Builder(ListActivity.this)
                                                                                     .setMessage("Error while sending data to server.")
                                                                                     .setNegativeButton("Try Again",null).show();
                                                                         }
                                                                         else{
-                                                                            progressDialog.hide();
+                                                                            progressDialog.dismiss();
                                                                             seedGrower.setIsSent(true);
                                                                             seedGrowerViewModel.update(seedGrower);
                                                                             new AlertDialog.Builder(ListActivity.this)
@@ -450,7 +451,7 @@ public class ListActivity extends AppCompatActivity implements NavigationView.On
                                                                 new Response.ErrorListener() {
                                                                     @Override
                                                                     public void onErrorResponse(VolleyError error) {
-                                                                        progressDialog.hide();
+                                                                        progressDialog.dismiss();
                                                                         new AlertDialog.Builder(ListActivity.this)
                                                                                 .setMessage("Error while sending data to server.")
                                                                                 .setNegativeButton("Try Again",null).show();
@@ -465,7 +466,7 @@ public class ListActivity extends AppCompatActivity implements NavigationView.On
                                                                 params.put("accredNo","");
                                                                 params.put("serial_number",seedGrower.getAccredno());
                                                                 params.put("seedSource",seedGrower.getSeedsource());
-                                                                params.put("otherSource","0");
+                                                                params.put("otherSource",seedGrower.getOtherseedsource());
                                                                 params.put("variety",seedGrower.getVariety());
                                                                 params.put("seedClass",seedGrower.getSeedclass());
                                                                 params.put("datePlanted",seedGrower.getDateplanted());
@@ -484,6 +485,7 @@ public class ListActivity extends AppCompatActivity implements NavigationView.On
                                                                 params.put("coop",seedGrower.getCoop());
                                                                 params.put("previouscrop",seedGrower.getPreviousCrop());
                                                                 params.put("previousvariety",seedGrower.getPreviousVariety());
+                                                                params.put("transplanting_method",seedGrower.getTransplanting_method());
                                                                 return params;
                                                             }
                                                         };
@@ -492,7 +494,7 @@ public class ListActivity extends AppCompatActivity implements NavigationView.On
 
                                                 }
                                                 else{
-                                                    progressDialog.hide();
+                                                    progressDialog.dismiss();
                                                     new AlertDialog.Builder(ListActivity.this)
                                                             .setTitle("No Internet Connection")
                                                             .setMessage("Internet connection is required to send form data.")
@@ -700,13 +702,11 @@ public class ListActivity extends AppCompatActivity implements NavigationView.On
     protected void onResume() {
         super.onResume();
         updateCounter();
-        Log.e(TAG, "onResume: " );
     }
 
     @Override
     protected void onPostResume() {
         super.onPostResume();
-        Log.e(TAG, "onResume: " );
     }
 
     @Override

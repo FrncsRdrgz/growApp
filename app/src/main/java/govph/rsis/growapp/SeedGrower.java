@@ -79,9 +79,12 @@ public class SeedGrower {
     @ColumnInfo (name="bought_id")
     public String bought_id;
 
+    @ColumnInfo (name="transplanting_method")
+    public String transplanting_method;
+
     public SeedGrower(String macaddress, String accredno, String latitude, String longitude, String variety, String seedsource, String otherseedsource, String seedclass, String dateplanted,
                        String areaplanted, String quantity, String seedbedarea, String seedlingage, String seedlot, String controlno, String barangay, String datecollected, Boolean isSent,
-                      String riceProgram, String coop, String previousCrop, String previousVariety){
+                      String riceProgram, String coop, String previousCrop, String previousVariety,String transplanting_method){
         this.macaddress = macaddress;
         this.accredno = accredno;
         this.latitude = latitude;
@@ -104,6 +107,7 @@ public class SeedGrower {
         this.coop = coop;
         this.previousCrop = previousCrop;
         this.previousVariety = previousVariety;
+        this.transplanting_method = transplanting_method;
     }
 
 
@@ -172,4 +176,6 @@ public class SeedGrower {
 
     public void setBought_id(String bought_id) { this.bought_id = bought_id; }
     public String getBought_id() {return bought_id;}
+
+    public String getTransplanting_method(){return transplanting_method;}
 }

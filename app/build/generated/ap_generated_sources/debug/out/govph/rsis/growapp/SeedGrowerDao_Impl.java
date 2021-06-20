@@ -39,7 +39,7 @@ public final class SeedGrowerDao_Impl implements SeedGrowerDao {
     this.__insertionAdapterOfSeedGrower = new EntityInsertionAdapter<SeedGrower>(__db) {
       @Override
       public String createQuery() {
-        return "INSERT OR ABORT INTO `SeedGrower` (`sgId`,`macaddress`,`accredno`,`latitude`,`longitude`,`variety`,`seedsource`,`otherseedsource`,`seedclass`,`dateplanted`,`areaplanted`,`quantity`,`seedbedarea`,`seedlingage`,`seedlot`,`controlno`,`barangay`,`datecollected`,`isSent`,`riceProgram`,`coop`,`previousCrop`,`previousVariety`,`bought_id`) VALUES (nullif(?, 0),?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        return "INSERT OR ABORT INTO `SeedGrower` (`sgId`,`macaddress`,`accredno`,`latitude`,`longitude`,`variety`,`seedsource`,`otherseedsource`,`seedclass`,`dateplanted`,`areaplanted`,`quantity`,`seedbedarea`,`seedlingage`,`seedlot`,`controlno`,`barangay`,`datecollected`,`isSent`,`riceProgram`,`coop`,`previousCrop`,`previousVariety`,`bought_id`,`transplanting_method`) VALUES (nullif(?, 0),?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
       }
 
       @Override
@@ -161,6 +161,11 @@ public final class SeedGrowerDao_Impl implements SeedGrowerDao {
           stmt.bindNull(24);
         } else {
           stmt.bindString(24, value.bought_id);
+        }
+        if (value.transplanting_method == null) {
+          stmt.bindNull(25);
+        } else {
+          stmt.bindString(25, value.transplanting_method);
         }
       }
     };
@@ -178,7 +183,7 @@ public final class SeedGrowerDao_Impl implements SeedGrowerDao {
     this.__updateAdapterOfSeedGrower = new EntityDeletionOrUpdateAdapter<SeedGrower>(__db) {
       @Override
       public String createQuery() {
-        return "UPDATE OR ABORT `SeedGrower` SET `sgId` = ?,`macaddress` = ?,`accredno` = ?,`latitude` = ?,`longitude` = ?,`variety` = ?,`seedsource` = ?,`otherseedsource` = ?,`seedclass` = ?,`dateplanted` = ?,`areaplanted` = ?,`quantity` = ?,`seedbedarea` = ?,`seedlingage` = ?,`seedlot` = ?,`controlno` = ?,`barangay` = ?,`datecollected` = ?,`isSent` = ?,`riceProgram` = ?,`coop` = ?,`previousCrop` = ?,`previousVariety` = ?,`bought_id` = ? WHERE `sgId` = ?";
+        return "UPDATE OR ABORT `SeedGrower` SET `sgId` = ?,`macaddress` = ?,`accredno` = ?,`latitude` = ?,`longitude` = ?,`variety` = ?,`seedsource` = ?,`otherseedsource` = ?,`seedclass` = ?,`dateplanted` = ?,`areaplanted` = ?,`quantity` = ?,`seedbedarea` = ?,`seedlingage` = ?,`seedlot` = ?,`controlno` = ?,`barangay` = ?,`datecollected` = ?,`isSent` = ?,`riceProgram` = ?,`coop` = ?,`previousCrop` = ?,`previousVariety` = ?,`bought_id` = ?,`transplanting_method` = ? WHERE `sgId` = ?";
       }
 
       @Override
@@ -301,7 +306,12 @@ public final class SeedGrowerDao_Impl implements SeedGrowerDao {
         } else {
           stmt.bindString(24, value.bought_id);
         }
-        stmt.bindLong(25, value.sgId);
+        if (value.transplanting_method == null) {
+          stmt.bindNull(25);
+        } else {
+          stmt.bindString(25, value.transplanting_method);
+        }
+        stmt.bindLong(26, value.sgId);
       }
     };
     this.__preparedStmtOfSoftDelete = new SharedSQLiteStatement(__db) {
@@ -434,6 +444,7 @@ public final class SeedGrowerDao_Impl implements SeedGrowerDao {
           final int _cursorIndexOfPreviousCrop = CursorUtil.getColumnIndexOrThrow(_cursor, "previousCrop");
           final int _cursorIndexOfPreviousVariety = CursorUtil.getColumnIndexOrThrow(_cursor, "previousVariety");
           final int _cursorIndexOfBoughtId = CursorUtil.getColumnIndexOrThrow(_cursor, "bought_id");
+          final int _cursorIndexOfTransplantingMethod = CursorUtil.getColumnIndexOrThrow(_cursor, "transplanting_method");
           final List<SeedGrower> _result = new ArrayList<SeedGrower>(_cursor.getCount());
           while(_cursor.moveToNext()) {
             final SeedGrower _item;
@@ -487,7 +498,9 @@ public final class SeedGrowerDao_Impl implements SeedGrowerDao {
             _tmpPreviousCrop = _cursor.getString(_cursorIndexOfPreviousCrop);
             final String _tmpPreviousVariety;
             _tmpPreviousVariety = _cursor.getString(_cursorIndexOfPreviousVariety);
-            _item = new SeedGrower(_tmpMacaddress,_tmpAccredno,_tmpLatitude,_tmpLongitude,_tmpVariety,_tmpSeedsource,_tmpOtherseedsource,_tmpSeedclass,_tmpDateplanted,_tmpAreaplanted,_tmpQuantity,_tmpSeedbedarea,_tmpSeedlingage,_tmpSeedlot,_tmpControlno,_tmpBarangay,_tmpDatecollected,_tmpIsSent,_tmpRiceProgram,_tmpCoop,_tmpPreviousCrop,_tmpPreviousVariety);
+            final String _tmpTransplanting_method;
+            _tmpTransplanting_method = _cursor.getString(_cursorIndexOfTransplantingMethod);
+            _item = new SeedGrower(_tmpMacaddress,_tmpAccredno,_tmpLatitude,_tmpLongitude,_tmpVariety,_tmpSeedsource,_tmpOtherseedsource,_tmpSeedclass,_tmpDateplanted,_tmpAreaplanted,_tmpQuantity,_tmpSeedbedarea,_tmpSeedlingage,_tmpSeedlot,_tmpControlno,_tmpBarangay,_tmpDatecollected,_tmpIsSent,_tmpRiceProgram,_tmpCoop,_tmpPreviousCrop,_tmpPreviousVariety,_tmpTransplanting_method);
             _item.sgId = _cursor.getInt(_cursorIndexOfSgId);
             _item.bought_id = _cursor.getString(_cursorIndexOfBoughtId);
             _result.add(_item);
@@ -622,6 +635,7 @@ public final class SeedGrowerDao_Impl implements SeedGrowerDao {
           final int _cursorIndexOfPreviousCrop = CursorUtil.getColumnIndexOrThrow(_cursor, "previousCrop");
           final int _cursorIndexOfPreviousVariety = CursorUtil.getColumnIndexOrThrow(_cursor, "previousVariety");
           final int _cursorIndexOfBoughtId = CursorUtil.getColumnIndexOrThrow(_cursor, "bought_id");
+          final int _cursorIndexOfTransplantingMethod = CursorUtil.getColumnIndexOrThrow(_cursor, "transplanting_method");
           final List<SeedGrower> _result = new ArrayList<SeedGrower>(_cursor.getCount());
           while(_cursor.moveToNext()) {
             final SeedGrower _item;
@@ -675,7 +689,9 @@ public final class SeedGrowerDao_Impl implements SeedGrowerDao {
             _tmpPreviousCrop = _cursor.getString(_cursorIndexOfPreviousCrop);
             final String _tmpPreviousVariety;
             _tmpPreviousVariety = _cursor.getString(_cursorIndexOfPreviousVariety);
-            _item = new SeedGrower(_tmpMacaddress,_tmpAccredno,_tmpLatitude,_tmpLongitude,_tmpVariety,_tmpSeedsource,_tmpOtherseedsource,_tmpSeedclass,_tmpDateplanted,_tmpAreaplanted,_tmpQuantity,_tmpSeedbedarea,_tmpSeedlingage,_tmpSeedlot,_tmpControlno,_tmpBarangay,_tmpDatecollected,_tmpIsSent,_tmpRiceProgram,_tmpCoop,_tmpPreviousCrop,_tmpPreviousVariety);
+            final String _tmpTransplanting_method;
+            _tmpTransplanting_method = _cursor.getString(_cursorIndexOfTransplantingMethod);
+            _item = new SeedGrower(_tmpMacaddress,_tmpAccredno,_tmpLatitude,_tmpLongitude,_tmpVariety,_tmpSeedsource,_tmpOtherseedsource,_tmpSeedclass,_tmpDateplanted,_tmpAreaplanted,_tmpQuantity,_tmpSeedbedarea,_tmpSeedlingage,_tmpSeedlot,_tmpControlno,_tmpBarangay,_tmpDatecollected,_tmpIsSent,_tmpRiceProgram,_tmpCoop,_tmpPreviousCrop,_tmpPreviousVariety,_tmpTransplanting_method);
             _item.sgId = _cursor.getInt(_cursorIndexOfSgId);
             _item.bought_id = _cursor.getString(_cursorIndexOfBoughtId);
             _result.add(_item);
@@ -730,6 +746,7 @@ public final class SeedGrowerDao_Impl implements SeedGrowerDao {
       final int _cursorIndexOfPreviousCrop = CursorUtil.getColumnIndexOrThrow(_cursor, "previousCrop");
       final int _cursorIndexOfPreviousVariety = CursorUtil.getColumnIndexOrThrow(_cursor, "previousVariety");
       final int _cursorIndexOfBoughtId = CursorUtil.getColumnIndexOrThrow(_cursor, "bought_id");
+      final int _cursorIndexOfTransplantingMethod = CursorUtil.getColumnIndexOrThrow(_cursor, "transplanting_method");
       final SeedGrower _result;
       if(_cursor.moveToFirst()) {
         final String _tmpMacaddress;
@@ -782,7 +799,9 @@ public final class SeedGrowerDao_Impl implements SeedGrowerDao {
         _tmpPreviousCrop = _cursor.getString(_cursorIndexOfPreviousCrop);
         final String _tmpPreviousVariety;
         _tmpPreviousVariety = _cursor.getString(_cursorIndexOfPreviousVariety);
-        _result = new SeedGrower(_tmpMacaddress,_tmpAccredno,_tmpLatitude,_tmpLongitude,_tmpVariety,_tmpSeedsource,_tmpOtherseedsource,_tmpSeedclass,_tmpDateplanted,_tmpAreaplanted,_tmpQuantity,_tmpSeedbedarea,_tmpSeedlingage,_tmpSeedlot,_tmpControlno,_tmpBarangay,_tmpDatecollected,_tmpIsSent,_tmpRiceProgram,_tmpCoop,_tmpPreviousCrop,_tmpPreviousVariety);
+        final String _tmpTransplanting_method;
+        _tmpTransplanting_method = _cursor.getString(_cursorIndexOfTransplantingMethod);
+        _result = new SeedGrower(_tmpMacaddress,_tmpAccredno,_tmpLatitude,_tmpLongitude,_tmpVariety,_tmpSeedsource,_tmpOtherseedsource,_tmpSeedclass,_tmpDateplanted,_tmpAreaplanted,_tmpQuantity,_tmpSeedbedarea,_tmpSeedlingage,_tmpSeedlot,_tmpControlno,_tmpBarangay,_tmpDatecollected,_tmpIsSent,_tmpRiceProgram,_tmpCoop,_tmpPreviousCrop,_tmpPreviousVariety,_tmpTransplanting_method);
         _result.sgId = _cursor.getInt(_cursorIndexOfSgId);
         _result.bought_id = _cursor.getString(_cursorIndexOfBoughtId);
       } else {

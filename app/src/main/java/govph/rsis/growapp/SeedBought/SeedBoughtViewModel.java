@@ -34,8 +34,8 @@ public class SeedBoughtViewModel extends AndroidViewModel {
     public SeedBought seedBought(int id){
         return seedBought = seedBoughtRepository.seedBought(id);
     }
-    public List<SeedBought> getAllSeedBought(String serialNum){
-        return allSeedBought = seedBoughtRepository.getAllSeedBought(serialNum);
+    public List<SeedBought> getAllSeedBought(String serialNum,String station_name){
+        return allSeedBought = seedBoughtRepository.getAllSeedBought(serialNum,station_name);
     }
 
 }

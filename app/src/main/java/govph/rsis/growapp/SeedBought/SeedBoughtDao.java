@@ -12,8 +12,8 @@ import java.util.List;
 @Dao
 public interface SeedBoughtDao {
 
-    @Query("SELECT * from seedbought WHERE quantity !=usedQuantity AND serialNum =:serialNum ORDER BY id")
-    List<SeedBought> getSeedBought(String serialNum);
+    @Query("SELECT * from seedbought WHERE quantity !=usedQuantity AND serialNum =:serialNum AND station_name =:station_name ORDER BY id")
+    List<SeedBought> getSeedBought(String serialNum,String station_name);
 
     @Query("SELECT * from seedbought WHERE id=:id")
     SeedBought getById(int id);

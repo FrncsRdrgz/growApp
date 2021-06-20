@@ -26,11 +26,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.amitshekhar.DebugDB;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.github.mikephil.charting.charts.BarChart;
@@ -71,7 +72,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     RequestQueue queue;
     TextView headerVersion,headerName,headerSerial,homeTvVersion,tvList,tvSent,tvDeleted,homeTvCollected,homeTvSent,homeTvDeleted,homeActUserName,homeActSerialNum,toolBarLogout;
     MenuItem mList,mSent,mDeleted;
-    LinearLayout linearList,linearAdd,linearAbout,linearSent,linearSyncData;
+    LinearLayout linearList,linearAdd,linearAbout,linearSent,linearSyncData,linearLogout;
     Intent intent;
     User user;
     AlertDialog.Builder builder;
@@ -87,14 +88,14 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         toolbar = findViewById(R.id.main_toolbar);
         setSupportActionBar(toolbar);
-
+        inflater = getLayoutInflater();
         builder = new AlertDialog.Builder(this);
         dialogView = inflater.inflate(R.layout.loading_template,null);
         builder.setCancelable(false);
         builder.setView(dialogView);
 
         dialog = builder.create();
-        dialog.show();
+
         userViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
         seedGrowerViewModel = ViewModelProviders.of(this).get(SeedGrowerViewModel.class);
         seedBoughtViewModel = ViewModelProviders.of(this).get(SeedBoughtViewModel.class);
@@ -104,7 +105,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         countSent = seedGrowerViewModel.getCountSent(user.getSerialNum());
         countDeleted = seedGrowerViewModel.getCountDeleted(user.getSerialNum());
 
-        Log.e(TAG, "collected: "+ DebugDB.getAddressLog());
+
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
         headerView = navigationView.getHeaderView(0);
@@ -125,6 +126,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         linearAdd = findViewById(R.id.linearAdd);
         linearSent = findViewById(R.id.linearSent);
         linearSyncData = findViewById(R.id.linearSyncData);
+        linearLogout = findViewById(R.id.linearLogout);
 
         mList = navigationView.getMenu().findItem(R.id.listBtn);
         mSent = navigationView.getMenu().findItem(R.id.sentItemBtn);
@@ -230,12 +232,19 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         linearSyncData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                dialog.show();
+                getBoughtData(user.getSerialNum());
             }
         });
         toolBarLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                logout();
+            }
+        });
+        linearLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 logout();
             }
         });
@@ -318,106 +327,56 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         view.setText(count > 0 ? String.valueOf(count) : null);
     }
 
-    private void getUserLoginDetails(String scannedValue){
+    private void getBoughtData(String scannedValue){
         queue = Volley.newRequestQueue(HomeActivity.this);
-        String url = DecVar.userCredentialApiUrl()+'/'+scannedValue;
+        String url = DecVar.getSeedBought()+'/'+scannedValue;
 
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                User user = new User();
-
-                SeedGrowerDatabase database = SeedGrowerDatabase.getInstance(HomeActivity.this);
-                    try {
-                        JSONObject json = new JSONObject(response);
-                        Log.e(TAG, "onResponse: "+json );
-                        if(json != null || json.length() > 0){
-                            String fullName = json.getString("fullName");
-                            String accredArea = json.getString("accredArea");
-                            String serialNum = json.getString("serialNum");
-                            String data = json.getString("data");
-                            int isExisting = userViewModel.isExisting(serialNum);
-
-                            JSONArray jsonArray = json.getJSONArray("data");
-                            if(isExisting > 0 ){
-                                userViewModel.getUpdateUserStatus("LoggedIn",serialNum);
-                            }else{
-                                user.setSerialNum(serialNum);
-                                user.setFullname(fullName);
-                                user.setAccredArea(accredArea);
-                                user.setLoggedIn("LoggedIn");
-                                userViewModel.insert(user);
-                            }
-
-                            if(jsonArray.length() != 0){
-                                for(int i = 0; i < jsonArray.length(); i++){
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        Log.e(TAG, "onResponse: "+response );
+                        try{
+                            if(response.length() != 0){
+                                for (int i = 0; i < response.length(); i++) {
+                                    JSONObject jsonObject = response.getJSONObject(i);
                                     SeedBought seedBought = new SeedBought();
-                                    JSONObject jsonObject = jsonArray.getJSONObject(i);
-
                                     String palletCode = jsonObject.getString("palletCode");
                                     String variety = jsonObject.getString("variety");
                                     String seedClass = jsonObject.getString("seedClass");
                                     String riceProgram = jsonObject.getString("riceProgram");
                                     String table_name = jsonObject.getString("table_name");
+                                    String station_name = jsonObject.getString("station_name");
                                     int quantity = jsonObject.getInt("quantity");
                                     double area = jsonObject.getDouble("area");
 
-
-                                    seedBought.setSerialNum(serialNum);
+                                    seedBought.setSerialNum(user.getSerialNum());
                                     seedBought.setVariety(variety);
                                     seedBought.setSeedClass(seedClass);
                                     seedBought.setPalletCode(palletCode);
                                     seedBought.setQuantity(quantity);
                                     seedBought.setUsedQuantity(0);
                                     seedBought.setTableName(table_name);
+                                    seedBought.setStation_name(station_name);
                                     seedBought.setArea(area);
                                     seedBought.setRiceProgram(riceProgram);
 
                                     seedBoughtViewModel.insert(seedBought);
                                 }
+
                             }
-
-                            /*for(int i = 0; i < json.length(); i++){
-                                JSONObject jsonObject = json.getJSONObject(i);
-                                String fullName = jsonObject.getString("fullName");
-                                String accredArea = jsonObject.getString("accredArea");
-                                String serialNum = jsonObject.getString("serialNum");
-                                user.setSerialNum(serialNum);
-                                int isExisting = userViewModel.isExisting(serialNum);
-
-
-                                if(isExisting > 0 ){
-                                    userViewModel.getUpdateUserStatus("LoggedIn",serialNum);
-                                }else{
-                                    user.setFullname(fullName);
-                                    user.setAccredArea(accredArea);
-                                    user.setLoggedIn("LoggedIn");
-                                    userViewModel.insert(user);
-                                }
-
-                            }*/
-                            //if(userViewModel.isExisting(user.serialNum);)
-                            dialog.dismiss();
-                        }else{
-                            Toast.makeText(HomeActivity.this, "No Seed Grower details.", Toast.LENGTH_SHORT).show();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                        dialog.dismiss();
                     }
-
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                dialog.dismiss();
-                Log.e(TAG, "onErrorResponse: "+error );
-                Toast.makeText(HomeActivity.this, "Error", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        queue.add(stringRequest);
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e(TAG, "onErrorResponse: "+error );
+                    }
+                });
+        queue.add(jsonArrayRequest);
         //Toast.makeText(this, "scannedValue: "+scannedValue, Toast.LENGTH_SHORT).show();
     }
 }

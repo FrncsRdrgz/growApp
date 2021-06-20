@@ -31,8 +31,8 @@ public class SeedBoughtRepository {
         return returnQuantity = seedBoughtDao.returnQuantity(serialNum, id, usedQuantity);
     }
 
-    public List<SeedBought> getAllSeedBought(String serialNum){
-        return allSeedBought = seedBoughtDao.getSeedBought(serialNum);
+    public List<SeedBought> getAllSeedBought(String serialNum,String station_name){
+        return allSeedBought = seedBoughtDao.getSeedBought(serialNum, station_name);
     }
 
     public SeedBought seedBought(int id){

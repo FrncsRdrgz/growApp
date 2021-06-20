@@ -98,9 +98,10 @@ public class EditSeedProductionActivity extends AppCompatActivity implements Loc
     MenuItem mList,mSent,mDeleted;
     Button getLocationBtn,btnSave;
     AutoCompleteTextView actVariety,actOtherVariety,actSeedClass, actSeedSource,actRiceProgram,actPreviousVariety,actTransplantingMethod;
-    TextInputLayout tilVariety,tilOtherVariety,tilSeedClass,tilSeedSource, tilRiceProgram,tilDatePlanted,tilSeedClass2,tillSeedSource2,tilRiceProgram2,tilAreaPlanted,tilSeedQuantity,tilSeedBedArea,tilSeedlingAge,tilSeedLotNo,tilLabNo,tilCooperative,tilBarangay;
+    TextInputLayout tilVariety,tilOtherVariety,tilSeedClass,tilSeedSource, tilRiceProgram,tilDatePlanted,til_other_seed_source,tilSeedClass2,tillSeedSource2,tilRiceProgram2,tilAreaPlanted,tilSeedQuantity,tilSeedBedArea,tilSeedlingAge,tilSeedLotNo,tilLabNo,tilCooperative,tilBarangay;
     ArrayAdapter<String> arrayAdapterVariety,arrayAdapterOtherVariety,arrayAdapterSeedClass,arrayAdapterSeedSource,arrayAdapterRiceProgram,arrayAdapterPreviousVariety,arrayAdapterTransplantingMethod;
-    TextInputEditText tetSeedClass,tetSeedSource,tetRiceProgram,tetDatePlanted,tetAreaPlanted,tetSeedQuantity,tetSeedBedArea,tetSeedlingAge,tetSeedLotNo,tetLabNo,tetCoop,tetBarangay,tetPreviousCrop;
+    TextInputEditText tetSeedClass,tetSeedSource,tetRiceProgram,tetDatePlanted,tetAreaPlanted,tetSeedQuantity,tetSeedBedArea,tetSeedlingAge,tetSeedLotNo,tetLabNo,
+            tetCoop,tetBarangay,tetPreviousCrop,tetOtherSeedSource;
     ArrayList arrayListVarieties,arrayListSeedClass,arrayListSeedSource,arrayListRiceProgram,arrayListTransplantingMethod;
     FrameLayout frameLayout;
     ScrollView scrollView;
@@ -119,6 +120,7 @@ public class EditSeedProductionActivity extends AppCompatActivity implements Loc
     View headerView;
     List<SeedBought> seedBought;
     SeedBought selectedSeed;
+    HashMap<Integer, SeedBought> spinnerMap;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -221,6 +223,7 @@ public class EditSeedProductionActivity extends AppCompatActivity implements Loc
         tilRiceProgram = (TextInputLayout) findViewById(R.id.tilRiceProgram);
         tilDatePlanted = (TextInputLayout) findViewById(R.id.tilDatePlanted);
         tilOtherVariety = (TextInputLayout) findViewById(R.id.tilOtherVariety);
+        til_other_seed_source = findViewById(R.id.til_other_seed_source);
 
         actSeedClass = (AutoCompleteTextView) findViewById(R.id.actSeedClass);
         actVariety = (AutoCompleteTextView) findViewById(R.id.actVariety);
@@ -246,6 +249,7 @@ public class EditSeedProductionActivity extends AppCompatActivity implements Loc
         tetCoop = (TextInputEditText) findViewById(R.id.tetCoop);
         tetBarangay = (TextInputEditText) findViewById(R.id.tetBarangay);
         tetPreviousCrop = (TextInputEditText) findViewById(R.id.tetPreviousCrop);
+        tetOtherSeedSource = findViewById(R.id.tetOtherSeedSource);
 
         materialBuilder = MaterialDatePicker.Builder.datePicker();
         materialBuilder.setTitleText("Select Date Planted");
@@ -267,7 +271,7 @@ public class EditSeedProductionActivity extends AppCompatActivity implements Loc
 
         }
 
-        seedBought = seedBoughtViewModel.getAllSeedBought(user.getSerialNum());
+        /*seedBought = seedBoughtViewModel.getAllSeedBought(user.getSerialNum(),"ces");
         //int counter = seedBought.size() + 1;
         //Log.e(TAG, "Counter: "+counter );
         final String[] spinnerArraySeeds = new String[seedBought.size()+1];
@@ -280,11 +284,11 @@ public class EditSeedProductionActivity extends AppCompatActivity implements Loc
         spinnerArraySeeds[seedBought.size()] = "Others";
         arrayAdapterVariety = new ArrayAdapter<>(getApplicationContext(),R.layout.spinner_seed_variety,spinnerArraySeeds);
         actVariety.setAdapter(arrayAdapterVariety);
-        actVariety.setThreshold(1);
+        actVariety.setThreshold(1);*/
 
         //Searchable Spinners here
         //Populate the ArrayListVarieties;
-        List<Seeds> seeds = database.seedsDao().getSeeds();
+        /*List<Seeds> seeds = database.seedsDao().getSeeds();
         ArrayList arrayListOtherVariety = new ArrayList<>();
         for(Seeds s : seeds){
             arrayListOtherVariety.add(s.getVariety());
@@ -295,7 +299,7 @@ public class EditSeedProductionActivity extends AppCompatActivity implements Loc
         actOtherVariety.setAdapter(arrayAdapterOtherVariety);
         actOtherVariety.setThreshold(1);
         actPreviousVariety.setAdapter(arrayAdapterPreviousVariety);
-        actPreviousVariety.setThreshold(1);
+        actPreviousVariety.setThreshold(1);*/
 
         //populate the Arraylist of seed class
         arrayListSeedClass = new ArrayList<>();
@@ -345,9 +349,8 @@ public class EditSeedProductionActivity extends AppCompatActivity implements Loc
         actRiceProgram.setAdapter(arrayAdapterRiceProgram);
         actRiceProgram.setThreshold(1);
 
-
         //set the data to text fields generated from database
-        if(seedGrowers.getOtherseedsource().equals("Others")){
+        /*if(seedGrowers.getOtherseedsource().equals("Others")){
 
             //preFilledForm.setVisibility(View.GONE);
             //hideLinear.setVisibility(View.VISIBLE);
@@ -368,12 +371,35 @@ public class EditSeedProductionActivity extends AppCompatActivity implements Loc
             preDataProgram.setText(seedGrowers.getRiceProgram());
             preDataClass.setText(seedGrowers.getSeedclass());
             preDataSource.setText(seedGrowers.getSeedsource());
+        }*/
+
+        if(seedGrowers.getSeedsource().equals("Others")){
+            til_other_seed_source.setVisibility(View.VISIBLE);
+            tetOtherSeedSource.setText(seedGrowers.getOtherseedsource());
+
+            List<Seeds> seeds = database.seedsDao().getSeeds();
+            arrayListVarieties = new ArrayList<>();
+            for(Seeds s : seeds){
+                String seed = s.getVariety().replaceAll("\\s","").toLowerCase();
+                arrayListVarieties.add(s.getVariety());
+            }
+            //set layout of the variety
+            arrayAdapterOtherVariety = new ArrayAdapter<>(getApplicationContext(),R.layout.spinner_seed_source,arrayListVarieties);
+            actVariety.setAdapter(arrayAdapterOtherVariety);
+            actVariety.setThreshold(2);
+            til_other_seed_source.setVisibility(View.VISIBLE);
         }
+
+        actSeedSource.setText(seedGrowers.getSeedsource(),false);
+        actVariety.setText(seedGrowers.getVariety(),false);
+        actRiceProgram.setText(seedGrowers.getRiceProgram(),false);
+        actSeedClass.setText(seedGrowers.getSeedclass(),false);
+        actTransplantingMethod.setText(seedGrowers.getTransplanting_method(),false);
 
         tvLongitude.setText(seedGrowers.getLongitude());
         tvLatitude.setText(seedGrowers.getLatitude());
 
-        actPreviousVariety.setText(seedGrowers.getPreviousVariety());
+        actPreviousVariety.setText(seedGrowers.getPreviousVariety(),false);
         tetAreaPlanted.setText(seedGrowers.getAreaplanted());
         tetBarangay.setText(seedGrowers.getBarangay());
         tetCoop.setText(seedGrowers.getCoop());
@@ -457,7 +483,82 @@ public class EditSeedProductionActivity extends AppCompatActivity implements Loc
             }
         });
 
+        actSeedSource.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                actVariety.clearListSelection();
+                actVariety.setText("");
+                actSeedClass.setText("");
+                actRiceProgram.setText("");
+                if(arrayListSeedSource.get(position).equals("Others")){
+                    List<Seeds> seeds = database.seedsDao().getSeeds();
+                    arrayListVarieties = new ArrayList<>();
+                    for(Seeds s : seeds){
+                        String seed = s.getVariety().replaceAll("\\s","").toLowerCase();
+                        arrayListVarieties.add(s.getVariety());
+                    }
+                    //set layout of the variety
+                    arrayAdapterOtherVariety = new ArrayAdapter<>(getApplicationContext(),R.layout.spinner_seed_source,arrayListVarieties);
+                    actVariety.setAdapter(arrayAdapterOtherVariety);
+                    actVariety.setThreshold(2);
+                    til_other_seed_source.setVisibility(View.VISIBLE);
+
+                }else{
+                    String station_name = checkStationName(arrayListSeedSource.get(position).toString());
+
+                    seedBought = seedBoughtViewModel.getAllSeedBought(user.getSerialNum(),station_name);
+                    final String[] spinnerArraySeeds = new String[seedBought.size()];
+                    spinnerMap = new HashMap<Integer, SeedBought>();
+                    arrayListVarieties = new ArrayList<>();
+                    for (int i = 0; i< seedBought.size(); i++){
+                        spinnerMap.put(i,seedBought.get(i));
+                        spinnerArraySeeds[i] = seedBought.get(i).getVariety();
+                    }
+                    arrayAdapterVariety = new ArrayAdapter<>(getApplicationContext(),R.layout.spinner_seed_variety,spinnerArraySeeds);
+                    actVariety.setAdapter(arrayAdapterVariety);
+                    actVariety.setThreshold(2);
+                    til_other_seed_source.setVisibility(View.GONE);
+                }
+            }
+        });
+
         actVariety.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                actSeedClass.setText("");
+                if(actSeedSource.getText().toString().equals("Others")){
+                    //preFilledForm.setVisibility(View.GONE);
+                    //hideLinear.setVisibility(View.VISIBLE);
+                    //linearOtherVariety.setVisibility(View.VISIBLE);
+                    selectedSeed = null;
+                }else{
+                    //preFilledForm.setVisibility(View.VISIBLE);
+                    //hideLinear.setVisibility(View.GONE);
+                    //linearOtherVariety.setVisibility(View.GONE);
+                    selectedSeed = spinnerMap.get(position);
+                    Log.e(TAG, "variety: "+selectedSeed.getVariety() );
+                    actRiceProgram.setText(selectedSeed.getRiceProgram(),false);
+                    if(selectedSeed.getSeedClass().equals("RS")){
+                        actSeedClass.setText("Registered",false);
+                        //preDataClass.setText("Registered");
+                    }
+                    if(selectedSeed.getSeedClass().equals("FS")){
+                        actSeedClass.setText("Registered",false);
+                        //preDataClass.setText("Foundation");
+                    }
+
+                    /*int quantity = spinnerMap.get(position).getQuantity() - spinnerMap.get(position).getUsedQuantity();
+                    preDataProgram.setText(spinnerMap.get(position).getRiceProgram());
+                    double area =(double) quantity/40;
+
+                    preDataAreaPlanted.setText(String.valueOf(area)+"ha");
+                    preDataQuantity.setText(String.valueOf(quantity)+"kg(s)");*/
+                }
+
+            }
+        });
+
+        /*actVariety.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
@@ -521,7 +622,7 @@ public class EditSeedProductionActivity extends AppCompatActivity implements Loc
                 }
 
             }
-        });
+        });*/
         //find view of buttons
         /*scanBtn = (Button) findViewById(R.id.scanBtn);
         scanBtn.setClickable(false);
@@ -769,7 +870,12 @@ public class EditSeedProductionActivity extends AppCompatActivity implements Loc
         String accredno = user.getSerialNum();
         String latitude = tvLatitude.getText().toString();
         String longitude = tvLongitude.getText().toString();
-        String seedVariety = "";
+        String seedVariety = actVariety.getText().toString().trim();
+        String seedSource = actSeedSource.getText().toString().trim();
+        String otherSeedSource = tetOtherSeedSource.getText().toString().trim();
+        String riceProgram = actRiceProgram.getText().toString().trim();
+        String seedClass = actSeedClass.getText().toString().trim();
+        /*String seedVariety = "";
         String seedSource = "";
         String otherSeedSource = "";
         String seedClass = "";
@@ -789,7 +895,7 @@ public class EditSeedProductionActivity extends AppCompatActivity implements Loc
             otherSeedSource = "";
             seedClass = preDataClass.getText().toString();
             riceProgram = preDataProgram.getText().toString();
-        }
+        }*/
         String areaPlanted = tetAreaPlanted.getText().toString();
         String seedQuantity = tetSeedQuantity.getText().toString();
         String seedbedArea = tetSeedBedArea.getText().toString();
@@ -802,12 +908,11 @@ public class EditSeedProductionActivity extends AppCompatActivity implements Loc
         Boolean isSent = false;
         String previousCrop = tetPreviousCrop.getText().toString();
         String previousVariety = actPreviousVariety.getText().toString();
-
-        Log.e(TAG, "Accreditation number: "+dateplanted );
+        String transplanting_method = actTransplantingMethod.getText().toString().trim();
 
             seedGrowerViewModel = ViewModelProviders.of(this).get(SeedGrowerViewModel.class);
             SeedGrower seedGrower = new SeedGrower(uniqueid,accredno,latitude,longitude,seedVariety,seedSource,otherSeedSource,seedClass,dateplanted,
-                    areaPlanted,seedQuantity,seedbedArea,seedlingAge,seedLot,controlNo,barangay,datecollected,isSent,riceProgram,coop,previousCrop,previousVariety);
+                    areaPlanted,seedQuantity,seedbedArea,seedlingAge,seedLot,controlNo,barangay,datecollected,isSent,riceProgram,coop,previousCrop,previousVariety,transplanting_method);
             seedGrower.setSgId(id);
             seedGrowerViewModel.update(seedGrower);
             finish();
@@ -1130,5 +1235,31 @@ public class EditSeedProductionActivity extends AppCompatActivity implements Loc
             startActivity(intent);
             finish();
         }
+    }
+
+    public String checkStationName(String station_name){
+        switch (station_name){
+            case "PhilRice CES - Muñoz":
+                return "ces";
+            case "PhilRice - Batac":
+                return "bes";
+            case "PhilRice - Midsayap":
+                return "mes";
+            case "PhilRice - Los Baños":
+                return "lbs";
+            case "PhilRice - Agusan":
+                return "aes";
+            case "PhilRice - Isabela":
+                return "cves";
+            case "PhilRice - Negros":
+                return "prn";
+            case "PhilRice - Bicol":
+                return "bies";
+            case "PhilRice - CMU":
+                return "cmu";
+            case "PhilRice - Zamboanga":
+                return "zss";
+        }
+        return null;
     }
 }

@@ -37,15 +37,15 @@ public final class SeedGrowerDatabase_Impl extends SeedGrowerDatabase {
 
   @Override
   protected SupportSQLiteOpenHelper createOpenHelper(DatabaseConfiguration configuration) {
-    final SupportSQLiteOpenHelper.Callback _openCallback = new RoomOpenHelper(configuration, new RoomOpenHelper.Delegate(9) {
+    final SupportSQLiteOpenHelper.Callback _openCallback = new RoomOpenHelper(configuration, new RoomOpenHelper.Delegate(11) {
       @Override
       public void createAllTables(SupportSQLiteDatabase _db) {
-        _db.execSQL("CREATE TABLE IF NOT EXISTS `SeedGrower` (`sgId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `macaddress` TEXT, `accredno` TEXT, `latitude` TEXT, `longitude` TEXT, `variety` TEXT, `seedsource` TEXT, `otherseedsource` TEXT, `seedclass` TEXT, `dateplanted` TEXT, `areaplanted` TEXT, `quantity` TEXT, `seedbedarea` TEXT, `seedlingage` TEXT, `seedlot` TEXT, `controlno` TEXT, `barangay` TEXT, `datecollected` TEXT, `isSent` INTEGER, `riceProgram` TEXT, `coop` TEXT, `previousCrop` TEXT, `previousVariety` TEXT, `bought_id` TEXT)");
+        _db.execSQL("CREATE TABLE IF NOT EXISTS `SeedGrower` (`sgId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `macaddress` TEXT, `accredno` TEXT, `latitude` TEXT, `longitude` TEXT, `variety` TEXT, `seedsource` TEXT, `otherseedsource` TEXT, `seedclass` TEXT, `dateplanted` TEXT, `areaplanted` TEXT, `quantity` TEXT, `seedbedarea` TEXT, `seedlingage` TEXT, `seedlot` TEXT, `controlno` TEXT, `barangay` TEXT, `datecollected` TEXT, `isSent` INTEGER, `riceProgram` TEXT, `coop` TEXT, `previousCrop` TEXT, `previousVariety` TEXT, `bought_id` TEXT, `transplanting_method` TEXT)");
         _db.execSQL("CREATE TABLE IF NOT EXISTS `Seeds` (`seed_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `variety` TEXT)");
         _db.execSQL("CREATE TABLE IF NOT EXISTS `User` (`userId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `serialNum` TEXT, `fullname` TEXT, `accredArea` TEXT, `isLoggedIn` TEXT)");
-        _db.execSQL("CREATE TABLE IF NOT EXISTS `SeedBought` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `serialNum` TEXT, `palletCode` TEXT, `variety` TEXT, `seedClass` TEXT, `riceProgram` TEXT, `quantity` INTEGER NOT NULL, `area` REAL NOT NULL, `usedQuantity` INTEGER NOT NULL, `tableName` TEXT)");
+        _db.execSQL("CREATE TABLE IF NOT EXISTS `SeedBought` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `serialNum` TEXT, `palletCode` TEXT, `variety` TEXT, `seedClass` TEXT, `riceProgram` TEXT, `quantity` INTEGER NOT NULL, `area` REAL NOT NULL, `usedQuantity` INTEGER NOT NULL, `tableName` TEXT, `station_name` TEXT)");
         _db.execSQL("CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)");
-        _db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'cc4228870e062c94e20b304845bc454a')");
+        _db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '7a079fa6ec5369dbeacbdcefecc92d2b')");
       }
 
       @Override
@@ -92,7 +92,7 @@ public final class SeedGrowerDatabase_Impl extends SeedGrowerDatabase {
 
       @Override
       protected RoomOpenHelper.ValidationResult onValidateSchema(SupportSQLiteDatabase _db) {
-        final HashMap<String, TableInfo.Column> _columnsSeedGrower = new HashMap<String, TableInfo.Column>(24);
+        final HashMap<String, TableInfo.Column> _columnsSeedGrower = new HashMap<String, TableInfo.Column>(25);
         _columnsSeedGrower.put("sgId", new TableInfo.Column("sgId", "INTEGER", true, 1, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsSeedGrower.put("macaddress", new TableInfo.Column("macaddress", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsSeedGrower.put("accredno", new TableInfo.Column("accredno", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
@@ -117,6 +117,7 @@ public final class SeedGrowerDatabase_Impl extends SeedGrowerDatabase {
         _columnsSeedGrower.put("previousCrop", new TableInfo.Column("previousCrop", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsSeedGrower.put("previousVariety", new TableInfo.Column("previousVariety", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsSeedGrower.put("bought_id", new TableInfo.Column("bought_id", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsSeedGrower.put("transplanting_method", new TableInfo.Column("transplanting_method", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
         final HashSet<TableInfo.ForeignKey> _foreignKeysSeedGrower = new HashSet<TableInfo.ForeignKey>(0);
         final HashSet<TableInfo.Index> _indicesSeedGrower = new HashSet<TableInfo.Index>(0);
         final TableInfo _infoSeedGrower = new TableInfo("SeedGrower", _columnsSeedGrower, _foreignKeysSeedGrower, _indicesSeedGrower);
@@ -153,7 +154,7 @@ public final class SeedGrowerDatabase_Impl extends SeedGrowerDatabase {
                   + " Expected:\n" + _infoUser + "\n"
                   + " Found:\n" + _existingUser);
         }
-        final HashMap<String, TableInfo.Column> _columnsSeedBought = new HashMap<String, TableInfo.Column>(10);
+        final HashMap<String, TableInfo.Column> _columnsSeedBought = new HashMap<String, TableInfo.Column>(11);
         _columnsSeedBought.put("id", new TableInfo.Column("id", "INTEGER", true, 1, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsSeedBought.put("serialNum", new TableInfo.Column("serialNum", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsSeedBought.put("palletCode", new TableInfo.Column("palletCode", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
@@ -164,6 +165,7 @@ public final class SeedGrowerDatabase_Impl extends SeedGrowerDatabase {
         _columnsSeedBought.put("area", new TableInfo.Column("area", "REAL", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsSeedBought.put("usedQuantity", new TableInfo.Column("usedQuantity", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsSeedBought.put("tableName", new TableInfo.Column("tableName", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsSeedBought.put("station_name", new TableInfo.Column("station_name", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
         final HashSet<TableInfo.ForeignKey> _foreignKeysSeedBought = new HashSet<TableInfo.ForeignKey>(0);
         final HashSet<TableInfo.Index> _indicesSeedBought = new HashSet<TableInfo.Index>(0);
         final TableInfo _infoSeedBought = new TableInfo("SeedBought", _columnsSeedBought, _foreignKeysSeedBought, _indicesSeedBought);
@@ -175,7 +177,7 @@ public final class SeedGrowerDatabase_Impl extends SeedGrowerDatabase {
         }
         return new RoomOpenHelper.ValidationResult(true, null);
       }
-    }, "cc4228870e062c94e20b304845bc454a", "d9da57ca52434488ccaf2e0bf9d98d69");
+    }, "7a079fa6ec5369dbeacbdcefecc92d2b", "c81839ad4018945b5a28bbb20f27d0d5");
     final SupportSQLiteOpenHelper.Configuration _sqliteConfig = SupportSQLiteOpenHelper.Configuration.builder(configuration.context)
         .name(configuration.name)
         .callback(_openCallback)

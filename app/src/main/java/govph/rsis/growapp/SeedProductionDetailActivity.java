@@ -105,10 +105,10 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
             preDataClass,preDataProgram,preDataQuantity,preDataAreaPlanted,preDataSource;
     Button getLocationBtn,btnSave;
     AutoCompleteTextView actVariety,actOtherVariety,actSeedClass, actSeedSource,actRiceProgram,actPreviousVariety,actTransplantingMethod;
-    TextInputLayout tilVariety,tilOtherVariety,tilSeedClass,tilSeedSource, tilRiceProgram,tilDatePlanted;
+    TextInputLayout tilVariety,til_other_seed_source,tilSeedClass,tilSeedSource, tilRiceProgram,tilDatePlanted;
     ArrayAdapter<String> arrayAdapterVariety,arrayAdapterSeedClass,arrayAdapterSeedSource,arrayAdapterRiceProgram,arrayAdapterPreviousVariety,arrayAdapterOtherVariety,arrayAdapterTransplantingMethod;
     TextInputEditText tetDatePlanted,tetAreaPlanted,tetSeedQuantity,tetSeedBedArea,tetSeedlingAge,tetSeedLotNo,tetLabNo,tetCoop,
-            tetBarangay,tetPreviousCrop;
+            tetBarangay,tetPreviousCrop,tetOtherSeedSource;
     MenuItem mList,mSent,mDeleted;
     ArrayList arrayListVarieties,arrayListSeedClass,arrayListSeedSource,arrayListRiceProgram,arrayListTransplantingMethod;
 
@@ -123,6 +123,7 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
     User user;
     List<SeedBought> seedBought;
     SeedBought selectedSeed;
+    HashMap<Integer, SeedBought> spinnerMap;
     View headerView;
 
     @Override
@@ -214,7 +215,7 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
         tilSeedSource = (TextInputLayout) findViewById(R.id.tilSeedSource);
         tilRiceProgram = (TextInputLayout) findViewById(R.id.tilRiceProgram);
         tilDatePlanted = (TextInputLayout) findViewById(R.id.tilDatePlanted);
-
+        til_other_seed_source = findViewById(R.id.til_other_seed_source);
 
         actSeedClass = (AutoCompleteTextView) findViewById(R.id.actSeedClass);
         actVariety = (AutoCompleteTextView) findViewById(R.id.actVariety);
@@ -235,6 +236,7 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
         tetCoop = (TextInputEditText) findViewById(R.id.tetCoop);
         tetBarangay = (TextInputEditText) findViewById(R.id.tetBarangay);
         tetPreviousCrop = (TextInputEditText) findViewById(R.id.tetPreviousCrop);
+        tetOtherSeedSource = findViewById(R.id.tetOtherSeedSource);
 
         materialBuilder = MaterialDatePicker.Builder.datePicker();
         materialBuilder.setTitleText("Select Date Planted");
@@ -267,41 +269,19 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
                 scanFunction();
             }
         });*/
-        seedBought = seedBoughtViewModel.getAllSeedBought(user.getSerialNum());
-        //int counter = seedBought.size() + 1;
-        //Log.e(TAG, "Counter: "+counter );
-        final String[] spinnerArraySeeds = new String[seedBought.size()+1];
-        final HashMap<Integer, SeedBought> spinnerMap = new HashMap<Integer, SeedBought>();
-        arrayListVarieties = new ArrayList<>();
-        for (int i = 0; i< seedBought.size(); i++){
-            spinnerMap.put(i,seedBought.get(i));
-            spinnerArraySeeds[i] = seedBought.get(i).getVariety();
-        }
-        spinnerArraySeeds[seedBought.size()] = "Others";
-        arrayAdapterVariety = new ArrayAdapter<>(getApplicationContext(),R.layout.spinner_seed_variety,spinnerArraySeeds);
-        actVariety.setAdapter(arrayAdapterVariety);
-        actVariety.setThreshold(1);
+
 
         //Searchable Spinners here
         //Populate the ArrayListVarieties;
-        List<Seeds> seeds = database.seedsDao().getSeeds();
+        /*List<Seeds> seeds = database.seedsDao().getSeeds();
         arrayListVarieties = new ArrayList<>();
         for(Seeds s : seeds){
             String seed = s.getVariety().replaceAll("\\s","").toLowerCase();
-            /*for(SeedBought sb :  seedBought){
-                String bought = sb.getVariety().replaceAll("\\s","").toLowerCase();
-
-                if(bought == seed){
-                    Log.e(TAG, "bought: "+bought );
-                    Log.e(TAG, "seed: " +bought );
-                }
-            }*/
             arrayListVarieties.add(s.getVariety());
         }
         //set layout of the variety
         arrayAdapterOtherVariety = new ArrayAdapter<>(getApplicationContext(),R.layout.spinner_seed_source,arrayListVarieties);
-        actOtherVariety.setAdapter(arrayAdapterOtherVariety);
-        actOtherVariety.setThreshold(1);
+        actOtherVariety.setAdapter(arrayAdapterOtherVariety);*/
 
         arrayAdapterPreviousVariety = new ArrayAdapter<>(getApplicationContext(),R.layout.spinner_seed_variety,arrayListVarieties);
         actPreviousVariety.setAdapter(arrayAdapterPreviousVariety);
@@ -319,18 +299,19 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
 
         //populate the array list of seed source
         arrayListSeedSource = new ArrayList<>();
-        arrayListSeedSource.add("PhilRice Maligaya");
-        arrayListSeedSource.add("PhilRice Midsayap");
-        arrayListSeedSource.add("PhilRice Los Baños");
-        arrayListSeedSource.add("PhilRice Agusan");
-        arrayListSeedSource.add("PhilRice Batac");
-        arrayListSeedSource.add("PhilRice Isabela");
-        arrayListSeedSource.add("PhilRice Negros");
-        arrayListSeedSource.add("PhilRice Bicol");
-        arrayListSeedSource.add("PhilRice CMU");
-        arrayListSeedSource.add("PhilRice Zamboanga");
-        arrayListSeedSource.add("PhilRice Samar");
-        arrayListSeedSource.add("PhilRice Mindoro");
+        arrayListSeedSource.add("PhilRice CES - Muñoz");
+        arrayListSeedSource.add("PhilRice - Midsayap");
+        arrayListSeedSource.add("PhilRice - Los Baños");
+        arrayListSeedSource.add("PhilRice - Agusan");
+        arrayListSeedSource.add("PhilRice - Batac");
+        arrayListSeedSource.add("PhilRice - Isabela");
+        arrayListSeedSource.add("PhilRice - Negros");
+        arrayListSeedSource.add("PhilRice - Bicol");
+        arrayListSeedSource.add("PhilRice - CMU");
+        arrayListSeedSource.add("PhilRice - Zamboanga");
+        arrayListSeedSource.add("PhilRice - Samar");
+        arrayListSeedSource.add("PhilRice - Mindoro");
+        arrayListSeedSource.add("Others");
 
         //set layout of the seed source
         arrayAdapterSeedSource = new ArrayAdapter<>(getApplicationContext(),R.layout.spinner_seed_source,arrayListSeedSource);
@@ -400,67 +381,76 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
             }
         };
 
+        actSeedSource.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                actVariety.clearListSelection();
+                actVariety.setText("");
+                actSeedClass.setText("");
+                actRiceProgram.setText("");
+                if(arrayListSeedSource.get(position).equals("Others")){
+                    List<Seeds> seeds = database.seedsDao().getSeeds();
+                    arrayListVarieties = new ArrayList<>();
+                    for(Seeds s : seeds){
+                        String seed = s.getVariety().replaceAll("\\s","").toLowerCase();
+                        arrayListVarieties.add(s.getVariety());
+                    }
+                    //set layout of the variety
+                    arrayAdapterOtherVariety = new ArrayAdapter<>(getApplicationContext(),R.layout.spinner_seed_source,arrayListVarieties);
+                    actVariety.setAdapter(arrayAdapterOtherVariety);
+                    actVariety.setThreshold(2);
+                    til_other_seed_source.setVisibility(View.VISIBLE);
+
+                }else{
+                    String station_name = checkStationName(arrayListSeedSource.get(position).toString());
+
+                    seedBought = seedBoughtViewModel.getAllSeedBought(user.getSerialNum(),station_name);
+                    final String[] spinnerArraySeeds = new String[seedBought.size()];
+                    spinnerMap = new HashMap<Integer, SeedBought>();
+                    arrayListVarieties = new ArrayList<>();
+                    for (int i = 0; i< seedBought.size(); i++){
+                        spinnerMap.put(i,seedBought.get(i));
+                        spinnerArraySeeds[i] = seedBought.get(i).getVariety();
+                    }
+                    arrayAdapterVariety = new ArrayAdapter<>(getApplicationContext(),R.layout.spinner_seed_variety,spinnerArraySeeds);
+                    actVariety.setAdapter(arrayAdapterVariety);
+                    actVariety.setThreshold(2);
+                    til_other_seed_source.setVisibility(View.GONE);
+                }
+            }
+        });
+
         actVariety.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                if(spinnerArraySeeds[position].equals("Others")){
+                actSeedClass.setText("");
+                if(actSeedSource.getText().toString().equals("Others")){
                     //preFilledForm.setVisibility(View.GONE);
                     //hideLinear.setVisibility(View.VISIBLE);
-                    linearOtherVariety.setVisibility(View.VISIBLE);
+                    //linearOtherVariety.setVisibility(View.VISIBLE);
                     selectedSeed = null;
                 }else{
                     //preFilledForm.setVisibility(View.VISIBLE);
                     //hideLinear.setVisibility(View.GONE);
-                    linearOtherVariety.setVisibility(View.GONE);
+                    //linearOtherVariety.setVisibility(View.GONE);
                     selectedSeed = spinnerMap.get(position);
-                    String source = spinnerMap.get(position).getTableName().toLowerCase();
-                    Log.e(TAG, "onItemClick: "+selectedSeed );
-                    //Toast.makeText(SeedProductionDetailActivity.this, "quantity" + spinnerMap.get(position).getQuantity(), Toast.LENGTH_SHORT).show();
-                    if(spinnerMap.get(position).getSeedClass().equals("RS")){
-                        preDataClass.setText("Registered");
-                    }else if(spinnerMap.get(position).getSeedClass().equals("FS")){
-                        preDataClass.setText("Foundation");
+                    Log.e(TAG, "variety: "+selectedSeed.getVariety() );
+                    actRiceProgram.setText(selectedSeed.getRiceProgram(),false);
+                    if(selectedSeed.getSeedClass().equals("RS")){
+                        actSeedClass.setText("Registered",false);
+                        //preDataClass.setText("Registered");
+                    }
+                    if(selectedSeed.getSeedClass().equals("FS")){
+                        actSeedClass.setText("Registered",false);
+                        //preDataClass.setText("Foundation");
                     }
 
-
-                    if(source.contains("ces")){
-                        preDataSource.setText("PhilRice - Science City of Muñoz");
-                    }
-                    else if(source.contains("bes")){
-                        preDataSource.setText("PhilRice - Batac");
-                    }
-                    else if(source.contains("mes")){
-                        preDataSource.setText("PhilRice - Midsayap");
-                    }
-                    else if(source.contains("lbs")){
-                        preDataSource.setText("PhilRice - Los Baños");
-                    }
-                    else if(source.contains("aes")){
-                        preDataSource.setText("PhilRice - Agusan");
-                    }
-                    else if(source.contains("cves")){
-                        preDataSource.setText("PhilRice - Isabela");
-                    }
-                    else if(source.contains("prn")){
-                        preDataSource.setText("PhilRice - Negros");
-                    }
-                    else if(source.contains("bies")){
-                        preDataSource.setText("PhilRice - Bicol");
-                    }
-                    else if(source.contains("cmu")){
-                        preDataSource.setText("PhilRice - CMU Satellite Station");
-                    }
-                    else if(source.contains("zss")){
-                        preDataSource.setText("PhilRice - Zamboanga Satellite Station");
-                    }
-                    //wip
-                    int quantity = spinnerMap.get(position).getQuantity() - spinnerMap.get(position).getUsedQuantity();
+                    /*int quantity = spinnerMap.get(position).getQuantity() - spinnerMap.get(position).getUsedQuantity();
                     preDataProgram.setText(spinnerMap.get(position).getRiceProgram());
                     double area =(double) quantity/40;
 
                     preDataAreaPlanted.setText(String.valueOf(area)+"ha");
-                    preDataQuantity.setText(String.valueOf(quantity)+"kg(s)");
+                    preDataQuantity.setText(String.valueOf(quantity)+"kg(s)");*/
                 }
 
             }
@@ -697,7 +687,12 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
         String accredno = user.getSerialNum();
         String latitude = tvLatitude.getText().toString();
         String longitude = tvLongitude.getText().toString();
-        String seedVariety = "";
+        String seedVariety = actVariety.getText().toString().trim();
+        String seedSource = actSeedSource.getText().toString().trim();
+        String otherSeedSource = tetOtherSeedSource.getText().toString().trim();
+        String riceProgram = actRiceProgram.getText().toString().trim();
+        String seedClass = actSeedClass.getText().toString().trim();
+        /*String seedVariety = "";
         String seedSource = "";
         String otherSeedSource = "";
         String seedClass = "";
@@ -717,7 +712,7 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
             otherSeedSource = "";
             seedClass = preDataClass.getText().toString();
             riceProgram = preDataProgram.getText().toString();
-        }
+        }*/
         String areaPlanted = tetAreaPlanted.getText().toString();
         String seedQuantity = tetSeedQuantity.getText().toString();
         String seedbedArea = tetSeedBedArea.getText().toString();
@@ -730,16 +725,17 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
         Boolean isSent = false;
         String previousCrop = tetPreviousCrop.getText().toString();
         String previousVariety = actPreviousVariety.getText().toString();
+        String transplanting_method = actTransplantingMethod.getText().toString().trim();
 
-        Log.e(TAG, "variety: "+seedVariety );
         seedGrowerViewModel = ViewModelProviders.of(this).get(SeedGrowerViewModel.class);
         SeedGrower seedGrower = new SeedGrower(uniqueid,accredno,latitude,longitude,seedVariety,seedSource,otherSeedSource,seedClass,dateplanted,
-                areaPlanted,seedQuantity,seedbedArea,seedlingAge,seedLot,controlNo,barangay,datecollected,isSent,riceProgram,coop,previousCrop,previousVariety);
-        if(selectedSeed != null){
+                areaPlanted,seedQuantity,seedbedArea,seedlingAge,seedLot,controlNo,barangay,datecollected,isSent,riceProgram,coop,previousCrop,previousVariety,transplanting_method);
+
+        /*if(selectedSeed != null){
             seedGrower.setBought_id(String.valueOf(selectedSeed.getId()));
             int usedQuantity = Integer.parseInt(seedQuantity) + selectedSeed.getUsedQuantity();
             seedBoughtViewModel.getUpdateUsedQuantity(user.getSerialNum(),usedQuantity, selectedSeed.getId());
-        }
+        }*/
 
         seedGrowerViewModel.insert(seedGrower);
 
@@ -1038,6 +1034,33 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
         Log.d("Latitude","status");
+    }
+
+    public String checkStationName(String station_name){
+        Log.e(TAG, "checkStationName: "+station_name );
+        switch (station_name){
+            case "PhilRice CES - Muñoz":
+                return "ces";
+            case "PhilRice - Batac":
+                return "bes";
+            case "PhilRice - Midsayap":
+                return "mes";
+            case "PhilRice - Los Baños":
+                return "lbs";
+            case "PhilRice - Agusan":
+                return "aes";
+            case "PhilRice - Isabela":
+                return "cves";
+            case "PhilRice - Negros":
+                return "prn";
+            case "PhilRice - Bicol":
+                return "bies";
+            case "PhilRice - CMU":
+                return "cmu";
+            case "PhilRice - Zamboanga":
+                return "zss";
+        }
+        return null;
     }
 
     public static String md5(final String s) {

@@ -302,7 +302,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-
                         android:paddingBottom="15dp"
                         android:orientation="horizontal"
                         android:layout_below="@id/btnFirstLinear">
@@ -360,7 +359,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingStart="83dp"
+                        android:gravity="center"
                         android:paddingBottom="15dp"
                         android:orientation="horizontal"
                         android:layout_below="@id/btnFirstLinear">
@@ -387,6 +386,31 @@
                                 android:textColor="#FFFF"
                                 android:gravity="center"
                                 android:text="SYNC DATA"/>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/linearLogout"
+                            android:layout_marginStart="15dp"
+                            android:layout_width="110dp"
+                            android:layout_height="100dp"
+                            android:background="@drawable/home_button"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:padding="5dp">
+                            <ImageView
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:layout_gravity="center"
+                                android:tint="@color/colorWhite"
+
+                                app:srcCompat="@drawable/power_button"/>
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textSize="17sp"
+                                android:textColor="#FFFF"
+                                android:gravity="center"
+                                android:text="LOGOUT"/>
                         </LinearLayout>
 
                     </LinearLayout>

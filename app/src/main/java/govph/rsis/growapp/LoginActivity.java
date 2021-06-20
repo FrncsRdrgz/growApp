@@ -174,9 +174,9 @@ public class LoginActivity extends AppCompatActivity {
                                     String seedClass = jsonObject.getString("seedClass");
                                     String riceProgram = jsonObject.getString("riceProgram");
                                     String table_name = jsonObject.getString("table_name");
+                                    String station_name = jsonObject.getString("station_name");
                                     int quantity = jsonObject.getInt("quantity");
                                     double area = jsonObject.getDouble("area");
-
 
                                     seedBought.setSerialNum(serialNum);
                                     seedBought.setVariety(variety);
@@ -185,6 +185,7 @@ public class LoginActivity extends AppCompatActivity {
                                     seedBought.setQuantity(quantity);
                                     seedBought.setUsedQuantity(0);
                                     seedBought.setTableName(table_name);
+                                    seedBought.setStation_name(station_name);
                                     seedBought.setArea(area);
                                     seedBought.setRiceProgram(riceProgram);
 

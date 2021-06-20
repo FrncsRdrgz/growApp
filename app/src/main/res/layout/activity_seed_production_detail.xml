@@ -197,6 +197,29 @@
                             <AutoCompleteTextView
                                 android:id="@+id/actSeedSource"
                                 android:layout_width="match_parent"
+                                android:inputType="none"
+                                android:layout_height="wrap_content"/>
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="7dp"
+                        android:paddingRight="15dp"
+                        android:paddingLeft="15dp">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/til_other_seed_source"
+                            android:visibility="gone"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Specify Seed Source"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/tetOtherSeedSource"
+                                android:layout_width="match_parent"
+                                android:inputType="text"
                                 android:layout_height="wrap_content"/>
                         </com.google.android.material.textfield.TextInputLayout>
                     </LinearLayout>
@@ -218,6 +241,7 @@
                             <AutoCompleteTextView
                                 android:id="@+id/actVariety"
                                 android:layout_width="match_parent"
+
                                 android:layout_height="wrap_content"
                                 />
                         </com.google.android.material.textfield.TextInputLayout>
@@ -372,6 +396,7 @@
                                 android:inputType="none"
                                 android:id="@+id/actSeedClass"
                                 android:layout_width="match_parent"
+
                                 android:layout_height="wrap_content"/>
                         </com.google.android.material.textfield.TextInputLayout>
                     </LinearLayout>

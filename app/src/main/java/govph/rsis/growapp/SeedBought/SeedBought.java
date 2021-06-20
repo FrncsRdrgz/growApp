@@ -33,8 +33,11 @@ public class SeedBought {
 
     @ColumnInfo (name = "tableName")
     public String tableName;
+    @ColumnInfo (name="station_name")
+    public String station_name;
 
     //setters
+    public void setStation_name(String station_name){this.station_name = station_name;}
     public void setSerialNum(String serialNum) { this.serialNum = serialNum; }
 
     public void setPalletCode(String palletCode) { this.palletCode = palletCode; }
@@ -54,6 +57,7 @@ public class SeedBought {
     public void setTableName(String tableName) { this.tableName = tableName; }
 
     //getters
+    public String getStation_name(){return station_name;}
     public String getSerialNum() { return serialNum; }
     public String getPalletCode() { return palletCode; }
     public String getSeedClass() { return seedClass; }
