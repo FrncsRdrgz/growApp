@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="govph.rsis.growapp"
-    android:versionCode="18"
-    android:versionName="2.18" >
+    android:versionCode="19"
+    android:versionName="2.19" >
 
     <uses-sdk
         android:minSdkVersion="21"
@@ -15,7 +15,6 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_PRIVILEGED_PHONE_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
     <application
         android:allowBackup="true"
@@ -44,17 +43,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <provider
-            android:name="com.amitshekhar.debug.encrypt.DebugDBEncryptInitProvider"
-            android:authorities="govph.rsis.growapp.DebugDBEncryptInitProvider"
-            android:enabled="true"
-            android:exported="false" />
-        <provider
-            android:name="com.amitshekhar.debug.DebugDBInitProvider"
-            android:authorities="govph.rsis.growapp.DebugDBInitProvider"
-            android:enabled="true"
-            android:exported="false" />
 
         <service
             android:name="androidx.room.MultiInstanceInvalidationService"

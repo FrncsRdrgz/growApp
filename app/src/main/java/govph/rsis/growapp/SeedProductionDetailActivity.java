@@ -282,6 +282,12 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
         //set layout of the variety
         arrayAdapterOtherVariety = new ArrayAdapter<>(getApplicationContext(),R.layout.spinner_seed_source,arrayListVarieties);
         actOtherVariety.setAdapter(arrayAdapterOtherVariety);*/
+        List<Seeds> seeds = database.seedsDao().getSeeds();
+        arrayListVarieties = new ArrayList<>();
+        for(Seeds s : seeds){
+            String seed = s.getVariety().replaceAll("\\s","").toLowerCase();
+            arrayListVarieties.add(s.getVariety());
+        }
 
         arrayAdapterPreviousVariety = new ArrayAdapter<>(getApplicationContext(),R.layout.spinner_seed_variety,arrayListVarieties);
         actPreviousVariety.setAdapter(arrayAdapterPreviousVariety);
@@ -389,12 +395,14 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
                 actSeedClass.setText("");
                 actRiceProgram.setText("");
                 if(arrayListSeedSource.get(position).equals("Others")){
+
                     List<Seeds> seeds = database.seedsDao().getSeeds();
                     arrayListVarieties = new ArrayList<>();
                     for(Seeds s : seeds){
                         String seed = s.getVariety().replaceAll("\\s","").toLowerCase();
                         arrayListVarieties.add(s.getVariety());
                     }
+
                     //set layout of the variety
                     arrayAdapterOtherVariety = new ArrayAdapter<>(getApplicationContext(),R.layout.spinner_seed_source,arrayListVarieties);
                     actVariety.setAdapter(arrayAdapterOtherVariety);
