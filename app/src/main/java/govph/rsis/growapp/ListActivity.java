@@ -41,6 +41,9 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.navigation.NavigationView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -77,6 +80,7 @@ public class ListActivity extends AppCompatActivity implements NavigationView.On
     View headerView;
     User user;
     int activityId,countCollected,countSent,countDeleted;
+    String app_version = new String();
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -148,6 +152,7 @@ public class ListActivity extends AppCompatActivity implements NavigationView.On
             PackageInfo pInfo = this.getPackageManager().getPackageInfo(getPackageName(), 0);
             tvVersion.setText("Version: "+ pInfo.versionName);
             listTvVersion.setText("Version: "+pInfo.versionName);
+            app_version = pInfo.versionName;
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
@@ -430,22 +435,30 @@ public class ListActivity extends AppCompatActivity implements NavigationView.On
                                                                     @Override
                                                                     public void onResponse(String response) {
                                                                         Log.e(TAG, "onResponse: "+response );
-                                                                        if(!response.equals("Success")){
-                                                                            progressDialog.dismiss();
-                                                                            new AlertDialog.Builder(ListActivity.this)
-                                                                                    .setMessage("Error while sending data to server.")
-                                                                                    .setNegativeButton("Try Again",null).show();
+                                                                        try {
+                                                                            JSONObject jsonObject = new JSONObject(response);
+
+                                                                            if(!jsonObject.get("status").toString().equals("Success")){
+                                                                                progressDialog.dismiss();
+                                                                                new AlertDialog.Builder(ListActivity.this)
+                                                                                        .setMessage(jsonObject.get("message").toString())
+                                                                                        .setNegativeButton("Try Again",null).show();
+                                                                            }
+                                                                            else{
+                                                                                progressDialog.dismiss();
+                                                                                //seedGrower.setIsSent(true);
+                                                                                //seedGrowerViewModel.update(seedGrower);
+                                                                                new AlertDialog.Builder(ListActivity.this)
+                                                                                        .setMessage(jsonObject.get("message").toString())
+                                                                                        .setNegativeButton("Ok",null).show();
+                                                                                dialog.dismiss();
+                                                                                updateCounter();
+                                                                            }
+
+                                                                        } catch (JSONException e) {
+                                                                            e.printStackTrace();
                                                                         }
-                                                                        else{
-                                                                            progressDialog.dismiss();
-                                                                            seedGrower.setIsSent(true);
-                                                                            seedGrowerViewModel.update(seedGrower);
-                                                                            new AlertDialog.Builder(ListActivity.this)
-                                                                                    .setMessage("Successfully sent form data")
-                                                                                    .setNegativeButton("Ok",null).show();
-                                                                            dialog.dismiss();
-                                                                            updateCounter();
-                                                                        }
+
                                                                     }
                                                                 },
                                                                 new Response.ErrorListener() {
@@ -486,6 +499,7 @@ public class ListActivity extends AppCompatActivity implements NavigationView.On
                                                                 params.put("previouscrop",seedGrower.getPreviousCrop());
                                                                 params.put("previousvariety",seedGrower.getPreviousVariety());
                                                                 params.put("transplanting_method",seedGrower.getTransplanting_method());
+                                                                params.put("app_version",app_version);
                                                                 return params;
                                                             }
                                                         };
