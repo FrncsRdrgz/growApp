@@ -7,8 +7,8 @@ android {
         applicationId "govph.rsis.growapp"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 20
-        versionName "2.20"
+        versionCode 21
+        versionName "2.21"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -21,8 +21,8 @@ android {
 
 dependencies {
     def room_version = "2.2.4"
-    /*debugImplementation 'com.amitshekhar.android:debug-db-encrypt:1.0.6'
-    debugImplementation 'com.amitshekhar.android:debug-db:1.0.6'*/
+    debugImplementation 'com.amitshekhar.android:debug-db-encrypt:1.0.6'
+    debugImplementation 'com.amitshekhar.android:debug-db:1.0.6'
     implementation 'com.toptoche.searchablespinner:searchablespinnerlibrary:1.3.1'
     implementation "androidx.room:room-runtime:$room_version"
     annotationProcessor "androidx.room:room-compiler:$room_version"

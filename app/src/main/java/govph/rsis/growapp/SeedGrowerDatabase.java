@@ -9,12 +9,18 @@ import androidx.room.RoomDatabase;
 import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
+import govph.rsis.growapp.Municipality.Municipality;
+import govph.rsis.growapp.Municipality.MunicipalityDao;
+import govph.rsis.growapp.Province.Province;
+import govph.rsis.growapp.Province.ProvinceDao;
+import govph.rsis.growapp.Region.Region;
+import govph.rsis.growapp.Region.RegionDao;
 import govph.rsis.growapp.SeedBought.SeedBought;
 import govph.rsis.growapp.SeedBought.SeedBoughtDao;
 import govph.rsis.growapp.User.User;
 import govph.rsis.growapp.User.UserDao;
 
-@Database(entities = {SeedGrower.class,Seeds.class, User.class, SeedBought.class}, version = 11, exportSchema = true)
+@Database(entities = {SeedGrower.class,Seeds.class, User.class, SeedBought.class, Province.class, Region.class, Municipality.class}, version = 14, exportSchema = true)
 public abstract class SeedGrowerDatabase extends RoomDatabase {
     public static final String DB_NAME ="seedgrower";
     private static SeedGrowerDatabase instance;
@@ -90,11 +96,41 @@ public abstract class SeedGrowerDatabase extends RoomDatabase {
             database.execSQL("ALTER TABLE SeedGrower ADD COLUMN transplanting_method TEXT");
         }
     };
+
+    static final Migration MIGRATION_11_12 = new Migration(11,12) {
+        @Override
+        public void migrate(@NonNull SupportSQLiteDatabase database) {
+            database.execSQL("CREATE TABLE `regions` (`id` INTEGER PRIMARY KEY NOT NULL," +
+                    "`region_id` INTEGER NOT NULL," +
+                    "`region` TEXT)");
+        }
+    };
+
+    static final Migration MIGRATION_12_13 = new Migration(12,13) {
+        @Override
+        public void migrate(@NonNull SupportSQLiteDatabase database) {
+            database.execSQL("CREATE TABLE `provinces` (`id` INTEGER PRIMARY KEY NOT NULL," +
+                    "`province_id` INTEGER NOT NULL," +
+                    "`region_id` INTEGER NOT NULL," +
+                    "`province` TEXT)");
+        }
+    };
+
+    static final Migration MIGRATION_13_14 = new Migration(13,14) {
+        @Override
+        public void migrate(@NonNull SupportSQLiteDatabase database) {
+            database.execSQL("CREATE TABLE `municipalities` (`id` INTEGER PRIMARY KEY NOT NULL," +
+                    "`municipality_id` INTEGER NOT NULL," +
+                    "`province_id` INTEGER NOT NULL," +
+                    "`municipality` TEXT)");
+        }
+    };
     public static synchronized SeedGrowerDatabase getInstance(Context context) {
         if(instance == null) {
             instance = Room.databaseBuilder(context.getApplicationContext(), SeedGrowerDatabase.class,DB_NAME)
                     .allowMainThreadQueries()
-                    .addMigrations(MIGRATION_2_3,MIGRATION_3_4,MIGRATION_4_5,MIGRATION_5_6,MIGRATION_6_7,MIGRATION_7_8,MIGRATION_8_9,MIGRATION_9_10,MIGRATION_10_11)
+                    .addMigrations(MIGRATION_2_3,MIGRATION_3_4,MIGRATION_4_5,MIGRATION_5_6,MIGRATION_6_7,MIGRATION_7_8,MIGRATION_8_9,MIGRATION_9_10,MIGRATION_10_11,
+                            MIGRATION_11_12,MIGRATION_12_13,MIGRATION_13_14)
                     .build();
         }
         return instance;
@@ -104,6 +140,9 @@ public abstract class SeedGrowerDatabase extends RoomDatabase {
     public abstract SeedsDao seedsDao();
     public abstract UserDao userDao();
     public abstract SeedBoughtDao seedBoughtDao();
+    public abstract MunicipalityDao municipalityDao();
+    public abstract ProvinceDao provinceDao();
+    public abstract RegionDao regionDao();
 
  /*   private static RoomDatabase.Callback roomCallback = new RoomDatabase.Callback(){
         @Override
