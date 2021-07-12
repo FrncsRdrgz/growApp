@@ -14,6 +14,8 @@ public interface RegionDao {
     @Query("SELECT * FROM region")
     List<Region> getRegions();
 
+    @Query("DELETE FROM region")
+    void deleteRegions();
 
     @Insert
     void insert(Region region);

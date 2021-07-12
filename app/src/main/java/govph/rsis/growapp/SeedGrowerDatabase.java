@@ -20,7 +20,7 @@ import govph.rsis.growapp.SeedBought.SeedBoughtDao;
 import govph.rsis.growapp.User.User;
 import govph.rsis.growapp.User.UserDao;
 
-@Database(entities = {SeedGrower.class,Seeds.class, User.class, SeedBought.class, Province.class, Region.class, Municipality.class}, version = 14, exportSchema = true)
+@Database(entities = {SeedGrower.class,Seeds.class, User.class, SeedBought.class, Province.class, Region.class, Municipality.class}, version = 17, exportSchema = true)
 public abstract class SeedGrowerDatabase extends RoomDatabase {
     public static final String DB_NAME ="seedgrower";
     private static SeedGrowerDatabase instance;
@@ -125,12 +125,30 @@ public abstract class SeedGrowerDatabase extends RoomDatabase {
                     "`municipality` TEXT)");
         }
     };
+    static final Migration MIGRATION_14_15 = new Migration(14,15) {
+        @Override
+        public void migrate(@NonNull  SupportSQLiteDatabase database) {
+            database.execSQL("ALTER TABLE SeedGrower ADD COLUMN region TEXT");
+        }
+    };
+    static final Migration MIGRATION_15_16 = new Migration(15,16) {
+        @Override
+        public void migrate(@NonNull  SupportSQLiteDatabase database) {
+            database.execSQL("ALTER TABLE SeedGrower ADD COLUMN province TEXT");
+        }
+    };
+    static final Migration MIGRATION_16_17 = new Migration(16,17) {
+        @Override
+        public void migrate(@NonNull  SupportSQLiteDatabase database) {
+            database.execSQL("ALTER TABLE SeedGrower ADD COLUMN municipality TEXT");
+        }
+    };
     public static synchronized SeedGrowerDatabase getInstance(Context context) {
         if(instance == null) {
             instance = Room.databaseBuilder(context.getApplicationContext(), SeedGrowerDatabase.class,DB_NAME)
                     .allowMainThreadQueries()
                     .addMigrations(MIGRATION_2_3,MIGRATION_3_4,MIGRATION_4_5,MIGRATION_5_6,MIGRATION_6_7,MIGRATION_7_8,MIGRATION_8_9,MIGRATION_9_10,MIGRATION_10_11,
-                            MIGRATION_11_12,MIGRATION_12_13,MIGRATION_13_14)
+                            MIGRATION_11_12,MIGRATION_12_13,MIGRATION_13_14,MIGRATION_14_15,MIGRATION_15_16,MIGRATION_16_17)
                     .build();
         }
         return instance;

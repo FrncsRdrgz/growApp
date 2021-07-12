@@ -14,6 +14,9 @@ public interface ProvinceDao {
     @Query("SELECT * FROM province")
     List<Province> getProvinces();
 
+    @Query("DELETE FROM province")
+    void deleteProvinces();
+
     @Insert
     void insert(Province province);
 

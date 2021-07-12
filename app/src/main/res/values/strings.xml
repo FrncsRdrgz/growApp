@@ -23,6 +23,9 @@
     <string name="seedLot">Seed Lot No.</string>
     <string name="labNo">Laboratory No.</string>
     <string name="barangay">Barangay (Farm Location)</string>
+    <string name="municipality">Municipality</string>
+    <string name="province">Province</string>
+    <string name="region">Region</string>
     <string name="riceProgram">Rice Program</string>
     <string name="coop">Affiliated Cooperative</string>
     <string name="previousCrop">Previous Crop Planted</string>

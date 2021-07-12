@@ -630,8 +630,51 @@
                         android:paddingRight="15dp"
                         android:paddingLeft="15dp"
                         android:id="@+id/linearBarangay"
+                        android:orientation="vertical"
                         >
 
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/tilRegion"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/region"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/tetRegion"
+                                android:layout_width="match_parent"
+                                android:inputType="text"
+                                android:focusableInTouchMode="false"
+                                android:layout_height="wrap_content"/>
+                        </com.google.android.material.textfield.TextInputLayout>
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/tilProvince"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/province"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/tetProvince"
+                                android:layout_width="match_parent"
+                                android:inputType="text"
+                                android:focusableInTouchMode="false"
+                                android:layout_height="wrap_content"/>
+                        </com.google.android.material.textfield.TextInputLayout>
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/tilMunicipality"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/municipality"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/tetMunicipality"
+                                android:layout_width="match_parent"
+                                android:inputType="text"
+                                android:focusableInTouchMode="false"
+                                android:layout_height="wrap_content"/>
+                        </com.google.android.material.textfield.TextInputLayout>
                         <com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/tilBarangay"
                             android:layout_width="match_parent"
@@ -645,6 +688,7 @@
                                 android:inputType="text"
                                 android:layout_height="wrap_content"/>
                         </com.google.android.material.textfield.TextInputLayout>
+
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="match_parent"

@@ -82,6 +82,15 @@ public class SeedGrower {
     @ColumnInfo (name="transplanting_method")
     public String transplanting_method;
 
+    @ColumnInfo (name="region")
+    public String region;
+
+    @ColumnInfo (name="province")
+    public String province;
+
+    @ColumnInfo (name="municipality")
+    public String municipality;
+
     public SeedGrower(String macaddress, String accredno, String latitude, String longitude, String variety, String seedsource, String otherseedsource, String seedclass, String dateplanted,
                        String areaplanted, String quantity, String seedbedarea, String seedlingage, String seedlot, String controlno, String barangay, String datecollected, Boolean isSent,
                       String riceProgram, String coop, String previousCrop, String previousVariety,String transplanting_method){

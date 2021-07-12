@@ -95,7 +95,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         builder.setView(dialogView);
 
         dialog = builder.create();
-
+        getPSGC();
         userViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
         seedGrowerViewModel = ViewModelProviders.of(this).get(SeedGrowerViewModel.class);
         seedBoughtViewModel = ViewModelProviders.of(this).get(SeedBoughtViewModel.class);
@@ -378,5 +378,29 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 });
         queue.add(jsonArrayRequest);
         //Toast.makeText(this, "scannedValue: "+scannedValue, Toast.LENGTH_SHORT).show();
+    }
+
+    private void getPSGC(){
+        queue = Volley.newRequestQueue(HomeActivity.this);
+        String url = DecVar.getPSGC();
+
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        Log.e(TAG, "onResponse: "+response );
+                        if(response.length() != 0){
+
+
+                        }
+                        dialog.dismiss();
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e(TAG, "onErrorResponse: "+error );
+                    }
+                });
+        queue.add(jsonArrayRequest);
     }
 }

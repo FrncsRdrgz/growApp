@@ -14,6 +14,8 @@ public interface MunicipalityDao {
     @Query("SELECT * FROM municipality")
     List<Municipality> getMunicipalities();
 
+    @Query("DELETE FROM municipality")
+    void deleteMunicipalities();
     @Insert
     void insert(Municipality municipality);
 

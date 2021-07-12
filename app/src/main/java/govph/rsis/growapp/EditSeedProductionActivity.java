@@ -102,7 +102,7 @@ public class EditSeedProductionActivity extends AppCompatActivity implements Loc
     ArrayAdapter<String> arrayAdapterVariety,arrayAdapterOtherVariety,arrayAdapterSeedClass,arrayAdapterSeedSource,arrayAdapterRiceProgram,arrayAdapterPreviousVariety,arrayAdapterTransplantingMethod;
     TextInputEditText tetSeedClass,tetSeedSource,tetRiceProgram,tetDatePlanted,tetAreaPlanted,tetSeedQuantity,tetSeedBedArea,tetSeedlingAge,tetSeedLotNo,tetLabNo,
             tetCoop,tetBarangay,tetPreviousCrop,tetOtherSeedSource;
-    ArrayList arrayListVarieties,arrayListSeedClass,arrayListSeedSource,arrayListRiceProgram,arrayListTransplantingMethod;
+    ArrayList arrayListVarieties,arrayListSeedClass,arrayListSeedSource,arrayListRiceProgram,arrayListTransplantingMethod,arrayListVarieties1;
     FrameLayout frameLayout;
     ScrollView scrollView;
 
@@ -300,9 +300,20 @@ public class EditSeedProductionActivity extends AppCompatActivity implements Loc
         actOtherVariety.setThreshold(1);
         actPreviousVariety.setAdapter(arrayAdapterPreviousVariety);
         actPreviousVariety.setThreshold(1);*/
+        List<Seeds> seeds1 = database.seedsDao().getSeeds();
+        arrayListVarieties1 = new ArrayList<>();
+        for(Seeds s : seeds1){
+            String seed = s.getVariety().replaceAll("\\s","").toLowerCase();
+            arrayListVarieties.add(s.getVariety());
+        }
+
+        arrayAdapterPreviousVariety = new ArrayAdapter<>(getApplicationContext(),R.layout.spinner_seed_variety,arrayListVarieties1);
+        actPreviousVariety.setAdapter(arrayAdapterPreviousVariety);
+        actPreviousVariety.setThreshold(1);
 
         //populate the Arraylist of seed class
         arrayListSeedClass = new ArrayList<>();
+        arrayListSeedClass.add("Breeder");
         arrayListSeedClass.add("Foundation");
         arrayListSeedClass.add("Registered");
 

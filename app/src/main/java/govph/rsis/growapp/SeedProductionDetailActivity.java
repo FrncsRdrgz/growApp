@@ -16,6 +16,7 @@ import android.Manifest;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -45,6 +46,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -105,12 +107,14 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
             preDataClass,preDataProgram,preDataQuantity,preDataAreaPlanted,preDataSource;
     Button getLocationBtn,btnSave;
     AutoCompleteTextView actVariety,actOtherVariety,actSeedClass, actSeedSource,actRiceProgram,actPreviousVariety,actTransplantingMethod;
-    TextInputLayout tilVariety,til_other_seed_source,tilSeedClass,tilSeedSource, tilRiceProgram,tilDatePlanted;
+    TextInputLayout tilVariety,til_other_seed_source,tilSeedClass,tilSeedSource, tilRiceProgram,tilDatePlanted,
+    tilRegion,tilProvince,tilMunicipality;
     ArrayAdapter<String> arrayAdapterVariety,arrayAdapterSeedClass,arrayAdapterSeedSource,arrayAdapterRiceProgram,arrayAdapterPreviousVariety,arrayAdapterOtherVariety,arrayAdapterTransplantingMethod;
     TextInputEditText tetDatePlanted,tetAreaPlanted,tetSeedQuantity,tetSeedBedArea,tetSeedlingAge,tetSeedLotNo,tetLabNo,tetCoop,
-            tetBarangay,tetPreviousCrop,tetOtherSeedSource;
+            tetBarangay,tetPreviousCrop,tetOtherSeedSource,tetRegion,tetProvince,tetMunicipality;
     MenuItem mList,mSent,mDeleted;
-    ArrayList arrayListVarieties,arrayListSeedClass,arrayListSeedSource,arrayListRiceProgram,arrayListTransplantingMethod;
+    ArrayList arrayListVarieties,arrayListSeedClass,arrayListSeedSource,arrayListRiceProgram,arrayListTransplantingMethod,
+    arrayListRegion, arrayListProvince, arrayListMunicipality;
 
     MaterialDatePicker.Builder materialBuilder;
     MaterialDatePicker materialDatePicker;
@@ -125,7 +129,7 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
     SeedBought selectedSeed;
     HashMap<Integer, SeedBought> spinnerMap;
     View headerView;
-
+    Dialog spinnerDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -216,6 +220,9 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
         tilRiceProgram = (TextInputLayout) findViewById(R.id.tilRiceProgram);
         tilDatePlanted = (TextInputLayout) findViewById(R.id.tilDatePlanted);
         til_other_seed_source = findViewById(R.id.til_other_seed_source);
+        tilRegion = findViewById(R.id.tilRegion);
+        tilProvince = findViewById(R.id.tilProvince);
+        tilMunicipality = findViewById(R.id.tilMunicipality);
 
         actSeedClass = (AutoCompleteTextView) findViewById(R.id.actSeedClass);
         actVariety = (AutoCompleteTextView) findViewById(R.id.actVariety);
@@ -237,6 +244,9 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
         tetBarangay = (TextInputEditText) findViewById(R.id.tetBarangay);
         tetPreviousCrop = (TextInputEditText) findViewById(R.id.tetPreviousCrop);
         tetOtherSeedSource = findViewById(R.id.tetOtherSeedSource);
+        tetProvince = findViewById(R.id.tetProvince);
+        tetRegion = findViewById(R.id.tetRegion);
+        tetMunicipality = findViewById(R.id.tetMunicipality);
 
         materialBuilder = MaterialDatePicker.Builder.datePicker();
         materialBuilder.setTitleText("Select Date Planted");
@@ -295,6 +305,7 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
 
         //populate the Arraylist of seed class
         arrayListSeedClass = new ArrayList<>();
+        arrayListSeedClass.add("Breeder");
         arrayListSeedClass.add("Foundation");
         arrayListSeedClass.add("Registered");
 
@@ -342,6 +353,11 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
         arrayAdapterTransplantingMethod = new ArrayAdapter<>(getApplicationContext(),R.layout.spinner_rice_program,arrayListTransplantingMethod);
         actTransplantingMethod.setAdapter(arrayAdapterTransplantingMethod);
 
+        arrayListRegion = new ArrayList<>();
+        arrayListRegion.add("Region 1");
+        arrayListRegion.add("Region 2");
+
+
         //get the location
         getLocationBtn.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -359,12 +375,6 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
         });*/
         //set the Save text clickable
         backBtn.setVisibility(View.GONE);
-        /*backBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });*/
         tetDatePlanted.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
@@ -483,6 +493,163 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
                 }else{
                     saveForm();
                 }
+            }
+        });
+
+        tetRegion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                spinnerDialog = new Dialog(SeedProductionDetailActivity.this);
+                spinnerDialog.setContentView(R.layout.dialog_searchable_spinner);
+                spinnerDialog.getWindow().setLayout(650, 800);
+                spinnerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(TRANSPARENT));
+                spinnerDialog.show();
+
+                EditText search_editText = spinnerDialog.findViewById(R.id.search_editText);
+                ListView list_view = spinnerDialog.findViewById(R.id.list_view);
+                TextView search_title = spinnerDialog.findViewById(R.id.search_title);
+                search_title.setText("Select Region");
+
+                final ArrayAdapter<String> adapter = new ArrayAdapter<>(SeedProductionDetailActivity.this,R.layout.spinner_seed_variety, arrayListRegion);
+                list_view.setAdapter(adapter);
+
+                search_editText.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        //filter array list
+                        adapter.getFilter().filter(s);
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+
+                    }
+                });
+
+                list_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        //When item selected from list
+                        //set selected item on text
+                        tetRegion.setText(adapter.getItem(position));
+                        spinnerDialog.dismiss();
+                    }
+                });
+            }
+        });
+
+        //create array list of provinces
+        arrayListProvince = new ArrayList<>();
+        arrayListProvince.add("Province 1");
+        arrayListProvince.add("Province 2");
+
+        //listener to create a spinner dialog with the list of provinces and with search function
+        tetProvince.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //declare spinner dialog
+                spinnerDialog = new Dialog(SeedProductionDetailActivity.this);
+                spinnerDialog.setContentView(R.layout.dialog_searchable_spinner);
+                spinnerDialog.getWindow().setLayout(650, 800);
+                spinnerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(TRANSPARENT));
+                spinnerDialog.show();
+
+                EditText search_editText = spinnerDialog.findViewById(R.id.search_editText);
+                ListView list_view = spinnerDialog.findViewById(R.id.list_view);
+                TextView search_title = spinnerDialog.findViewById(R.id.search_title);
+                search_title.setText("Select Province");
+
+                //set arrayadapter of provinces
+                final ArrayAdapter<String> adapter = new ArrayAdapter<>(SeedProductionDetailActivity.this,R.layout.spinner_seed_variety, arrayListProvince);
+                list_view.setAdapter(adapter);
+
+                search_editText.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        //filter array list
+                        adapter.getFilter().filter(s);
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+
+                    }
+                });
+
+                list_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        //When item selected from list
+                        //set selected item on text
+                        tetProvince.setText(adapter.getItem(position));
+                        spinnerDialog.dismiss();
+                    }
+                });
+            }
+        });
+
+        //create array list of municipalities
+        arrayListMunicipality = new ArrayList<>();
+        arrayListMunicipality.add("Cabanatuan");
+        arrayListMunicipality.add("San Jose");
+        arrayListMunicipality.add("Talavera");
+        arrayListMunicipality.add("Gapan");
+        tetMunicipality.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //declare spinner dialog
+                spinnerDialog = new Dialog(SeedProductionDetailActivity.this);
+                spinnerDialog.setContentView(R.layout.dialog_searchable_spinner);
+                spinnerDialog.getWindow().setLayout(650, 800);
+                spinnerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(TRANSPARENT));
+                spinnerDialog.show();
+
+                EditText search_editText = spinnerDialog.findViewById(R.id.search_editText);
+                ListView list_view = spinnerDialog.findViewById(R.id.list_view);
+                TextView search_title = spinnerDialog.findViewById(R.id.search_title);
+                search_title.setText("Select Province");
+
+                //set array adapter of municipalities
+                final ArrayAdapter<String> adapter = new ArrayAdapter<>(SeedProductionDetailActivity.this,R.layout.spinner_seed_variety, arrayListMunicipality);
+                list_view.setAdapter(adapter);
+
+                search_editText.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        //filter array list
+                        adapter.getFilter().filter(s);
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+
+                    }
+                });
+
+                list_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        //When item selected from list
+                        //set selected item on text
+                        tetMunicipality.setText(adapter.getItem(position));
+                        spinnerDialog.dismiss();
+                    }
+                });
             }
         });
         //open datepicker
@@ -1147,10 +1314,7 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
         }
     }
 
-    @Override
-    public void onPointerCaptureChanged(boolean hasCapture) {
 
-    }
 
     public void logout(){
         Toast.makeText(this, "Logout", Toast.LENGTH_SHORT).show();
