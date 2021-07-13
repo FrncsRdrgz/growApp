@@ -14,6 +14,9 @@ public interface ProvinceDao {
     @Query("SELECT * FROM province")
     List<Province> getProvinces();
 
+    @Query("SELECT * FROM province WHERE region_id =:region_id")
+    List<Province> getProvinceByRegionId(int region_id);
+
     @Query("DELETE FROM province")
     void deleteProvinces();
 

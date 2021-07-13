@@ -26,6 +26,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.amitshekhar.DebugDB;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -52,6 +53,12 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import govph.rsis.growapp.Municipality.Municipality;
+import govph.rsis.growapp.Municipality.MunicipalityViewModel;
+import govph.rsis.growapp.Province.Province;
+import govph.rsis.growapp.Province.ProvinceViewModel;
+import govph.rsis.growapp.Region.Region;
+import govph.rsis.growapp.Region.RegionViewModel;
 import govph.rsis.growapp.SeedBought.SeedBought;
 import govph.rsis.growapp.SeedBought.SeedBoughtViewModel;
 import govph.rsis.growapp.User.User;
@@ -68,6 +75,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private SeedGrowerViewModel seedGrowerViewModel;
     private UserViewModel userViewModel;
     private SeedBoughtViewModel seedBoughtViewModel;
+    private RegionViewModel regionViewModel;
+    private ProvinceViewModel provinceViewModel;
+    private MunicipalityViewModel municipalityViewModel;
     private View headerView;
     RequestQueue queue;
     TextView headerVersion,headerName,headerSerial,homeTvVersion,tvList,tvSent,tvDeleted,homeTvCollected,homeTvSent,homeTvDeleted,homeActUserName,homeActSerialNum,toolBarLogout;
@@ -95,11 +105,17 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         builder.setView(dialogView);
 
         dialog = builder.create();
-        getPSGC();
+        Log.e(TAG, "onCreate: "+ DebugDB.getAddressLog());
+
         userViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
         seedGrowerViewModel = ViewModelProviders.of(this).get(SeedGrowerViewModel.class);
         seedBoughtViewModel = ViewModelProviders.of(this).get(SeedBoughtViewModel.class);
+        regionViewModel = ViewModelProviders.of(this).get(RegionViewModel.class);
+        provinceViewModel = ViewModelProviders.of(this).get(ProvinceViewModel.class);
+        municipalityViewModel = ViewModelProviders.of(this).get(MunicipalityViewModel.class);
 
+
+        getPSGC();
         user = userViewModel.getLoggedInUser();
         countCollected = seedGrowerViewModel.getCountCollected(user.getSerialNum());
         countSent = seedGrowerViewModel.getCountSent(user.getSerialNum());
@@ -335,7 +351,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
-                        Log.e(TAG, "onResponse: "+response );
+                        //Log.e(TAG, "onResponse: "+response );
                         try{
                             if(response.length() != 0){
                                 for (int i = 0; i < response.length(); i++) {
@@ -381,18 +397,73 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void getPSGC(){
+        regionViewModel.deleteRegions();
+        provinceViewModel.deleteProvinces();
+        municipalityViewModel.deleteMunicipalities();
         queue = Volley.newRequestQueue(HomeActivity.this);
         String url = DecVar.getPSGC();
 
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
-                (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
                     @Override
-                    public void onResponse(JSONArray response) {
-                        Log.e(TAG, "onResponse: "+response );
-                        if(response.length() != 0){
+                    public void onResponse(JSONObject response) {
+                        try {
+                            if(response.length() !=0){
+
+                                JSONArray regions = response.getJSONArray("regions");
+                                JSONArray provinces = response.getJSONArray("provinces");
+                                JSONArray municipalities = response.getJSONArray("municipalities");
+
+                                for (int i = 0; i < regions.length(); i++) {
+                                    JSONObject json_region = regions.getJSONObject(i);
+
+                                    String region_name = json_region.getString("region");
+                                    int region_id = json_region.getInt("region_id");
+
+                                    Region region = new Region();
+                                    region.setRegion(region_name);
+                                    region.setRegion_id(region_id);
+
+                                    regionViewModel.insert(region);
+                                }
+
+                                for (int j = 0; j < provinces.length(); j++) {
+                                    JSONObject json_province = provinces.getJSONObject(j);
+
+                                    String province_name = json_province.getString("province");
+                                    int region_id = json_province.getInt("region_id");
+                                    int province_id = json_province.getInt("province_id");
+
+                                    Province province = new Province();
+                                    province.setProvince(province_name);
+                                    province.setProvince_id(province_id);
+                                    province.setRegion_id(region_id);
+
+                                    provinceViewModel.insert(province);
+                                }
+
+                                for (int k = 0; k < municipalities.length(); k++) {
+                                    JSONObject json_municipality = municipalities.getJSONObject(k);
+
+                                    String municipality_name = json_municipality.getString("municipality");
+                                    int province_id = json_municipality.getInt("province_id");
+                                    int municipality_id = json_municipality.getInt("municipality_id");
+
+                                    Municipality municipality = new Municipality();
+                                    municipality.setMunicipality(municipality_name);
+                                    municipality.setMunicipality_id(municipality_id);
+                                    municipality.setProvince_id(province_id);
+
+                                    municipalityViewModel.insert(municipality);
+                                }
 
 
+                            }
+
+                        }catch (JSONException e) {
+                            e.printStackTrace();
                         }
+
                         dialog.dismiss();
                     }
                 }, new Response.ErrorListener() {
@@ -401,6 +472,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                         Log.e(TAG, "onErrorResponse: "+error );
                     }
                 });
-        queue.add(jsonArrayRequest);
+        queue.add(jsonObjectRequest);
     }
 }

@@ -36,6 +36,7 @@ import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -75,6 +76,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 
+import govph.rsis.growapp.Municipality.Municipality;
+import govph.rsis.growapp.Municipality.MunicipalityViewModel;
+import govph.rsis.growapp.Province.Province;
+import govph.rsis.growapp.Province.ProvinceViewModel;
+import govph.rsis.growapp.Region.Region;
+import govph.rsis.growapp.Region.RegionViewModel;
 import govph.rsis.growapp.SeedBought.SeedBought;
 import govph.rsis.growapp.SeedBought.SeedBoughtViewModel;
 import govph.rsis.growapp.User.User;
@@ -93,6 +100,9 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
     private SeedGrowerViewModel seedGrowerViewModel;
     private UserViewModel userViewModel;
     private SeedBoughtViewModel seedBoughtViewModel;
+    private RegionViewModel regionViewModel;
+    private ProvinceViewModel provinceViewModel;
+    private MunicipalityViewModel municipalityViewModel;
     private boolean mPermissionGranted;
     private List<Seeds> seedSample = new ArrayList<>();
     public static final int REQUEST_CODE_EXAMPLE = 0x9988;
@@ -128,8 +138,11 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
     List<SeedBought> seedBought;
     SeedBought selectedSeed;
     HashMap<Integer, SeedBought> spinnerMap;
+    HashMap<Integer, Province> provinceHashMap;
+    HashMap<Integer, Municipality> municipalityHashMap;
     View headerView;
     Dialog spinnerDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -141,6 +154,10 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
         userViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
         seedBoughtViewModel = ViewModelProviders.of(this).get(SeedBoughtViewModel.class);
         seedGrowerViewModel = ViewModelProviders.of(this).get(SeedGrowerViewModel.class);
+        regionViewModel = ViewModelProviders.of(this).get(RegionViewModel.class);
+        provinceViewModel = ViewModelProviders.of(this).get(ProvinceViewModel.class);
+        municipalityViewModel = ViewModelProviders.of(this).get(MunicipalityViewModel.class);
+
         user = userViewModel.getLoggedInUser();
         countCollected = seedGrowerViewModel.getCountCollected(user.getSerialNum());
         countSent = seedGrowerViewModel.getCountSent(user.getSerialNum());
@@ -353,11 +370,6 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
         arrayAdapterTransplantingMethod = new ArrayAdapter<>(getApplicationContext(),R.layout.spinner_rice_program,arrayListTransplantingMethod);
         actTransplantingMethod.setAdapter(arrayAdapterTransplantingMethod);
 
-        arrayListRegion = new ArrayList<>();
-        arrayListRegion.add("Region 1");
-        arrayListRegion.add("Region 2");
-
-
         //get the location
         getLocationBtn.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -496,12 +508,22 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
             }
         });
 
+        //get regions from the region view model
+        List<Region> regionList = regionViewModel.getRegionList();
+        final HashMap<Integer,Region> regionHashMap = new HashMap<Integer, Region>();
+
+        arrayListRegion = new ArrayList<>();
+        for(int i = 0; i< regionList.size(); i++){
+            regionHashMap.put(i,regionList.get(i));
+            arrayListRegion.add(regionList.get(i).getRegion());
+        }
+        //listener to create a spinner dialog with the list of regions and with search function
         tetRegion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 spinnerDialog = new Dialog(SeedProductionDetailActivity.this);
                 spinnerDialog.setContentView(R.layout.dialog_searchable_spinner);
-                spinnerDialog.getWindow().setLayout(650, 800);
+                spinnerDialog.getWindow().setLayout(750, 1200);
                 spinnerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(TRANSPARENT));
                 spinnerDialog.show();
 
@@ -509,6 +531,7 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
                 ListView list_view = spinnerDialog.findViewById(R.id.list_view);
                 TextView search_title = spinnerDialog.findViewById(R.id.search_title);
                 search_title.setText("Select Region");
+
 
                 final ArrayAdapter<String> adapter = new ArrayAdapter<>(SeedProductionDetailActivity.this,R.layout.spinner_seed_variety, arrayListRegion);
                 list_view.setAdapter(adapter);
@@ -534,6 +557,20 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
                 list_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        tetProvince.setText("");
+                        tetMunicipality.setText("");
+                        //get position of region
+                        Region region = regionHashMap.get(position);
+
+                        //get the region id base on the selected item from list to get the provinces
+                        List<Province> provinceList = provinceViewModel.getProvinceByRegionId(region.getRegion_id());
+                        provinceHashMap = new HashMap<Integer, Province>();
+                        arrayListProvince = new ArrayList<>();
+                        for (int i = 0; i < provinceList.size(); i++) {
+                            provinceHashMap.put(i,provinceList.get(i));
+                            arrayListProvince.add(provinceList.get(i).getProvince());
+                        }
+
                         //When item selected from list
                         //set selected item on text
                         tetRegion.setText(adapter.getItem(position));
@@ -544,112 +581,137 @@ public class SeedProductionDetailActivity extends AppCompatActivity implements L
         });
 
         //create array list of provinces
-        arrayListProvince = new ArrayList<>();
+        /*arrayListProvince = new ArrayList<>();
         arrayListProvince.add("Province 1");
-        arrayListProvince.add("Province 2");
+        arrayListProvince.add("Province 2");*/
 
         //listener to create a spinner dialog with the list of provinces and with search function
         tetProvince.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //declare spinner dialog
-                spinnerDialog = new Dialog(SeedProductionDetailActivity.this);
-                spinnerDialog.setContentView(R.layout.dialog_searchable_spinner);
-                spinnerDialog.getWindow().setLayout(650, 800);
-                spinnerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(TRANSPARENT));
-                spinnerDialog.show();
 
-                EditText search_editText = spinnerDialog.findViewById(R.id.search_editText);
-                ListView list_view = spinnerDialog.findViewById(R.id.list_view);
-                TextView search_title = spinnerDialog.findViewById(R.id.search_title);
-                search_title.setText("Select Province");
+                if(arrayListProvince != null && !arrayListProvince.isEmpty()){
 
-                //set arrayadapter of provinces
-                final ArrayAdapter<String> adapter = new ArrayAdapter<>(SeedProductionDetailActivity.this,R.layout.spinner_seed_variety, arrayListProvince);
-                list_view.setAdapter(adapter);
 
-                search_editText.addTextChangedListener(new TextWatcher() {
-                    @Override
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                    //declare spinner dialog
+                    spinnerDialog = new Dialog(SeedProductionDetailActivity.this);
+                    spinnerDialog.setContentView(R.layout.dialog_searchable_spinner);
+                    spinnerDialog.getWindow().setLayout(750, 1200);
+                    spinnerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(TRANSPARENT));
+                    spinnerDialog.show();
 
-                    }
+                    EditText search_editText = spinnerDialog.findViewById(R.id.search_editText);
+                    ListView list_view = spinnerDialog.findViewById(R.id.list_view);
+                    TextView search_title = spinnerDialog.findViewById(R.id.search_title);
+                    search_title.setText("Select Province");
 
-                    @Override
-                    public void onTextChanged(CharSequence s, int start, int before, int count) {
-                        //filter array list
-                        adapter.getFilter().filter(s);
-                    }
+                    //set arrayadapter of provinces
+                    final ArrayAdapter<String> adapter = new ArrayAdapter<>(SeedProductionDetailActivity.this, R.layout.spinner_seed_variety, arrayListProvince);
+                    list_view.setAdapter(adapter);
 
-                    @Override
-                    public void afterTextChanged(Editable s) {
+                    search_editText.addTextChangedListener(new TextWatcher() {
+                        @Override
+                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-                    }
-                });
+                        }
 
-                list_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        //When item selected from list
-                        //set selected item on text
-                        tetProvince.setText(adapter.getItem(position));
-                        spinnerDialog.dismiss();
-                    }
-                });
+                        @Override
+                        public void onTextChanged(CharSequence s, int start, int before, int count) {
+                            //filter array list
+                            adapter.getFilter().filter(s);
+                        }
+
+                        @Override
+                        public void afterTextChanged(Editable s) {
+
+                        }
+                    });
+
+                    list_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            tetMunicipality.setText("");
+                            //get position of selected province
+                            Province province = provinceHashMap.get(position);
+
+                            //get the province id base on the selected item from list to get the municipalities
+                            List<Municipality> municipalityList = municipalityViewModel.getMunicipalityByProvinceId(province.getProvince_id());
+                            municipalityHashMap = new HashMap<Integer, Municipality>();
+                            arrayListMunicipality = new ArrayList<>();
+
+                            for (int i = 0; i < municipalityList.size(); i++) {
+                                municipalityHashMap.put(i, municipalityList.get(i));
+                                arrayListMunicipality.add(municipalityList.get(i).getMunicipality());
+                            }
+                            //When item selected from list
+                            //set selected item on text
+                            tetProvince.setText(adapter.getItem(position));
+                            spinnerDialog.dismiss();
+                        }
+                    });
+                }
+                else{
+                    new AlertDialog.Builder(SeedProductionDetailActivity. this )
+                            .setMessage( "Please select Region first" )
+                            .setNegativeButton( "Okay" , null )
+                            .show() ;
+                }
             }
         });
 
-        //create array list of municipalities
-        arrayListMunicipality = new ArrayList<>();
-        arrayListMunicipality.add("Cabanatuan");
-        arrayListMunicipality.add("San Jose");
-        arrayListMunicipality.add("Talavera");
-        arrayListMunicipality.add("Gapan");
         tetMunicipality.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //declare spinner dialog
-                spinnerDialog = new Dialog(SeedProductionDetailActivity.this);
-                spinnerDialog.setContentView(R.layout.dialog_searchable_spinner);
-                spinnerDialog.getWindow().setLayout(650, 800);
-                spinnerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(TRANSPARENT));
-                spinnerDialog.show();
+                if(arrayListMunicipality != null && !arrayListMunicipality.isEmpty()) {
+                    spinnerDialog = new Dialog(SeedProductionDetailActivity.this);
+                    spinnerDialog.setContentView(R.layout.dialog_searchable_spinner);
+                    spinnerDialog.getWindow().setLayout(750, 1200);
+                    spinnerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(TRANSPARENT));
+                    spinnerDialog.show();
 
-                EditText search_editText = spinnerDialog.findViewById(R.id.search_editText);
-                ListView list_view = spinnerDialog.findViewById(R.id.list_view);
-                TextView search_title = spinnerDialog.findViewById(R.id.search_title);
-                search_title.setText("Select Province");
+                    EditText search_editText = spinnerDialog.findViewById(R.id.search_editText);
+                    ListView list_view = spinnerDialog.findViewById(R.id.list_view);
+                    TextView search_title = spinnerDialog.findViewById(R.id.search_title);
+                    search_title.setText("Select Province");
 
-                //set array adapter of municipalities
-                final ArrayAdapter<String> adapter = new ArrayAdapter<>(SeedProductionDetailActivity.this,R.layout.spinner_seed_variety, arrayListMunicipality);
-                list_view.setAdapter(adapter);
+                    //set array adapter of municipalities
+                    final ArrayAdapter<String> adapter = new ArrayAdapter<>(SeedProductionDetailActivity.this, R.layout.spinner_seed_variety, arrayListMunicipality);
+                    list_view.setAdapter(adapter);
 
-                search_editText.addTextChangedListener(new TextWatcher() {
-                    @Override
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                    search_editText.addTextChangedListener(new TextWatcher() {
+                        @Override
+                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-                    }
+                        }
 
-                    @Override
-                    public void onTextChanged(CharSequence s, int start, int before, int count) {
-                        //filter array list
-                        adapter.getFilter().filter(s);
-                    }
+                        @Override
+                        public void onTextChanged(CharSequence s, int start, int before, int count) {
+                            //filter array list
+                            adapter.getFilter().filter(s);
+                        }
 
-                    @Override
-                    public void afterTextChanged(Editable s) {
+                        @Override
+                        public void afterTextChanged(Editable s) {
 
-                    }
-                });
+                        }
+                    });
 
-                list_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        //When item selected from list
-                        //set selected item on text
-                        tetMunicipality.setText(adapter.getItem(position));
-                        spinnerDialog.dismiss();
-                    }
-                });
+                    list_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            //When item selected from list
+                            //set selected item on text
+                            tetMunicipality.setText(adapter.getItem(position));
+                            spinnerDialog.dismiss();
+                        }
+                    });
+                }else{
+                    new AlertDialog.Builder(SeedProductionDetailActivity. this )
+                            .setMessage( "Please select province first" )
+                            .setNegativeButton( "Okay" , null )
+                            .show() ;
+                }
             }
         });
         //open datepicker

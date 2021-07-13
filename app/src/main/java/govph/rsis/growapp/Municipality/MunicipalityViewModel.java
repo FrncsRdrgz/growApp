@@ -20,7 +20,8 @@ public class MunicipalityViewModel extends AndroidViewModel {
     }
 
     public List<Municipality> getMunicipalityList(){return municipalityList;}
-
+    public List<Municipality> getMunicipalityByProvinceId(int province_id){return municipalityRepository.getMunicipalityByProvinceId(province_id);}
     public void insert(Municipality municipality) {municipalityRepository.insert(municipality);}
-
+    public void update(Municipality municipality){ municipalityRepository.update(municipality);}
+    public void deleteMunicipalities(){municipalityRepository.deleteMunicipalities();}
 }

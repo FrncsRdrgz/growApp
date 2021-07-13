@@ -19,8 +19,11 @@ public class MunicipalityRepository {
     }
 
     public List<Municipality> getMunicipalityList() { return municipalityList;}
+    public List<Municipality> getMunicipalityByProvinceId(int province_id){return municipalityDao.getMunicipalitiesByProvinceId(province_id);}
+
     public void insert(Municipality municipality) { new InsertMunicipalityAsyncTask(municipalityDao).execute(municipality);}
     public void update(Municipality municipality) {new UpdateMunicipalityAsyncTask(municipalityDao).execute(municipality);}
+    public void deleteMunicipalities(){ municipalityDao.deleteMunicipalities();}
 
     private static class InsertMunicipalityAsyncTask extends AsyncTask<Municipality, Void, Void>{
         private MunicipalityDao municipalityDao;
